@@ -152,7 +152,7 @@
 
 <!-- Contact -->
 <div id="contact">
-	<div id=""></div>
+	<div id="map"></div>
 	<!-- Contact Info -->
     <div class="contact-info">
     <h3 class="main-heading"><span>Contact info</span></h3>
@@ -193,9 +193,10 @@
         /* ---------------------------------------------------------------------- */
         
         // Needed variables
+        var $content        = $("#content");
         var $map                = $('#map'),
             $tabContactClass    = ('tab-contact'),
-            $address            = 'Level 13, 2 Elizabeth St, Melbourne Victoria 3000 Australia';
+            $address            = 'Jl werkudoro 1 no 36 polehan malang';
         
         $content.bind('easytabs:after', function(evt,tab,panel) {
             if ( tab.hasClass($tabContactClass) ) {

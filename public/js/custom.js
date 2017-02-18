@@ -129,26 +129,7 @@ jQuery(document).ready(function(){
 		 });
 		return false;
 	});	
-	/* ---------------------------------------------------------------------- */
-	/*	Google Maps
-	/* ---------------------------------------------------------------------- */
 	
-	// Needed variables
-	var $map 				= $('#map'),
-		$tabContactClass 	= ('tab-contact'),
-		$address 			= 'Level 13, 2 Elizabeth St, Melbourne Victoria 3000 Australia';
-	
-	$content.bind('easytabs:after', function(evt,tab,panel) {
-		if ( tab.hasClass($tabContactClass) ) {
-			$map.gMap({
-				address: $address,
-				zoom: 16,
-				markers: [
-					{ 'address' : $address }
-				]
-			});
-		}
-  	});
 	
 
 });	
