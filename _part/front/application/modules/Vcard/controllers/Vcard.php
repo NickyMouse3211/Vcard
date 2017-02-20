@@ -28,6 +28,14 @@ class Vcard extends CI_Controller {
     private $table_db_group_portfolio     = 'group_portfolio';
     private $table_prefix_group_portfolio = 'group_portfolio.';
     private $pref_group_portfolio         = 'group_portfolio_';
+    
+    private $table_db_contact             = 'contact';
+    private $table_prefix_contact         = 'contact.';
+    private $pref_contact                 = 'contact_';
+    
+    private $table_db_map                 = 'map';
+    private $table_prefix_map             = 'map.';
+    private $pref_map                     = 'map_';
 
 	public function index($param='')
 	{
@@ -92,6 +100,18 @@ class Vcard extends CI_Controller {
                                         );
             $data['portfolio_list']['portfolio-'.$value->group_portfolio_id] =  $value->group_portfolio_name;
         }
+
+        //-----------------------------------------------contact-----------------------------------------//
+        
+        $where_contact[strEncrypt('contact_vcard_id', TRUE)] = strEncrypt(@$data['profile']->vcard_id);
+        $vcard_contact = $this->m_global->get_data_all($this->table_db_contact, null, $where_contact);
+        $data['contact'] = $vcard_contact;
+
+        //-----------------------------------------------map-----------------------------------------//
+        
+        $where_map[strEncrypt('map_vcard_id', TRUE)] = strEncrypt(@$data['profile']->vcard_id);
+        $vcard_map = $this->m_global->get_data_all($this->table_db_map, null, $where_map);
+        $data['map'] = $vcard_map[0];
 		$this->template->display(strtolower(__CLASS__),$data);
 	}
 

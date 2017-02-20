@@ -157,10 +157,14 @@
     <div class="contact-info">
     <h3 class="main-heading"><span>Contact info</span></h3>
 	<ul>
-        <li>Level 13, 2 Elizabeth St, Melbourne Victoria 3000 Australia<br /><br /></li>
-        <li>Email: John.smith@gmail.com</li>
-        <li>Phone: +123 456 789 111</li>
-        <li>Website: www.johnsmith.com</li>
+        <li><?php echo $map->map_full; ?><br /><br /></li>
+        <?php 
+            foreach ($contact as $key => $value) {
+                ?>
+                    <li><?php echo $value->contact_type;?> &nbsp;:&nbsp; <?php echo $value->contact_value; ?> </li>
+                <?php
+            }
+        ?>
     </ul>
     </div>
     <!-- /Contact Info -->
@@ -193,10 +197,10 @@
         /* ---------------------------------------------------------------------- */
         
         // Needed variables
-        var $content        = $("#content");
+        var $content            = $("#content");
         var $map                = $('#map'),
             $tabContactClass    = ('tab-contact'),
-            $address            = 'Jl werkudoro 1 no 36 polehan malang';
+            $address            = '<?php echo $map->map_full; ?>';
         
         $content.bind('easytabs:after', function(evt,tab,panel) {
             if ( tab.hasClass($tabContactClass) ) {
