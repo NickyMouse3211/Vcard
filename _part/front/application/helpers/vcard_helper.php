@@ -327,3 +327,13 @@ function textsubstr($text='' , $start=0 , $end=999999999999999999)
 
     return $textout;
 }
+
+function generateRandomString($length = 10) {
+    $characters = 'BAYUADYNUGRAHAbayuadynugraha08970454527bayuadynugrahayahoocombayuadynugraha3211gmailcom0607199702061996';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}

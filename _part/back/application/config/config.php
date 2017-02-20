@@ -500,5 +500,5 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['plugin']  	 = [];
 $config['proxy_ips'] = '';
-$config['app_name']  = 'Fierce';
+$config['app_name']  = 'vcard';
 $config['plugin']    = ['custombox','pagination','sweet-alert','datatables', 'daterangepicker','input-mask','select2','bootstrap-select','file-input','validation','profile','toastr','datepickers'];

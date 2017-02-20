@@ -28,9 +28,9 @@
 		<li><label>Name</label><span><?php echo $name;?></span></li>
         <li><label>Date of birth</label><span><?php echo $dob;?></span></li>
         <li><label>Address</label><span><?php echo $address;?></span></li>
-        <li><label>Email</label><span><?php echo $email;?></span></li>
+        <li><label>Email</label><span style="word-wrap: break-word;"><?php echo $email;?></span></li>
         <li><label>Phone</label><span><?php echo $phone;?></span></li>
-        <li><label>Website</label><span><?php echo $website;?></span></li>
+        <li><label>Website</label><span style="word-wrap: break-word;"><?php echo $website;?></span></li>
     </ul>
     <!-- /Personal info section -->
 </div>        

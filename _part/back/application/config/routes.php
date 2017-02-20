@@ -65,8 +65,8 @@ $route['touch/article/(:any)']  = 'touch_artikel/$1';
 $route['touch/gallery']         = 'touch_gallery';
 $route['touch/gallery/(:any)']  = 'touch_gallery/$1';
 
-$route['fierce/article']        = 'fierce_artikel';
-$route['fierce/article/(:any)'] = 'fierce_artikel/$1';
+$route['vcard/article']        = 'vcard_artikel';
+$route['vcard/article/(:any)'] = 'vcard_artikel/$1';
 
-$route['fierce/gallery']        = 'fierce_gallery';
-$route['fierce/gallery/(:any)'] = 'fierce_gallery/$1';
+$route['vcard/gallery']        = 'vcard_gallery';
+$route['vcard/gallery/(:any)'] = 'vcard_gallery/$1';

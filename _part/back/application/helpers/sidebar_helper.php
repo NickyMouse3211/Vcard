@@ -12,10 +12,10 @@
 			$touchgallery  	= ['name' => 'Gallery'		, 'link' => 'touch/gallery'	, 'icon' => 'picture'	, 'controller' => 'touch_gallery'];
 		$touch     			= ['name' => 'Touch Data'	, 'link' => [$touchtouch,$touchartikel,$touchgallery], 'icon' => 'arrow-right', 'controller' => 'touch'];
 
-			$fiercefierce  	= ['name' => 'Fierce'		, 'link' => 'fierce'			, 'icon' => 'book-open'	, 'controller' => 'fierce'];
-			$fierceartikel  = ['name' => 'Article'		, 'link' => 'fierce/article'	, 'icon' => 'book-open'	, 'controller' => 'fierce_artikel'];
-			$fiercegallery  = ['name' => 'Gallery'		, 'link' => 'fierce/gallery'	, 'icon' => 'picture'	, 'controller' => 'fierce_gallery'];
-		$fierce     		= ['name' => 'Fierce Data'	, 'link' => [$fiercefierce,$fierceartikel,$fiercegallery], 'icon' => 'social-facebook', 'controller' => 'fierce'];
+			$vcardvcard  	= ['name' => 'vcard'		, 'link' => 'vcard'			, 'icon' => 'book-open'	, 'controller' => 'vcard'];
+			$vcardartikel  = ['name' => 'Article'		, 'link' => 'vcard/article'	, 'icon' => 'book-open'	, 'controller' => 'vcard_artikel'];
+			$vcardgallery  = ['name' => 'Gallery'		, 'link' => 'vcard/gallery'	, 'icon' => 'picture'	, 'controller' => 'vcard_gallery'];
+		$vcard     		= ['name' => 'vcard Data'	, 'link' => [$vcardvcard,$vcardartikel,$vcardgallery], 'icon' => 'social-facebook', 'controller' => 'vcard'];
 
 		$developer     		= ['name' => 'Developer'	, 'link' => 'developer'	, 'icon' => 'ghost'		, 'controller' => 'developer'];
 		$report     		= ['name' => 'Report'		, 'link' => 'report'	, 'icon' => 'notebook'	, 'controller' => 'report'];
@@ -25,7 +25,7 @@
 				$dashboard, 
 				$master,
 				$touch,
-				$fierce,
+				$vcard,
 				$developer,
 				$report
 			];
@@ -34,13 +34,13 @@
 				$dashboard, 
 				$master,
 				$touch,
-				$fierce
+				$vcard
 			];
 		}else{
 			$menu = [ 
 				$dashboard, 
 				$master,
-				$fierce
+				$vcard
 			];
 		}
 		
