@@ -47,9 +47,12 @@
 	<div class="wrap col-md-12">
 		<div class="logo">
 		  <h1>404</h1>
+		  <!-- <div style="width: 100px;height: 100px; background-color: <?php //echo color_inverse('#36D608');?>;">
+		  		<p style="color: #36D608 <?php //echo colour('dark');?>;">Tes Tulisan</p>
+		  </div> -->
 		  <p>Sorry This was deadlink - Page not Found</p>
 		   <div class="sub">
-		     <p><a href="#">Go Back to Home</a></p>
+		     <p><a href="#" onclick="javascript:history.go(-1)">Go Back to Home</a></p>
 		    </div>
 		</div>
 	</div>

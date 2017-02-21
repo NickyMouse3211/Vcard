@@ -71,7 +71,7 @@ class Login extends MX_Controller {
                         setcookie('user_logged[pass]', $this->input->post('password'), time() + 3600, "/");
                     }
                     changecode($email);
-                    redirect(base_url().'user');
+                    redirect(base_url().'vcard');
                 } else {
                     $this->session->set_flashdata('status', '<div class="alert alert-danger"><strong>Error!</strong> Your account is not authorized for login.</div>');
                     redirect(base_url().'login');

@@ -98,7 +98,7 @@
 <script type="text/javascript">
 
 	jQuery(document).ready(function() {
-		var url = base_url+"user/select";
+		var url = base_url+"vcard/select";
 		var header = [
 			{ "sClass": "text-center" },
 			{ "sClass": "text-center" },
@@ -120,37 +120,37 @@
 
 	   	TableAjax.initDefault(url, header, order, sort);
 
-	   	$('#ROLE').select2({
-	   	    minimumInputLength: 0,
-	   	    ajax: {
-	   	        url: "<?=base_url('universal/get_role')?>",
-	   	        dataType: 'json',
-	   	        quietMillis: 250,
-	   	        data: function (term, page) {
-	   	            return {
-	   	                q: term,
-	   	            };
-	   	        },
-	   	        results: function (data, page) {
-	   	            return { results: data.item };
-	   	        },
-	   	        cache: true
-	   	    },
-	   	    initSelection: function(element, callback) {
-	   	        var id = $(element).val();
-	   	        if (id !== "") {
-	   	            $.ajax("<?=base_url('universal/get_role')?>/"+id, {
-	   	                dataType: "json"
-	   	            }).done(function(data) { callback(data[0]); });
-	   	        }
-	   	    },
-	   	    formatResult: function (state) {
-	   	        return state.name;
-	   	    },
-	   	    formatSelection:  function (state) {
-	   	        return state.name;
-	   	    }
-	   	});
+	   	// $('#ROLE').select2({
+	   	//     minimumInputLength: 0,
+	   	//     ajax: {
+	   	//         url: "<?=base_url('universal/get_role')?>",
+	   	//         dataType: 'json',
+	   	//         quietMillis: 250,
+	   	//         data: function (term, page) {
+	   	//             return {
+	   	//                 q: term,
+	   	//             };
+	   	//         },
+	   	//         results: function (data, page) {
+	   	//             return { results: data.item };
+	   	//         },
+	   	//         cache: true
+	   	//     },
+	   	//     initSelection: function(element, callback) {
+	   	//         var id = $(element).val();
+	   	//         if (id !== "") {
+	   	//             $.ajax("<?=base_url('universal/get_role')?>/"+id, {
+	   	//                 dataType: "json"
+	   	//             }).done(function(data) { callback(data[0]); });
+	   	//         }
+	   	//     },
+	   	//     formatResult: function (state) {
+	   	//         return state.name;
+	   	//     },
+	   	//     formatSelection:  function (state) {
+	   	//         return state.name;
+	   	//     }
+	   	// });
 
 	   	$('.banner-select').selectpicker({
             iconBase: 'fa',

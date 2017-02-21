@@ -298,3 +298,43 @@ function chiper($text,$type = 'encrypt',$customKey=''){
         return $cipher->encrypt($string, $kunci);
     }
 }
+
+function colour($tint) {
+
+    $frag = range(0,255);
+
+    $red = "";
+    $green = "";
+    $blue = "";
+
+    for (;;) {
+
+        $red = $frag[mt_rand(0, count($frag)-1)];
+        $green = $frag[mt_rand(0, count($frag)-1)];
+        $blue = $frag[mt_rand(0, count($frag)-1)];
+
+        switch ($tint) {
+            case 'light':
+                if (($red + $green + $blue / 3) >= 200) break 2;
+                break;
+            case 'dark' :
+            default:
+                if (($red + $green + $blue / 3) <= 50) break 2;
+                break;
+        }
+    }
+    return sprintf("#%02s%02s%02s", dechex($red), dechex($green),dechex($blue));
+}
+
+function color_inverse($color){
+    $color = str_replace('#', '', $color);
+    if (strlen($color) != 6){ return '000000'; }
+    $rgb = '';
+    for ($x=0;$x<3;$x++){
+        $c = 255 - hexdec(substr($color,(2*$x),2));
+        $c = ($c < 0) ? 0 : dechex($c);
+        $rgb .= (strlen($c) < 2) ? '0'.$c : $c;
+    }
+    return '#'.$rgb;
+}
+

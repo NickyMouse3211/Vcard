@@ -1,5 +1,6 @@
-<div class="page-footer">
-	<div class="page-footer-inner">
+<div class="page-footer" style="background-color: <?php echo colour('dark') ?> ;">
+<!-- <div class="page-footer" style="z-index: 999999999999999999999999999999;position: relative;background-color: #3B3F51 ; width: 103%;margin: -1.5%;"> -->
+	<div class="page-footer-inner" style="color: <?php echo colour('light') ?>">
 		 2016 &copy; Power by NickyM. <a href="http://www.fierce.hol.es" title="Nicky Dancer" target="_blank">Pro Online Website</a>
 	</div>
 	<div class="scroll-to-top">

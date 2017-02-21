@@ -21,3 +21,45 @@ Rounded Portlets
 .custom{
 	margin-bottom: -5px;
 }
+
+::-webkit-scrollbar
+{
+  width: 12px;  /* for vertical scrollbars */
+  height: 12px; /* for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track
+{
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb
+{
+  background: rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb:hover
+{
+  background: rgba(170, 170, 170, 0.5);
+}
+
+#boxscroll {
+	padding: 0px;
+	height: 450px;
+	width: 420px;
+	border: 2px solid #0000FF;
+	overflow: auto;
+	margin: 0px;
+}
+#boxscroll2 {
+	padding: 0px;
+	height: 450px;
+	width: 420px;
+	border: 2px solid #FF0000;
+	overflow: auto;
+	margin: 0px;
+}
+div:focus {
+   outline: none;
+   ie-dummy: expression(this.hideFocus=true);
+}

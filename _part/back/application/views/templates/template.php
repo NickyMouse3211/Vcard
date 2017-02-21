@@ -62,6 +62,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		echo get_css($value)."\n";
 	endforeach; 
 ?>
+
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -75,6 +76,9 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
 <script src="<?=base_url('../public/back/global/plugins/jquery.min.js');?>" type="text/javascript"></script>
+<script src="<?=base_url('../public/js/jquery.nicescroll.js');?>" type="text/javascript"></script>
+<script src="<?=base_url('../public/js/ext/iphone-style-checkboxes.js');?>" type="text/javascript"></script>
+<link href="<?=base_url('../public/js/ext/iphone-style-checkboxes.css');?>" rel="stylesheet" type="text/css"/>
 <script>
 	jQuery(document).ready(function() {    
 	   	Metronic.init(); // init metronic core componets
@@ -89,8 +93,8 @@ License: You must have a valid license purchased only from themeforest(the above
             iconBase: 'fa',
             tickIcon: 'fa-check'
         });
-	});
-	var base_url = "<?=base_url()?>";
+	 });
+    var base_url = "<?=base_url()?>";
 </script>
 <body class="page-md page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo">
 <!-- BEGIN HEADER -->
@@ -99,7 +103,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <div class="clearfix">
 </div>
 <!-- BEGIN CONTAINER -->
-<div class="page-container">
+<div class="page-container" >
 	<!-- BEGIN SIDEBAR -->
 	<?= @$_menu; ?>
 	<!-- END SIDEBAR -->
@@ -177,4 +181,10 @@ License: You must have a valid license purchased only from themeforest(the above
 </html>
 <script type="text/javascript">
 	var intrefreshartikel = '';
+</script>
+<script>
+	jQuery(document).ready(function() {    
+	   	$("#page-scroll-container").niceScroll();
+	});
+	var base_url = "<?=base_url()?>";
 </script>

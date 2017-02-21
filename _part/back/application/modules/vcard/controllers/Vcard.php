@@ -97,7 +97,7 @@ class Vcard extends MX_Controller {
             echo json_encode($data);
         } else {
             $this->form_validation->set_rules('vcard_email', 'Email', 'required|valid_email|callback_check_email[]');
-            $this->form_validation->set_rules('vcard_nama', 'Name', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('vcard_name', 'Name', 'trim|xss_clean|required');
             $this->form_validation->set_rules('vcard_password', 'vcard Password', 'trim|xss_clean|required');
             $this->form_validation->set_rules('vcard_role', 'Periode To', 'trim|xss_clean|required');
             $this->form_validation->set_message('check_email','The Email field must contain a unique value.');
@@ -105,7 +105,7 @@ class Vcard extends MX_Controller {
             if ( $this->form_validation->run($this) )
             {
 
-                    $data[$this->table_prefix.'nama']        = $this->input->post('vcard_nama');
+                    $data[$this->table_prefix.'name']        = $this->input->post('vcard_name');
                     $data[$this->table_prefix.'password']    = strEncrypt($this->input->post('vcard_password'));
                     $data[$this->table_prefix.'email']       = $this->input->post('vcard_email');
                     $data[$this->table_prefix.'role']        = $this->input->post('vcard_role');
@@ -120,7 +120,7 @@ class Vcard extends MX_Controller {
                     {
                         $data['status'] = 1;
                         # sesuai in pesan message dengan aksi yang telah di proses, Nama atau variabel bisa di masukkin.
-                        $data['message'] = 'Successfully add vcard with Nama <strong>'.$this->input->post('vcard_nama').'</strong></strong>';
+                        $data['message'] = 'Successfully add vcard with Nama <strong>'.$this->input->post('vcard_name').'</strong></strong>';
                         echo json_encode($data);
                     } else {
                         # menghapus gambar yg udah di upload jika sql gagal,
@@ -128,7 +128,7 @@ class Vcard extends MX_Controller {
 
                         $data['status'] = 0;
                         #ini sesuaiin juga
-                        $data['message'] = 'Failed add vcard with Nama <strong>'.$this->input->post('vcard_nama').'</strong></strong>';
+                        $data['message'] = 'Failed add vcard with Nama <strong>'.$this->input->post('vcard_name').'</strong></strong>';
 
                         echo json_encode($data);
                     }
@@ -155,13 +155,13 @@ class Vcard extends MX_Controller {
             echo json_encode($data);
         } else {
             $this->form_validation->set_rules('vcard_email'        , 'Email'           , 'trim|xss_clean|required|callback_check_email['.$id.']');
-            $this->form_validation->set_rules('vcard_nama'         , 'Name'            , 'trim|xss_clean|required');
+            $this->form_validation->set_rules('vcard_name'         , 'Name'            , 'trim|xss_clean|required');
             $this->form_validation->set_rules('vcard_nick_name'    , 'Nick Name'       , 'trim|xss_clean|required');
             $this->form_validation->set_rules('vcard_tempat_lahir' , 'Place of Birth'  , 'trim|xss_clean|required');
             $this->form_validation->set_rules('vcard_tanggal_lahir', 'Date of Birth'   , 'trim|xss_clean|required');
             $this->form_validation->set_rules('vcard_alamat'       , 'Address'         , 'trim|xss_clean');
             $this->form_validation->set_rules('vcard_sign'         , 'Sign'            , 'trim|xss_clean');
-            $this->form_validation->set_rules('vcard_telepon'      , 'Phone'           , 'trim|xss_clean');
+            $this->form_validation->set_rules('vcard_phone'      , 'Phone'           , 'trim|xss_clean');
             $this->form_validation->set_rules('vcard_guild_name'   , 'Guild Name'      , 'trim|xss_clean');
             $this->form_validation->set_rules('vcard_couple'       , 'Couple Nick Name', 'trim|xss_clean');
             $this->form_validation->set_rules('vcard_password'     , 'vcard Password' , 'trim|xss_clean');
@@ -193,13 +193,13 @@ class Vcard extends MX_Controller {
                 } // end IF !empty($_FILES
 
                 $data[$this->table_prefix.'email']              = $this->input->post('vcard_email');
-                $data[$this->table_prefix.'nama']               = $this->input->post('vcard_nama');
+                $data[$this->table_prefix.'name']               = $this->input->post('vcard_name');
                 $data[$this->table_prefix.'nick_name']          = $this->input->post('vcard_nick_name');
                 $data[$this->table_prefix.'tempat_lahir']       = $this->input->post('vcard_tempat_lahir');
                 $data[$this->table_prefix.'tanggal_lahir']      = date('Y-m-d', strtotime($this->input->post('vcard_tanggal_lahir')));
                 $data[$this->table_prefix.'alamat']             = $this->input->post('vcard_alamat');
                 $data[$this->table_prefix.'sign']               = $this->input->post('vcard_sign');
-                $data[$this->table_prefix.'telepon']     = $this->input->post('vcard_telepon');
+                $data[$this->table_prefix.'phone']     = $this->input->post('vcard_phone');
                 $data[$this->table_prefix.'guild_name']         = $this->input->post('vcard_guild_name');
                 $data[$this->table_prefix.'couple']             = $this->input->post('vcard_couple');
                 $data[$this->table_prefix.'role']               = $this->input->post('vcard_role');
@@ -218,7 +218,7 @@ class Vcard extends MX_Controller {
                         unlink('../public/images/vcard/'.$re->vcard_pict);
                     }
                     $data['status'] = 1;
-                    $data['message'] = 'Successfully edit vcard with Nama <strong>'.$this->input->post('vcard_nama').'</strong></strong>';
+                    $data['message'] = 'Successfully edit vcard with Nama <strong>'.$this->input->post('vcard_name').'</strong></strong>';
 
                     echo json_encode($data);
 
@@ -229,7 +229,7 @@ class Vcard extends MX_Controller {
                     }
 
                     $data['status'] = 0;
-                    $data['message'] = 'Failed edit vcard with Nama <strong>'.$this->input->post('vcard_nama').'</strong></strong>';
+                    $data['message'] = 'Failed edit vcard with Nama <strong>'.$this->input->post('vcard_name').'</strong></strong>';
                     echo json_encode($data);
                 }
             } else {
@@ -262,9 +262,9 @@ class Vcard extends MX_Controller {
         }
 
         $aCari = [
-            'name'          => $this->table_prefix.'nama',
+            'name'          => $this->table_prefix.'name',
             'email'         => $this->table_prefix.'email',
-            'phone'         => $this->table_prefix.'telepon',
+            'phone'         => $this->table_prefix.'phone',
             'role'          => $this->table_prefix.'role',
             'status'        => $this->table_prefix.'status',
             'update_date'   => $this->table_prefix.'update_date'
@@ -338,9 +338,9 @@ class Vcard extends MX_Controller {
                 '<input type="checkbox" name="id[]" value="'.strEncrypt($rows->vcard_id).'">',
                 $i,
 
-                $rows->vcard_nama,
+                $rows->vcard_name,
                 $rows->vcard_email,
-                $rows->vcard_telepon,
+                $rows->vcard_phone,
                 $roles[$rows->vcard_role],
                 $rows->vcard_status == 1 ? 'Active' :  ($rows->vcard_status == 99 ? 'Deleted' : 'InActive'),
                 $rows->vcard_update_date == '' ? 'has not been updated' : tgl_format($rows->vcard_update_date),
