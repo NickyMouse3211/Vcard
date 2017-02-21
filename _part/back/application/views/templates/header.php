@@ -45,10 +45,10 @@
 					<li class="dropdown dropdown-user dropdown-dark">
 						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 						<span class="username username-hide-on-mobile">
-							<?php echo $this->session->userdata('user_data')->member_nama;?>
+							<?php echo $this->session->userdata('user_data')->vcard_name;?>
 						</span>
 						<!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
-						<img alt="" class="img-circle" src="<?php echo base_url('../public/images/member') . '/'.$this->session->userdata('user_data')->member_pict;?>"/>
+						<img alt="" class="img-circle" src="<?php echo base_url('../public/images/member') . '/'.$this->session->userdata('user_data')->vcard_image;?>"/>
 						</a>
 						<ul class="dropdown-menu dropdown-menu-default">
 							<li>
@@ -57,7 +57,7 @@
 								</a>
 							</li>
 							<li>
-								<a href="<?=base_url();?>" target="_blank"><i class="icon-puzzle"></i> View Site </a>
+								<a href="<?=base_url('../'.$this->session->userdata('user_data')->vcard_link);?>" target="_blank"><i class="icon-puzzle"></i> View Card </a>
 							</li>
 							<li class="divider">
 							</li>
@@ -95,16 +95,16 @@
 							<div class="portlet light profile-sidebar-portlet">
 								<!-- SIDEBAR USERPIC -->
 								<div class="profile-userpic">
-									<img src="<?php echo base_url('../public/images/member') . '/'. $this->session->userdata('user_data')->member_pict; ?>" class="img-responsive" alt="">
+									<img src="<?php echo base_url('../public/images/member') . '/'. $this->session->userdata('user_data')->vcard_image; ?>" class="img-responsive" alt="">
 								</div>
 								<!-- END SIDEBAR USERPIC -->
 								<!-- SIDEBAR USER TITLE -->
 								<div class="profile-usertitle">
 									<div class="profile-usertitle-name">
-										 <?= $this->session->userdata('user_data')->member_nama; ?>
+										 <?= $this->session->userdata('user_data')->vcard_name; ?>
 									</div>
 									<div class="profile-usertitle-job">
-										 <?= role($this->session->userdata('user_data')->member_role).' - '. $this->session->userdata('user_data')->member_guild_name; ?>
+										 <?= $this->session->userdata('user_data')->vcard_name.' - '. $this->session->userdata('user_data')->vcard_work; ?>
 									</div>
 								</div>
 								<!-- END SIDEBAR USER TITLE -->
@@ -159,7 +159,7 @@
 																				<label class="control-label col-md-3">Nama Lenkap :</label>
 																				<div class="col-md-9">
 																					<p class="form-control-static">
-																						<?= $this->session->userdata('user_data')->member_nama; ?>
+																						<?= $this->session->userdata('user_data')->vcard_name; ?>
 																					</p>
 																				</div>
 																			</div>
@@ -168,7 +168,7 @@
 																				<label class="control-label col-md-3">Email :</label>
 																				<div class="col-md-9">
 																					<p class="form-control-static">
-																						<?= $this->session->userdata('user_data')->member_email; ?>
+																						<?= $this->session->userdata('user_data')->vcard_email; ?>
 																					</p>
 																				</div>
 																			</div>
@@ -177,7 +177,7 @@
 																				<label class="control-label col-md-3">Alamat :</label>
 																				<div class="col-md-9">
 																					<p class="form-control-static">
-																						<?= $this->session->userdata('user_data')->member_alamat; ?>
+																						<?= $this->session->userdata('user_data')->vcard_address; ?>
 																					</p>
 																				</div>
 																			</div>
@@ -186,7 +186,7 @@
 																				<label class="control-label col-md-3">No Handphone :</label>
 																				<div class="col-md-9">
 																					<p class="form-control-static">
-																						<?= $this->session->userdata('user_data')->member_telepon; ?>
+																						<?= $this->session->userdata('user_data')->vcard_phone; ?>
 																					</p>
 																				</div>
 																			</div>
@@ -221,7 +221,7 @@
 																		<div class="col-md-6">
 																			<div class="input-icon">
 																				<i class="fa fa-font"></i>
-																				<input value="<?= $this->session->userdata('user_data')->member_nama; ?>" type="text" class="form-control input-circle" placeholder="Masukan nama">
+																				<input value="<?= $this->session->userdata('user_data')->vcard_name; ?>" type="text" class="form-control input-circle" placeholder="Masukan nama">
 																			</div>
 																		</div>
 																	</div>
@@ -231,7 +231,7 @@
 																		<div class="col-md-6">
 																			<div class="input-icon">
 																				<i class="fa fa-envelope"></i>
-																				<input value="<?= $this->session->userdata('user_data')->member_email; ?>" type="text" class="form-control input-circle" placeholder="Masukan email">
+																				<input value="<?= $this->session->userdata('user_data')->vcard_email; ?>" type="text" class="form-control input-circle" placeholder="Masukan email">
 																			</div>
 																		</div>
 																	</div>
@@ -241,7 +241,7 @@
 																		<div class="col-md-6">
 																			<div class="input-icon">
 																				<i class="fa taxi"></i>
-																				<textarea class="form-control input-circle" placeholder="Masukan alamat"><?= $this->session->userdata('user_data')->member_alamat; ?></textarea>
+																				<textarea class="form-control input-circle" placeholder="Masukan alamat"><?= $this->session->userdata('user_data')->vcard_address; ?></textarea>
 																			</div>
 																		</div>
 																	</div>
@@ -251,7 +251,7 @@
 																		<div class="col-md-6">
 																			<div class="input-icon">
 																				<i class="fa fa-phone"></i>
-																				<input value="<?= $this->session->userdata('user_data')->member_telepon; ?>" type="text" class="form-control input-circle" placeholder="Masukan no handphone">
+																				<input value="<?= $this->session->userdata('user_data')->vcard_phone; ?>" type="text" class="form-control input-circle" placeholder="Masukan no handphone">
 																			</div>
 																		</div>
 																	</div>
@@ -261,7 +261,7 @@
 																		<div class="col-md-9">
 																			<div class="fileinput fileinput-new" data-provides="fileinput">
 																				<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
-																					<img src="<?php echo base_url('../public/images/member') . '/'. $this->session->userdata('user_data')->member_pict; ?>" alt="">
+																					<img src="<?php echo base_url('../public/images/member') . '/'. $this->session->userdata('user_data')->vcard_image; ?>" alt="">
 																				</div>
 																				<div>
 																					<span class="btn default btn-file">

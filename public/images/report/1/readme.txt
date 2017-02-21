@@ -1,1 +1,0 @@
-Foto Dari nugurahamizu@gmail.com dengan id 1

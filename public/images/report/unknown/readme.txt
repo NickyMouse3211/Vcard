@@ -1,1 +1,0 @@
-Foto Dari  dengan id unknown

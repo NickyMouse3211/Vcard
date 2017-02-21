@@ -20,29 +20,12 @@
 		$developer     		= ['name' => 'Developer'	, 'link' => 'developer'	, 'icon' => 'ghost'		, 'controller' => 'developer'];
 		$report     		= ['name' => 'Report'		, 'link' => 'report'	, 'icon' => 'notebook'	, 'controller' => 'report'];
 
-		if ($CI->session->userdata('user_data')->member_role == '1') {
-			$menu = [ 
-				$dashboard, 
-				$master,
-				$touch,
-				$vcard,
-				$developer,
-				$report
-			];
-		}elseif ($CI->session->userdata('user_data')->member_role == '2' || $CI->session->userdata('user_data')->member_role == '3') {
-			$menu = [ 
-				$dashboard, 
-				$master,
-				$touch,
-				$vcard
-			];
-		}else{
-			$menu = [ 
-				$dashboard, 
-				$master,
-				$vcard
-			];
-		}
+		
+		$menu = [ 
+			$dashboard, 
+			$master,
+			$vcard
+		];
 		
 
 		return $menu;
