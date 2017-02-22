@@ -186,5 +186,4 @@ License: You must have a valid license purchased only from themeforest(the above
 	jQuery(document).ready(function() {    
 	   	$("#page-scroll-container").niceScroll();
 	});
-	var base_url = "<?=base_url()?>";
 </script>

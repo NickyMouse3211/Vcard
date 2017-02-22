@@ -46,6 +46,15 @@ function strEncrypt($str, $forDB = FALSE){
     return $str;
 }
 
+function strEncryptcode($str, $forDB = FALSE){
+    $CI =& get_instance();  
+    $key    = $CI->config->item('encryption_key');
+    $code = $CI->session->userdata('user_code').$CI->session->userdata('user_data')->vcard_id;
+
+    $str    = ($forDB) ? 'md5(concat(\'' . $key . $code . '\',' . $str. '))' : md5($key . $code . $str);   
+    return $str;
+}
+
 function csrf_get_token(){
     $CI =& get_instance();
     $csrf   = strEncrypt('csrf');

@@ -254,6 +254,7 @@ var Layout = function() {
                     if(res == 'out'){
                         window.location = base_url+'back/login';
                     }else{
+                        window.history.pushState("object or string", "Title", url);
                         Metronic.stopPageLoading();
                         pageContentBody.html(res);
                         Layout.fixContentHeight(); // fix content height

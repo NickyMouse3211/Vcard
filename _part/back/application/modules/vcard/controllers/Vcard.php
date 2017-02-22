@@ -58,8 +58,11 @@ class Vcard extends MX_Controller {
         $js['custom']       = ['form-validation'];
 
         $data['id']         = $id;
-        # id dalam bentuk encript, lihat di cdn_helper strEncrypt()
-        $data['records']    = $this->m_global->get_data_all($this->table_db, NULL, [strEncrypt('vcard_id', TRUE) => $id])[0];
+        # id dalam bentuk encript, lihat di cdn_helper strEncryptcode()
+        $data['records']    = $this->m_global->get_data_all($this->table_db, NULL, [strEncryptcode('vcard_id', TRUE) => $id])[0];
+        echo "<pre>";
+        print_r ($this->db->last_query());
+        echo "</pre>";exit();
         $this->template->display($this->prefix.'_edit', $data, $js);
     }
 
@@ -74,8 +77,8 @@ class Vcard extends MX_Controller {
         $js['custom']       = ['form-validation'];
 
         $data['id']         = $id;
-        # id dalam bentuk encript, lihat di cdn_helper strEncrypt()
-        $data['records']    = $this->m_global->get_data_all($this->table_db, NULL, [strEncrypt('vcard_id', TRUE) => $id])[0];
+        # id dalam bentuk encript, lihat di cdn_helper strEncryptcode()
+        $data['records']    = @$this->m_global->get_data_all($this->table_db, NULL, [strEncryptcode('vcard_id', TRUE) => $id])[0];
         $this->template->display($this->prefix.'_detail', $data, $js);
     }
 
@@ -106,7 +109,7 @@ class Vcard extends MX_Controller {
             {
 
                     $data[$this->table_prefix.'name']        = $this->input->post('vcard_name');
-                    $data[$this->table_prefix.'password']    = strEncrypt($this->input->post('vcard_password'));
+                    $data[$this->table_prefix.'password']    = strEncryptcode($this->input->post('vcard_password'));
                     $data[$this->table_prefix.'email']       = $this->input->post('vcard_email');
                     $data[$this->table_prefix.'role']        = $this->input->post('vcard_role');
                     $data[$this->table_prefix.'status']      = '1';
@@ -186,7 +189,7 @@ class Vcard extends MX_Controller {
                         echo json_encode($data);
                         die();
                     }else{
-                        $re                               = $this->m_global->get_data_all($this->table_db, NULL, [strEncrypt($this->table_prefix.'id', TRUE) => $id], $this->table_prefix.'pict')[0];
+                        $re                               = $this->m_global->get_data_all($this->table_db, NULL, [strEncryptcode($this->table_prefix.'id', TRUE) => $id], $this->table_prefix.'pict')[0];
                         $upload                           = $this->upload->data();
                         $data[$this->table_prefix.'pict'] = $upload['file_name'];
                     }
@@ -207,10 +210,10 @@ class Vcard extends MX_Controller {
                 $data[$this->table_prefix.'update_id']          = $this->session->userdata('user_data')->vcard_id;
                 # jika kosong tidak dirubah
                 if($this->input->post('vcard_password') != ''){
-                    $data[$this->table_prefix.'password']           = strEncrypt($this->input->post('vcard_password'));
+                    $data[$this->table_prefix.'password']           = strEncryptcode($this->input->post('vcard_password'));
                 }
 
-                $result = $this->m_global->update($this->table_db, $data, [strEncrypt('vcard_id', TRUE) => $id]);
+                $result = $this->m_global->update($this->table_db, $data, [strEncryptcode('vcard_id', TRUE) => $id]);
 
                 if( $result )
                 {
@@ -244,7 +247,7 @@ class Vcard extends MX_Controller {
     // validasi
     public function check_email($str, $id){
         if ($id != '') {
-            $result = $this->m_global->validation($this->table_db, [strEncrypt($this->table_prefix.'id', TRUE).' <>' => $id, $this->table_prefix.'email' => $str]);
+            $result = $this->m_global->validation($this->table_db, [strEncryptcode($this->table_prefix.'id', TRUE).' <>' => $id, $this->table_prefix.'email' => $str]);
         }else{
             $result = $this->m_global->validation($this->table_db, [$this->table_prefix.'email' => $str]);
         }
@@ -257,7 +260,7 @@ class Vcard extends MX_Controller {
         if(@$_REQUEST['customActionType'] == 'group_action'){
             $aChk = [0, 1, 99];
             if(in_array(@$_REQUEST['customActionName'], $aChk)){
-                $this->change_status($_REQUEST['customActionName'], [strEncrypt($this->table_prefix.'id', true).' IN ' => "('".implode("','", $_REQUEST['id'] )."')"]);
+                $this->change_status($_REQUEST['customActionName'], [strEncryptcode($this->table_prefix.'id', true).' IN ' => "('".implode("','", $_REQUEST['id'] )."')"]);
             }
         }
 
@@ -320,22 +323,22 @@ class Vcard extends MX_Controller {
         $i = 1 + $iDisplayStart;
         foreach ($result as $rows) {
             if ($this->session->userdata('user_data')->vcard_role == '1') {
-                $action =   '<a data-original-title="Change Status vcard" href="'.base_url( $this->prefix.'/change_status_by/'.strEncrypt($rows->vcard_id).'/'.($rows->vcard_status == 1 ? '0' : '1' ) ).'" class="tooltips btn-icon-only btn btn-sm '.($rows->vcard_status == 0 ? 'grey-cascade' : ($rows->vcard_status == 99 ? 'red-sunglo' : 'green-meadow')). '" onClick="return f_status(1, this, event)"><i title="'.($rows->vcard_status == 0 ? 'InActive' : ($rows->vcard_status == 99 ? 'Deleted' : 'Active') ).'" class="fa fa'.($rows->vcard_status == 0 ? '-eye-slash' : ($rows->vcard_status == 99 ? '-trash-o' : '-eye') ).'"></i></a> '.
-                            '<a data-original-title="Edit vcard Data" href="'.base_url( $this->prefix.'/show_edit/'.strEncrypt($rows->vcard_id) ).'" class="btn btn-icon-only btn-sm blue-madison ajaxify tooltips"><i class="fa fa-edit"></i></a> '.
-                            '<a data-original-title="Detail vcard Data" href="'.base_url( $this->prefix.'/show_detail/'.strEncrypt($rows->vcard_id) ).'" class="btn btn-icon-only btn-sm yellow ajaxify tooltips"><i class="fa fa-search"></i></a> '.
-                            '<a data-original-title="Delete vcard Data" href="'.base_url( $this->prefix.'/change_status_by/'.strEncrypt($rows->vcard_id).'/99/'.($rows->vcard_status == 99 ? '/true' : '' )).'" class="btn btn-icon-only btn-sm red-sunglo tooltips" onClick="return f_status(2, this, event)"><i class="fa fa-times"></i></a>';
+                $action =   '<a data-original-title="Change Status vcard" href="'.base_url( $this->prefix.'/change_status_by/'.strEncryptcode($rows->vcard_id).'/'.($rows->vcard_status == 1 ? '0' : '1' ) ).'" class="tooltips btn-icon-only btn btn-sm '.($rows->vcard_status == 0 ? 'grey-cascade' : ($rows->vcard_status == 99 ? 'red-sunglo' : 'green-meadow')). '" onClick="return f_status(1, this, event)"><i title="'.($rows->vcard_status == 0 ? 'InActive' : ($rows->vcard_status == 99 ? 'Deleted' : 'Active') ).'" class="fa fa'.($rows->vcard_status == 0 ? '-eye-slash' : ($rows->vcard_status == 99 ? '-trash-o' : '-eye') ).'"></i></a> '.
+                            '<a data-original-title="Edit vcard Data" href="'.base_url( $this->prefix.'/show_edit/'.strEncryptcode($rows->vcard_id) ).'" class="btn btn-icon-only btn-sm blue-madison ajaxify tooltips"><i class="fa fa-edit"></i></a> '.
+                            '<a data-original-title="Detail vcard Data" href="'.base_url( $this->prefix.'/show_detail/'.strEncryptcode($rows->vcard_id) ).'" class="btn btn-icon-only btn-sm yellow ajaxify tooltips"><i class="fa fa-search"></i></a> '.
+                            '<a data-original-title="Delete vcard Data" href="'.base_url( $this->prefix.'/change_status_by/'.strEncryptcode($rows->vcard_id).'/99/'.($rows->vcard_status == 99 ? '/true' : '' )).'" class="btn btn-icon-only btn-sm red-sunglo tooltips" onClick="return f_status(2, this, event)"><i class="fa fa-times"></i></a>';
             }elseif ($this->session->userdata('user_data')->vcard_role != '1') {
                 if ($rows->vcard_role > $this->session->userdata('user_data')->vcard_role || $this->session->userdata('user_data')->vcard_id == $rows->vcard_id) {
-                    $action =   '<a data-original-title="Change Status vcard" href="'.base_url( $this->prefix.'/change_status_by/'.strEncrypt($rows->vcard_id).'/'.($rows->vcard_status == 1 ? '0' : '1' ) ).'" class="tooltips btn-icon-only btn btn-sm '.($rows->vcard_status == 0 ? 'grey-cascade' : ($rows->vcard_status == 99 ? 'red-sunglo' : 'green-meadow')). '" onClick="return f_status(1, this, event)"><i title="'.($rows->vcard_status == 0 ? 'InActive' : ($rows->vcard_status == 99 ? 'Deleted' : 'Active') ).'" class="fa fa'.($rows->vcard_status == 0 ? '-eye-slash' : ($rows->vcard_status == 99 ? '-trash-o' : '-eye') ).'"></i></a> '.
-                                '<a data-original-title="Edit vcard Data" href="'.base_url( $this->prefix.'/show_edit/'.strEncrypt($rows->vcard_id) ).'" class="btn btn-icon-only btn-sm blue-madison ajaxify tooltips"><i class="fa fa-edit"></i></a> '.
-                                '<a data-original-title="Detail vcard Data" href="'.base_url( $this->prefix.'/show_detail/'.strEncrypt($rows->vcard_id) ).'" class="btn btn-icon-only btn-sm yellow ajaxify tooltips"><i class="fa fa-search"></i></a> '.
-                                '<a data-original-title="Delete vcard Data" href="'.base_url( $this->prefix.'/change_status_by/'.strEncrypt($rows->vcard_id).'/99/'.($rows->vcard_status == 99 ? '/true' : '' )).'" class="btn btn-icon-only btn-sm red-sunglo tooltips" onClick="return f_status(2, this, event)"><i class="fa fa-times"></i></a>';
+                    $action =   '<a data-original-title="Change Status vcard" href="'.base_url( $this->prefix.'/change_status_by/'.strEncryptcode($rows->vcard_id).'/'.($rows->vcard_status == 1 ? '0' : '1' ) ).'" class="tooltips btn-icon-only btn btn-sm '.($rows->vcard_status == 0 ? 'grey-cascade' : ($rows->vcard_status == 99 ? 'red-sunglo' : 'green-meadow')). '" onClick="return f_status(1, this, event)"><i title="'.($rows->vcard_status == 0 ? 'InActive' : ($rows->vcard_status == 99 ? 'Deleted' : 'Active') ).'" class="fa fa'.($rows->vcard_status == 0 ? '-eye-slash' : ($rows->vcard_status == 99 ? '-trash-o' : '-eye') ).'"></i></a> '.
+                                '<a data-original-title="Edit vcard Data" href="'.base_url( $this->prefix.'/show_edit/'.strEncryptcode($rows->vcard_id) ).'" class="btn btn-icon-only btn-sm blue-madison ajaxify tooltips"><i class="fa fa-edit"></i></a> '.
+                                '<a data-original-title="Detail vcard Data" href="'.base_url( $this->prefix.'/show_detail/'.strEncryptcode($rows->vcard_id) ).'" class="btn btn-icon-only btn-sm yellow ajaxify tooltips"><i class="fa fa-search"></i></a> '.
+                                '<a data-original-title="Delete vcard Data" href="'.base_url( $this->prefix.'/change_status_by/'.strEncryptcode($rows->vcard_id).'/99/'.($rows->vcard_status == 99 ? '/true' : '' )).'" class="btn btn-icon-only btn-sm red-sunglo tooltips" onClick="return f_status(2, this, event)"><i class="fa fa-times"></i></a>';
                 }else{
-                    $action =   '<a data-original-title="Detail vcard Data" href="'.base_url( $this->prefix.'/show_detail/'.strEncrypt($rows->vcard_id) ).'" class="btn btn-icon-only btn-sm yellow ajaxify tooltips"><i class="fa fa-search"></i></a> ';
+                    $action =   '<a data-original-title="Detail vcard Data" href="'.base_url( $this->prefix.'/show_detail/'.strEncryptcode($rows->vcard_id) ).'" class="btn btn-icon-only btn-sm yellow ajaxify tooltips"><i class="fa fa-search"></i></a> ';
                 }
             }
             $records["data"][] = [
-                '<input type="checkbox" name="id[]" value="'.strEncrypt($rows->vcard_id).'">',
+                '<input type="checkbox" name="id[]" value="'.strEncryptcode($rows->vcard_id).'">',
                 $i,
 
                 $rows->vcard_name,
@@ -367,7 +370,7 @@ class Vcard extends MX_Controller {
     public function change_status_by($id, $status, $stat = FALSE)
     {
         if($stat){
-            $result = $this->m_global->delete($this->table_db, [strEncrypt($this->table_prefix.'id', true) => $id]);
+            $result = $this->m_global->delete($this->table_db, [strEncryptcode($this->table_prefix.'id', true) => $id]);
             if($result){
                 $data['status'] = 1;
             }else{
@@ -377,7 +380,7 @@ class Vcard extends MX_Controller {
             echo json_encode($data);
 
         }else{
-            $result = $this->m_global->update($this->table_db, [$this->table_prefix.'status' => $status], [strEncrypt($this->table_prefix.'id', true) => $id]);
+            $result = $this->m_global->update($this->table_db, [$this->table_prefix.'status' => $status], [strEncryptcode($this->table_prefix.'id', true) => $id]);
             if($result){
                 $data['status'] = 1;
             }else{

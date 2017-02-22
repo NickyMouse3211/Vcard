@@ -8,12 +8,6 @@ class Errorr extends MX_Controller {
         parent::__construct();
     }
 
-    public function index()
-    {
-            header('HTTP/1.1 404 Not Found');
-            $this->load->view('404');
-    }
-
 	public function error_404()
 	{
         $data['pagetitle']  = 'Error';

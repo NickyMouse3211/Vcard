@@ -61,9 +61,9 @@ class Login extends MX_Controller {
             $result = $this->m_global->get_data_all($this->table_db, NULL, ['vcard_email' => $email, 'vcard_password' => $password]);
             if(!empty($result)){
                 if ($result[0]->vcard_status == '1') {
-                    
-                    $this->session->set_userdata('user_data', $result[0]);
                     $this->session->set_userdata('user_code', $code);
+                    $result[0]->vcard_id = strEncryptcode($result[0]->vcard_id);
+                    $this->session->set_userdata('user_data', $result[0]);
 
                     $check = isset($_POST['remember'])?$_POST['remember']:'';
                     if ($check) {

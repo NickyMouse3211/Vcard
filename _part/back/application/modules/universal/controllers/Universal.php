@@ -26,9 +26,9 @@ class Universal extends CI_Controller {
 	        $q = $_GET['q'];
 
 	        $where[] = '';
-	        if ($this->session->userdata('user_data')->member_role == '2' ) {
+	        if ($this->session->userdata('user_data')->vcard_role == '2' ) {
 	        	$where['role_id <>'] = '1';
-	        }elseif ($this->session->userdata('user_data')->member_role >= '3' ) {
+	        }elseif ($this->session->userdata('user_data')->vcard_role >= '3' ) {
 	        	$where['role_id >'] = '3';
 	        }
 	        $whereE = "(role_nama LIKE '%$q%')";

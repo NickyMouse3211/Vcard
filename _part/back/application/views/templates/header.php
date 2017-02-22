@@ -4,7 +4,7 @@
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<a href="<?=base_url('dashboard');?>" style="margin-top:0px;padding-top:0px;">
-				<img style="margin-top:3px;padding-top:3px;" src="<?=base_url('../public/images/logo/NDLoogo.png');?>" height="60" alt="logo" class="logo-default"/>
+				<img style="margin-top:3px;padding-top:3px;" src="<?=base_url('../public/images/logo/virtual-card.png');?>" height="60" alt="logo" class="logo-default"/>
 			</a>
 			<div class="menu-toggler sidebar-toggler">
 				<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
