@@ -32,6 +32,15 @@ function strEncrypt($str, $forDB = FALSE){
     return $str;
 }
 
+function strEncryptcode($str, $forDB = FALSE){
+    $CI =& get_instance();  
+    $key    = $CI->config->item('encryption_key');
+    $code = $CI->session->userdata('user_code').$CI->session->userdata('user_data')->vcard_id;
+
+    $str    = ($forDB) ? 'md5(concat(\'' . $key . $code . '\',' . $str. '))' : md5($key . $code . $str);   
+    return $str;
+}
+
 function md5_mod($str){
 	$str = md5(md5($str).'prb_vcard');
 	return $str;
@@ -376,4 +385,40 @@ function color_inverse($color){
     }
     return '#'.$rgb;
 }
+function cekCode($email_login)
+{
+    $CI      = &get_instance();
+    $cekcode = @$CI->m_global->get_data_all('code', NULL, ['code_email' => $email_login])[0];
 
+    if (!empty($cekcode)) {
+        return $cekcode->code_string;
+    } else {
+        return false;
+    }
+}
+function changecode($email)
+{
+    $CI      = &get_instance();
+    $rand    = generateRandomString();
+    $cekcode = $CI->m_global->get_data_all('code', NULL, ['code_email' => $email])[0];
+    $decrypt = chiper($cekcode->code_key,'decrypt',$cekcode->code_string);
+
+    $newkey = chiper($decrypt,'encrypt',$rand);
+    $newpass= strEncrypt($decrypt.$rand);
+    $saverand= $CI->m_global->update('code',array('code_string' => $rand, 'code_key' => $newkey), array('code_email' => $email));
+    $savevcard= $CI->m_global->update('vcard',array('vcard_password' => $newpass), array('vcard_email' => $email));
+    return $cekcode->code_string;
+}
+function chiper($text,$type = 'encrypt',$customKey=''){
+    $cipher = new Cipher(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
+    $kunci  = "BAYUADYNUGRAHAbayuadynugraha08970454527bayuadynugrahayahoocombayuadynugraha3211gmailcom0607199702061996";
+    $string = $text;
+    if ($customKey != '') {
+       $kunci = $customKey;
+    }
+    if ($type == 'decrypt' ) {
+        return $cipher->decrypt($string, $kunci);
+    }else{
+        return $cipher->encrypt($string, $kunci);
+    }
+}

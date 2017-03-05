@@ -105,30 +105,30 @@ jQuery(document).ready(function(){
 	/* ---------------------------------------------------------------------- */
 	
 	// Needed variables
-	var $contactform 	= $('#contactform'),
-		$success		= 'Your message has been sent. Thank you!';
+	// var $contactform 	= $('#contactform'),
+	// 	$success		= 'Your message has been sent. Thank you!';
 		
-	$contactform.submit(function(){
-		$.ajax({
-		   type: "POST",
-		   url: "php/contact.php",
-		   data: $(this).serialize(),
-		   success: function(msg)
-		   {
-				if(msg == 'SEND'){
-					response = '<div class="success">'+ $success +'</div>';
-				}
-				else{
-					response = '<div class="error">'+ msg +'</div>';
-				}
-				// Hide any previous response text
-				$(".error,.success").remove();
-				// Show response message
-				$contactform.prepend(response);
-			}
-		 });
-		return false;
-	});	
+	// $contactform.submit(function(){
+	// 	$.ajax({
+	// 	   type: "POST",
+	// 	   url: "php/contact.php",
+	// 	   data: $(this).serialize(),
+	// 	   success: function(msg)
+	// 	   {
+	// 			if(msg == 'SEND'){
+	// 				response = '<div class="success">'+ $success +'</div>';
+	// 			}
+	// 			else{
+	// 				response = '<div class="error">'+ msg +'</div>';
+	// 			}
+	// 			// Hide any previous response text
+	// 			$(".error,.success").remove();
+	// 			// Show response message
+	// 			$contactform.prepend(response);
+	// 		}
+	// 	 });
+	// 	return false;
+	// });	
 	
 	
 

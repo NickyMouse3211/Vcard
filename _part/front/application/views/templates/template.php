@@ -9,6 +9,7 @@
 	    <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/reset.css');?>"/> 
 	    <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/style.css');?>"/>
 	    <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/fancybox.css');?>"/>
+	    <link rel="stylesheet" type="text/css" href="<?=base_url('public/back/global/plugins/bootstrap-toastr/toastr.min.css');?>"/>
 		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,300,800,700,400italic|PT+Serif:400,400italic"/>
 		<meta name="description" content="Vcard Bayu Ady Nugraha Berisi Biodata dari Bayu Ady nugraha">
 		<meta name="keywords" content="Vcard,Bayu Ady Nugraha,Berisi,Biodata,dari Bayu Ady nugraha">
@@ -28,6 +29,7 @@
 	    <script type="text/javascript" src="<?=base_url('public/js/isotope.pkgd.js');?>"></script>
 	    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 	    <script type="text/javascript" src="<?=base_url('public/js/jquery.gmap.min.js');?>"></script>
+	    <script type="text/javascript" src="<?=base_url('public/back/global/plugins/bootstrap-toastr/toastr.min.js');?>"></script>
 	    <script type="text/javascript" src="<?=base_url('public/js/custom.js');?>"></script>
 
 		

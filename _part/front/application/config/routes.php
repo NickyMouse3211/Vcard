@@ -56,6 +56,9 @@ $route['translate_uri_dashes'] = FALSE;
 $route['vcard']                = 'vcard/index';
 $route['vcard/(:any)']         = 'vcard/index/$1';
 
+$route['login']                = 'login/index';
+$route['login/(:any)']         = 'login/$1';
+
 $route['(:any)']               = 'vcard/index/$1';
 
 // $route['touch/gallery']         = 'touch/touch_gallery';
