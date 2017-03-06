@@ -19,22 +19,66 @@
 			<div class="form-body">
 				<div class="form-group">
 					<label class="col-md-2 control-label">
-						Name
+						Link
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="member_nama" type="text" maxlength="50" class="required form-control" placeholder="User Name" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Link')); ?>" type="text" maxlength="100" class="required form-control" placeholder="Link" />
 						<span class="help-block"></span>
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-md-2 control-label">
+						Name
+						<span class="required" aria-required="true">* </span>
+					</label>
+					<div class="col-md-4">
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Name')); ?>" maxlength="50" type="text" class="required form-control" placeholder="Name" />
+						<span class="help-block"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-2 control-label">
+						Work
+						<span class="required" aria-required="true">* </span>
+					</label>
+					<div class="col-md-4">
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Work')); ?>" maxlength="100" type="text" class="required form-control" placeholder="Work" />
+						<span class="help-block"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-2 control-label">
+						DO Birth
+						<span class="required" aria-required="true">* </span>
+					</label>
+					<div class="col-md-4">
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'DO Birth')); ?>" maxlength="15" type="text" class="required form-control" placeholder="DO Birth" />
+						<span class="help-block"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-2 control-label">
+						Address
+						<span class="required" aria-required="true">* </span>
+					</label>
+					<div class="col-md-4">
+						<textarea name="<?php echo strtolower(str_replace(' ', '_', 'Address')); ?>" class="required form-control" placeholder="Address"></textarea>
+						<span class="help-block"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-2 control-label">
 						Email
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="member_email" maxlength="100" type="text" class="required form-control" placeholder="User Email" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Email')) ?>" maxlength="100" type="email" class="required form-control" placeholder="Email" />
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -44,7 +88,7 @@
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="member_password" id='member_password' maxlength="255" type="password" class="required form-control" placeholder="Password User" />
+						<input name="password" id='password' maxlength="255" type="password" class="required form-control" placeholder="Password" />
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -54,18 +98,80 @@
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="re_password" maxlength="255" type="password" class="required form-control" placeholder="Password User" />
+						<input name="re_password" maxlength="255" type="password" class="required form-control" placeholder="Password" />
 						<span class="help-block"></span>
 					</div>
 				</div>
+
+				<div class="form-group">
+					<label class="col-md-2 control-label">
+						Phone
+						<span class="required" aria-required="true">* </span>
+					</label>
+					<div class="col-md-4">
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Phone')); ?>" maxlength="15" type="text" class="required form-control" placeholder="Phone" />
+						<span class="help-block"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-2 control-label">
+						Website
+						<span class="required" aria-required="true">* </span>
+					</label>
+					<div class="col-md-4">
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Website')); ?>" maxlength="15" type="text" class="required form-control" placeholder="Website" />
+						<span class="help-block"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-2 control-label">
+						Description
+						<span class="required" aria-required="true">* </span>
+					</label>
+					<div class="col-md-4">
+						<textarea name="<?php echo strtolower(str_replace(' ', '_', 'Description')); ?>" class="required form-control" placeholder="Description"></textarea>
+						<span class="help-block"></span>
+					</div>
+				</div>
+
 				<div class="form-group">
 					<label class="col-md-2 control-label">
 						Role
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="member_role" type="text" id="ROLE" class="form-control" placeholder="Role" />
+						<input name="<?php echo strtolower('Link') ?>" type="text" id="ROLE" class="form-control" placeholder="Role" />
 						<span class="help-block"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-2 control-label">
+						Photo
+						<span class="required" aria-required="true">* </span>
+					</label>
+					<div class="col-md-4">
+						<div class="fileinput fileinput-new" data-provides="fileinput">
+							<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+								<img class="img-edit" src="<?=base_url("../public/images")?>/anonim.png" alt="">
+							</div>
+							<div>
+								<span class="btn default btn-file">
+								<span class="fileinput-new">
+								Select image </span>
+								<span class="fileinput-exists">
+								Change </span>
+								<input type="file" class="upload" name="pu_foto">
+								</span>
+								<a href="javascript:;" class="btn red fileinput-exists file-remove" data-dismiss="fileinput">
+								Remove </a>
+							</div>
+						</div>
+						<span class="help-block">
+							File Type: Jpg. Jpeg, Gif, Png. Max Size: 1024 KB , Potrait , max size 1024 KB
+						</span>
 					</div>
 				</div>
 				
@@ -132,6 +238,43 @@
        	    }
        	});
 		
+	});
+
+	$('.upload').change(function(){
+		var _URL    = window.URL || window.webkitURL;
+		var nil     = $(this).val().split('.');
+		nil         = nil[nil.length - 1].toLowerCase();
+		var file    = $(this)[0].files[0].size;
+		var arr     = ['gif','jpg','png','jpeg'];
+		var width   = null;
+		var height  = null;
+		var maxsize = 1024000;
+		var img     = new Image();
+
+	    if (arr.indexOf(nil) < 0)
+	    {
+	    	$('.img-edit').attr('src','<?=base_url("../public/images")?>/anonim.png');
+	        $(this).val('');
+	        toastr.error('File type does not fit !');
+	    }
+	    if (file > maxsize)
+	    {
+	    	$('.img-edit').attr('src','<?=base_url("../public/images")?>/anonim.png');
+	        $(this).val('');
+	        toastr.error('File size is too large !');
+	    }
+		
+		img.onload  = function () {
+			width   = $(this)[0].width;
+			height  = $(this)[0].height;
+			if (height < width) {
+				$('.img-edit').attr('src','<?=base_url("../public/images")?>/anonim.png');
+			    $(this).val('');
+			    toastr.error('file instead of portrait !');
+			    $('.file-remove').click();
+			}
+        };
+        img.src = _URL.createObjectURL($(this)[0].files[0]);	    
 	});
 
 	function isNumber(evt) {
