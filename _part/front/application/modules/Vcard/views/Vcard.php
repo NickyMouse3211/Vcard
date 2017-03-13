@@ -9,7 +9,7 @@
     $phone       = @$profile->vcard_phone != '' || @$profile->vcard_phone != null ? @$profile->vcard_phone : ' -';
     $website     = @$profile->vcard_website != '' || @$profile->vcard_website != null ? @$profile->vcard_website : ' -';
     $description = @$profile->vcard_description != '' || @$profile->vcard_description != null ? @$profile->vcard_description : ' -';
-    $img         = @$profile->vcard_image != '' || @$profile->vcard_image != null ? 'vcard/'.@$profile->vcard_image : 'vcard/no-vcard.jpg';
+    $img         = @$profile->vcard_image != '' || @$profile->vcard_image != null ? '/vcard/'.@$profile->vcard_image : 'vcard/no-vcard.jpg';
 
     $resume      = count($resume_employment) > 0 ? '' : 'display:none';
     $portfolio   = count($portfolio) > 0 ? '' : 'display:none';
@@ -21,7 +21,7 @@
 <div id="profile"> 
  	<!-- About section -->
 	<div class="about">
-    	<div class="photo-inner"><img src="<?php echo $img; ?>" height="186" width="153" /></div>
+    	<div class="photo-inner"><img src="<?php echo base_url('public/images/').$img; ?>" height="186" width="153" /></div>
         <h1><?php echo $name;?></h1>
         <h3><?php echo $work;?></h3>
         <p><?php echo $description;?></p>

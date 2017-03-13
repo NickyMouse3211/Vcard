@@ -42,7 +42,7 @@ class Vcard extends MX_Controller {
         $data['instance']   = $this->prefix;
         $data['url']        = $this->prefix.'/show_add';
         $data['breadcrumb'] = ['vcard' => $this->prefix, 'Add' => $this->prefix.'/show_add'];
-        $js['custom']       = ['form-validation'];
+        $js['custom']       = ['form-validation','cropit'];
 
         $this->template->display($this->prefix.'_add', $data, $js);
     }
@@ -92,17 +92,28 @@ class Vcard extends MX_Controller {
         $config['max_size'] = '1024';
         #ini juga ni
         $this->load->library('upload', $config);
-
+        decode_base64($this->input->post('filebase64'),'vcard','test');
+        echo "<pre>";
+        print_r ($this->input->post());
+        echo "</pre>";exit();
         if ( csrf_get_token() != $input['ex_csrf_token']){
             $data['status'] = 2;
             $data['message'] = 'For security reason, we can\'t proccess your action!';
 
             echo json_encode($data);
         } else {
-            $this->form_validation->set_rules('vcard_email', 'Email', 'required|valid_email|callback_check_email[]');
+            $this->form_validation->set_rules('vcard_link', 'Link', 'trim|xss_clean|required');
             $this->form_validation->set_rules('vcard_name', 'Name', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('vcard_work', 'Work', 'trim|xss_clean');
+            $this->form_validation->set_rules('vcard_date_of_birth', 'Date of Birth', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('vcard_address', 'Address', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('vcard_email', 'Email', 'required|valid_email|callback_check_email[]');
             $this->form_validation->set_rules('vcard_password', 'vcard Password', 'trim|xss_clean|required');
-            $this->form_validation->set_rules('vcard_role', 'Periode To', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('vcard_phone', 'Phone', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('vcard_website', 'Website', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('vcard_description', 'Description', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('vcard_role', 'Role', 'trim|xss_clean|required');
+
             $this->form_validation->set_message('check_email','The Email field must contain a unique value.');
 
             if ( $this->form_validation->run($this) )
@@ -321,20 +332,21 @@ class Vcard extends MX_Controller {
         }
         //echo $this->db->last_query();
         $i = 1 + $iDisplayStart;
+
         foreach ($result as $rows) {
+            $changeStatus = '<a data-original-title="Change Status vcard" href="'.base_url( $this->prefix.'/change_status_by/'.strEncryptcode($rows->vcard_id).'/'.($rows->vcard_status == 1 ? '0' : '1' ) ).'" class="tooltips btn-icon-only btn btn-sm '.($rows->vcard_status == 0 ? 'grey-cascade' : ($rows->vcard_status == 99 ? 'red-sunglo' : 'green-meadow')). '" onClick="return f_status(1, this, event)"><i title="'.($rows->vcard_status == 0 ? 'InActive' : ($rows->vcard_status == 99 ? 'Deleted' : 'Active') ).'" class="fa fa'.($rows->vcard_status == 0 ? '-eye-slash' : ($rows->vcard_status == 99 ? '-trash-o' : '-eye') ).'"></i></a> ';
+            $editData = '<a data-original-title="Edit vcard Data" href="'.base_url( $this->prefix.'/show_edit/'.strEncryptcode($rows->vcard_id) ).'" class="btn btn-icon-only btn-sm blue-madison ajaxify tooltips"><i class="fa fa-edit"></i></a> ';
+            $detailData = '<a data-original-title="Detail vcard Data" href="'.base_url( $this->prefix.'/show_detail/'.strEncryptcode($rows->vcard_id) ).'" class="btn btn-icon-only btn-sm yellow ajaxify tooltips"><i class="fa fa-search"></i></a> ';
+            $deleteData = '<a data-original-title="Delete vcard Data" href="'.base_url( $this->prefix.'/change_status_by/'.strEncryptcode($rows->vcard_id).'/99/'.($rows->vcard_status == 99 ? '/true' : '' )).'" class="btn btn-icon-only btn-sm red-sunglo tooltips" onClick="return f_status(2, this, event)"><i class="fa fa-times"></i></a>';
+
             if ($this->session->userdata('user_data')->vcard_role == '1') {
-                $action =   '<a data-original-title="Change Status vcard" href="'.base_url( $this->prefix.'/change_status_by/'.strEncryptcode($rows->vcard_id).'/'.($rows->vcard_status == 1 ? '0' : '1' ) ).'" class="tooltips btn-icon-only btn btn-sm '.($rows->vcard_status == 0 ? 'grey-cascade' : ($rows->vcard_status == 99 ? 'red-sunglo' : 'green-meadow')). '" onClick="return f_status(1, this, event)"><i title="'.($rows->vcard_status == 0 ? 'InActive' : ($rows->vcard_status == 99 ? 'Deleted' : 'Active') ).'" class="fa fa'.($rows->vcard_status == 0 ? '-eye-slash' : ($rows->vcard_status == 99 ? '-trash-o' : '-eye') ).'"></i></a> '.
-                            '<a data-original-title="Edit vcard Data" href="'.base_url( $this->prefix.'/show_edit/'.strEncryptcode($rows->vcard_id) ).'" class="btn btn-icon-only btn-sm blue-madison ajaxify tooltips"><i class="fa fa-edit"></i></a> '.
-                            '<a data-original-title="Detail vcard Data" href="'.base_url( $this->prefix.'/show_detail/'.strEncryptcode($rows->vcard_id) ).'" class="btn btn-icon-only btn-sm yellow ajaxify tooltips"><i class="fa fa-search"></i></a> '.
-                            '<a data-original-title="Delete vcard Data" href="'.base_url( $this->prefix.'/change_status_by/'.strEncryptcode($rows->vcard_id).'/99/'.($rows->vcard_status == 99 ? '/true' : '' )).'" class="btn btn-icon-only btn-sm red-sunglo tooltips" onClick="return f_status(2, this, event)"><i class="fa fa-times"></i></a>';
+                $action =   $changeStatus.$editData.$detailData.$deleteData;
+                            
             }elseif ($this->session->userdata('user_data')->vcard_role != '1') {
                 if ($rows->vcard_role > $this->session->userdata('user_data')->vcard_role || $this->session->userdata('user_data')->vcard_id == $rows->vcard_id) {
-                    $action =   '<a data-original-title="Change Status vcard" href="'.base_url( $this->prefix.'/change_status_by/'.strEncryptcode($rows->vcard_id).'/'.($rows->vcard_status == 1 ? '0' : '1' ) ).'" class="tooltips btn-icon-only btn btn-sm '.($rows->vcard_status == 0 ? 'grey-cascade' : ($rows->vcard_status == 99 ? 'red-sunglo' : 'green-meadow')). '" onClick="return f_status(1, this, event)"><i title="'.($rows->vcard_status == 0 ? 'InActive' : ($rows->vcard_status == 99 ? 'Deleted' : 'Active') ).'" class="fa fa'.($rows->vcard_status == 0 ? '-eye-slash' : ($rows->vcard_status == 99 ? '-trash-o' : '-eye') ).'"></i></a> '.
-                                '<a data-original-title="Edit vcard Data" href="'.base_url( $this->prefix.'/show_edit/'.strEncryptcode($rows->vcard_id) ).'" class="btn btn-icon-only btn-sm blue-madison ajaxify tooltips"><i class="fa fa-edit"></i></a> '.
-                                '<a data-original-title="Detail vcard Data" href="'.base_url( $this->prefix.'/show_detail/'.strEncryptcode($rows->vcard_id) ).'" class="btn btn-icon-only btn-sm yellow ajaxify tooltips"><i class="fa fa-search"></i></a> '.
-                                '<a data-original-title="Delete vcard Data" href="'.base_url( $this->prefix.'/change_status_by/'.strEncryptcode($rows->vcard_id).'/99/'.($rows->vcard_status == 99 ? '/true' : '' )).'" class="btn btn-icon-only btn-sm red-sunglo tooltips" onClick="return f_status(2, this, event)"><i class="fa fa-times"></i></a>';
+                    $action =   $changeStatus.$editData.$detailData.$deleteData;
                 }else{
-                    $action =   '<a data-original-title="Detail vcard Data" href="'.base_url( $this->prefix.'/show_detail/'.strEncryptcode($rows->vcard_id) ).'" class="btn btn-icon-only btn-sm yellow ajaxify tooltips"><i class="fa fa-search"></i></a> ';
+                    $action =   $detailData;
                 }
             }
             $records["data"][] = [
@@ -344,7 +356,7 @@ class Vcard extends MX_Controller {
                 $rows->vcard_name,
                 $rows->vcard_email,
                 $rows->vcard_phone,
-                $roles[$rows->vcard_role],
+                $rows->vcard_role != '' ? @$roles[$rows->vcard_role] : 'Data not yet filled',
                 $rows->vcard_status == 1 ? 'Active' :  ($rows->vcard_status == 99 ? 'Deleted' : 'InActive'),
                 $rows->vcard_update_date == '' ? 'has not been updated' : tgl_format($rows->vcard_update_date),
                 $action,

@@ -185,5 +185,49 @@ License: You must have a valid license purchased only from themeforest(the above
 <script>
 	jQuery(document).ready(function() {    
 	   	$("#page-scroll-container").niceScroll();
+	   	$('.date-picker-month').datepicker({
+	   	    format: 'mm-yyyy',
+	   	    // startView: 1,
+	   	    // minViewMode: 1
+	   	});
+
+	   	$('.date-picker-year').datepicker({
+	   	    format: 'yyyy',
+	   	    // startView: 2,
+	   	    // minViewMode: 2
+	   	});
+
+	   	$('.date-picker').datepicker({
+	   	    format: 'dd-mm-yyyy',
+	   	    // startView: 2,
+	   	    // minViewMode: 2
+	   	});
+
+	   	var regex = new RegExp("^[-_a-zA-Z0-9\b]+$");
+	   	$('.link').bind("keypress", function (event) {
+	   	    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+	   	    if (!regex.test(key)) {
+	   	        event.preventDefault();
+	   	        return false;
+	   	    }
+	   	});
+
+	   	var regex = new RegExp("^[-_a-zA-Z0-9\b@.]+$");
+	   	$('.email').bind("keypress", function (event) {
+	   	    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+	   	    if (!regex.test(key)) {
+	   	        event.preventDefault();
+	   	        return false;
+	   	    }
+	   	});
+
+	   	var regex = new RegExp("^[0-9\b]+$");
+	   	$('.number').bind("keypress", function (event) {
+	   	    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+	   	    if (!regex.test(key)) {
+	   	        event.preventDefault();
+	   	        return false;
+	   	    }
+	   	});
 	});
 </script>
