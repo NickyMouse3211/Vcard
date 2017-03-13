@@ -62,13 +62,15 @@ var FormValidation = function () {
         init: function (form_target, rule, message, title, text) { 
         	handleLogin(form_target, rule, message, title, text); 
     	},
-        initDefault: function (form_target, rule, message, title, text) {
+        initDefault: function (form_target, rule, message, title, text, BANoption) {
+            
             $('.select2').select2('destroy');
             $('.select2').select2();
 
-            title = (typeof title === "undefined") ? "Are You Sure?" : title;
-            text = (typeof text === "undefined") ? "?" : text;
-            
+            title     = (typeof title === "undefined" || title == null ) ? "Are You Sure?" : title;
+            text      = (typeof text === "undefined" || text == null ) ? "?" : text;
+            BANoption = (typeof BANoption === "undefined" || BANoption == null ) ? 'empty' : BANoption;
+
             var form_input = $(form_target);
             var form_action = form_input.attr('action');
             var form_confirm = form_input.attr('data-confirm');
@@ -123,6 +125,16 @@ var FormValidation = function () {
                 },
 
                 submitHandler: function (form) {
+                    if (typeof BANoption.cropit !== "undefined") {
+                        cropit = BANoption.cropit;
+                        var imageData = $(cropit.class).cropit(cropit.action, {
+                            type: cropit.type,
+                            quality: cropit.quality,
+                            originalSize: cropit.originalSize,
+                        });
+                        $(cropit.hiddenForm).val(imageData);
+                    }
+                
                     if(form_confirm == 1){
                         swal({
                             title: title,

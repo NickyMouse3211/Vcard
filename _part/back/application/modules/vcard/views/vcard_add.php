@@ -1,3 +1,38 @@
+<style>
+  .cropit-preview {
+    background-color: #f8f8f8;
+    background-size: cover;
+    border: 5px solid #ccc;
+    border-radius: 3px;
+    margin-top: 7px;
+    width: 153px;
+    height: 186px;
+  }
+
+  .cropit-preview-image-container {
+    cursor: move;
+  }
+
+  .cropit-preview-background {
+    opacity: .2;
+    cursor: auto;
+  }
+
+  .image-size-label {
+    margin-top: 10px;
+  }
+
+  input, .export {
+    /* Use relative position to prevent from being covered by image background */
+    position: relative;
+    z-index: 10;
+    display: block;
+  }
+
+  button {
+    margin-top: 10px;
+  }
+</style>
 <div class="portlet light">
 	<div class="portlet-title">
 		<div class="caption">
@@ -6,7 +41,7 @@
 		</div>
 	</div>
 	<div class="portlet-body">
-		<form method="POST" action="<?=base_url($instance.'/action_add')?>" class="form-horizontal form-add" role="form" >
+		<form method="POST" action="<?=base_url($instance.'/action_add')?>" class="form-horizontal form-add" role="form" enctype="multipart/form-data">
 			<input type="hidden" name="ex_csrf_token" value="<?= csrf_get_token(); ?>">
 			<div class="alert alert-danger display-hide">
 				<button class="close" data-close="alert"></button>
@@ -142,7 +177,7 @@
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="<?php echo strtolower('Link') ?>" type="text" id="ROLE" class="form-control" placeholder="Role" />
+						<input name="<?php echo strtolower('role') ?>" type="text" id="ROLE" class="form-control" placeholder="Role" />
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -152,25 +187,34 @@
 						Photo
 						<span class="required" aria-required="true">* </span>
 					</label>
-					<div class="col-md-4">
-						<div class="fileinput fileinput-new" data-provides="fileinput">
-							<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
-								<img class="img-edit" src="<?=base_url("../public/images")?>/anonim.png" alt="">
-							</div>
-							<div>
-								<span class="btn default btn-file">
-								<span class="fileinput-new">
-								Select image </span>
-								<span class="fileinput-exists">
-								Change </span>
-								<input type="file" class="upload" name="pu_foto">
-								</span>
-								<a href="javascript:;" class="btn red fileinput-exists file-remove" data-dismiss="fileinput">
-								Remove </a>
-							</div>
+					<div class="col-md-10">
+						<div class="image-editor fileinput fileinput-new" data-provides="fileinput">
+						  <div>
+						  	<span class="btn default btn-file">
+						  	<span class="fileinput-new">
+						  	Select image </span>
+						  	<span class="fileinput-exists">
+						  	Change </span>
+						  	<input type="file" class="upload cropit-image-input" name="pu_foto">
+						  	<input type="text" name="filebase64" id='hidden_base64' readonly hidden>
+						  	</span>
+						  	<a href="javascript:;" class="btn blue rotate-cw">
+						  	Rotate counterclockwise </a>
+						  	<a href="javascript:;" class="btn blue rotate-ccw">
+						  	Rotate clockwise </a>
+
+						  </div>
+						  <div class="cropit-preview">
+						  	<img class="img-edit" src="<?=base_url("../public/images")?>/anonim.png" alt="" style="width: 145px; height: 150px;">
+						  </div>
+						  <div class="image-size-label" >
+						    Resize image
+						  </div>
+						  <input type="range" class="cropit-image-zoom-input col-md-2">
 						</div>
+
 						<span class="help-block">
-							File Type: Jpg. Jpeg, Gif, Png. Max Size: 1024 KB , Potrait , max size 1024 KB
+							File Type: Jpg. Jpeg, Gif, Png. Max Size: 1024 KB 
 						</span>
 					</div>
 				</div>
@@ -193,18 +237,42 @@
 <script>
 	jQuery(document).ready(function() {
 
+		$('.image-editor').cropit({
+		  exportZoom: 1,
+		  imageBackground: true,
+		  imageBackgroundBorderWidth: 20,
+		  
+		});
+
+		$('.rotate-cw').click(function() {
+		  $('.image-editor').cropit('rotateCW');
+		});
+		$('.rotate-ccw').click(function() {
+		  $('.image-editor').cropit('rotateCCW');
+		});
 		// Fungsi Form Validasi
       	var rule = {
       		member_email: {
       			email : true,
       		},
       		re_password: {
-			equalTo: "#member_password",
+				equalTo: "#password",
 			}
       	};
        	var message = {};
        	var form = '.form-add';
-       	FormValidation.initDefault(form, rule, message);
+
+       	var BANoption = { 
+       						cropit: {
+       							'class'  		: '.image-editor',
+       							'action' 		: 'export',
+       							'type'	 		: 'image/jpeg',
+       							'quality'		: 0.33,
+       							'originalSize' 	: true,
+       							'hiddenForm'	: '#hidden_base64'
+       						}, 
+       					};
+       	FormValidation.initDefault(form, rule, message, null, null, BANoption);
        	// FormValidation.init(form, rule, message);
        	$('#ROLE').select2({
        	    minimumInputLength: 0,
@@ -264,17 +332,17 @@
 	        toastr.error('File size is too large !');
 	    }
 		
-		img.onload  = function () {
-			width   = $(this)[0].width;
-			height  = $(this)[0].height;
-			if (height < width) {
-				$('.img-edit').attr('src','<?=base_url("../public/images")?>/anonim.png');
-			    $(this).val('');
-			    toastr.error('file instead of portrait !');
-			    $('.file-remove').click();
-			}
-        };
-        img.src = _URL.createObjectURL($(this)[0].files[0]);	    
+		// img.onload  = function () {
+		// 	width   = $(this)[0].width;
+		// 	height  = $(this)[0].height;
+		// 	if (height < width) {
+		// 		$('.img-edit').attr('src','<?php // echo base_url("../public/images")?>/anonim.png');
+		// 	    $(this).val('');
+		// 	    toastr.error('file instead of portrait !');
+		// 	    $('.file-remove').click();
+		// 	}
+  //       };
+  //       img.src = _URL.createObjectURL($(this)[0].files[0]);	    
 	});
 
 	function isNumber(evt) {

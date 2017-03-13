@@ -347,3 +347,11 @@ function color_inverse($color){
     return '#'.$rgb;
 }
 
+function decode_base64 ($code, $folder ,$username) {
+    list($type, $code) = explode(';', $code);
+    list(, $code)      = explode(',', $code);
+    $code = base64_decode($code);
+
+    file_put_contents('../public/images/'.$folder.'/'.$username.'.jpg', $code);
+}
+
