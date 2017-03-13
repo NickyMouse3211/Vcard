@@ -111,8 +111,16 @@ class Vcard extends CI_Controller {
         
         $where_map[strEncrypt('map_vcard_id', TRUE)] = strEncrypt(@$data['profile']->vcard_id);
         $vcard_map = $this->m_global->get_data_all($this->table_db_map, null, $where_map);
-        $data['map'] = $vcard_map[0];
+        $data['map'] = @$vcard_map[0];
 		$this->template->display(strtolower(__CLASS__),$data);
 	}
+
+    public function send_message() {
+        $data['status'] = false;
+        $data['msg']    = 'Email Not Found';
+
+        echo json_encode($data);
+        exit();
+    }
 
 }

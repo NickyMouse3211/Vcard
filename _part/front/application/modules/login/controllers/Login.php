@@ -14,8 +14,8 @@ class Login extends CI_Controller {
 	}
 
 	public function act_login() {
-		$this->form_validation->set_rules('email', 'Email', 'trim|required');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required');
+		$this->form_validation->set_rules('email', 'Email', 'trim|xss_clean|required|valid_email');
+        $this->form_validation->set_rules('password', 'Password', 'trim|xss_clean|required');
         // echo "<pre>";
         // print_r ($this->input->post());
         // echo "</pre>".'<br/>'.$this->form_validation->run($this);exit();
@@ -65,7 +65,53 @@ class Login extends CI_Controller {
 
                 echo json_encode($data);
             }
-        }else{
+        } else{
+        	$data['status'] = false;
+            $data['msg']	= validation_errors();
+
+            echo json_encode($data);
+        }
+	}
+
+	public function register() {
+        $this->form_validation->set_rules('link', 'Link', 'trim|xss_clean|required');
+        $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
+		$this->form_validation->set_rules('email', 'Email', 'trim|xss_clean|required|valid_email');
+        $this->form_validation->set_rules('password', 'Password', 'trim|xss_clean|required');
+        $this->form_validation->set_rules('c_password', 'Password Confirmation', 'trim|xss_clean|required');
+
+        if ($this->form_validation->run($this) == TRUE) {
+        	if ($this->input->post('password') == $this->input->post('c_password')) {
+        		$data[$this->pref.'link'] 		= $this->input->post('link');
+        		$data[$this->pref.'name'] 		= $this->input->post('name');
+        		$data[$this->pref.'email'] 		= $this->input->post('email');
+
+        		$result = $this->m_global->insert($this->table_db, $data);
+
+                if( $result['status'] )
+                {
+                	newcode($this->db->insert_id(), $this->input->post('email'), $this->input->post('password'));
+                    $data['status'] = true;
+                    # sesuai in pesan message dengan aksi yang telah di proses, Nama atau variabel bisa di masukkin.
+                    $data['msg'] = 'Successfully add vcard with Link <strong>'.$this->input->post('link').'</strong></strong>';
+                    echo json_encode($data);
+                } else {
+                    # menghapus gambar yg udah di upload jika sql gagal,
+                    # hapus jika tidak ada upload file
+
+                    $data['status'] = false;
+                    #ini sesuaiin juga
+                    $data['msg'] = 'Failed add vcard with Link <strong>'.$this->input->post('link').'</strong></strong>';
+
+                    echo json_encode($data);
+                }
+        	} else {
+        		$data['status'] = false;
+	            $data['msg']	= 'Password and Password Confirmation not match';
+
+	            echo json_encode($data);
+        	}
+        } else{
         	$data['status'] = false;
             $data['msg']	= validation_errors();
 

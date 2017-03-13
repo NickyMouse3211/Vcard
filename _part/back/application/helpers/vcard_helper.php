@@ -347,3 +347,28 @@ function color_inverse($color){
     return '#'.$rgb;
 }
 
+function newcode($id,$email,$password)
+{
+    $CI      = &get_instance();
+    $rand    = generateRandomString();
+
+    $newkey = chiper($password,'encrypt',$rand);
+    $newpass= strEncrypt($password.$rand);
+
+    $data['code_vcard_id'] = $id;
+    $data['code_string'] = $rand;
+    $data['code_email'] = $email;
+    $data['code_key'] = $newkey;
+    $saverand = $CI->m_global->insert('code', $data);
+    if ($saverand) {
+        $savevcard= $CI->m_global->update('vcard', array('vcard_password' => $newpass), array('vcard_email' => $email));
+
+        if ($savevcard) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}

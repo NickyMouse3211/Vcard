@@ -11,6 +11,11 @@
     $description = @$profile->vcard_description != '' || @$profile->vcard_description != null ? @$profile->vcard_description : ' -';
     $img         = @$profile->vcard_image != '' || @$profile->vcard_image != null ? 'vcard/'.@$profile->vcard_image : 'vcard/no-vcard.jpg';
 
+    $resume      = count($resume_employment) > 0 ? '' : 'display:none';
+    $portfolio   = count($portfolio) > 0 ? '' : 'display:none';
+    $map         = count($contact) > 0 ? '' : 'display:none';
+
+    $form_contact   = count($this->session->userdata('user_data')) > 0 ? 'display:none' : '';
 ?>
 <!-- Profile -->
 <div id="profile"> 
@@ -40,8 +45,8 @@
 <div class="menu">
 	<ul class="tabs" style="<?php echo $menustyle; ?>">
     	<li><a href="#profile" class="tab-profile">Profile</a></li>
-    	<li><a href="#resume" class="tab-resume">Resume</a></li>
-    	<li><a href="#portfolio" class="tab-portfolio">Portfolio</a></li>
+    	<li><a href="#resume" class="tab-resume" style="<?php echo $resume ?>">Resume</a></li>
+    	<li><a href="#portfolio" class="tab-portfolio" style="<?php echo $portfolio ?>">Portfolio</a></li>
     	<li><a href="#contact" class="tab-contact">Contact</a></li>
     </ul>
 </div>
@@ -152,12 +157,12 @@
 
 <!-- Contact -->
 <div id="contact">
-	<div id="map"></div>
+	<div id="map" style="<?php echo $map ?>"></div>
 	<!-- Contact Info -->
     <div class="contact-info">
     <h3 class="main-heading"><span>Contact info</span></h3>
 	<ul>
-        <li><?php echo $map->map_full; ?><br /><br /></li>
+        <li><?php echo @$map->map_full; ?><br /><br /></li>
         <?php 
             foreach ($contact as $key => $value) {
                 ?>
@@ -173,12 +178,12 @@
     <div class="contact-form">
         <h3 class="main-heading"><span>Let's keep in touch</span></h3>
         <div id="contact-status"></div>
-        <form action="" id="contactform">
-            <p>
+        <form id="contactform">
+            <p style="<?php echo $form_contact ?>">
             	<label for="name">Your Name</label>
             	<input type="text" name="name" class="input" >
             </p>
-            <p>
+            <p style="<?php echo $form_contact ?>">
             	<label for="email">Your Email</label>
             	<input type="text" name="email" class="input">
             </p>
@@ -191,26 +196,50 @@
     </div>
     <!-- /Contact Form -->
 </div>
+
+<?php if (count($contact) > 0) { ?>
+    <script type="text/javascript">
+            /* ---------------------------------------------------------------------- */
+            /*  Google Maps
+            /* ---------------------------------------------------------------------- */
+            
+            // Needed variables
+            var $content            = $("#content");
+            var $map                = $('#map'),
+                $tabContactClass    = ('tab-contact'),
+                $address            = '<?php echo $map->map_full; ?>';
+            
+            $content.bind('easytabs:after', function(evt,tab,panel) {
+                if ( tab.hasClass($tabContactClass) ) {
+                    $map.gMap({
+                        address: $address,
+                        zoom: 16,
+                        markers: [
+                            { 'address' : $address }
+                        ]
+                    });
+                }
+            });
+    </script>
+<?php } ?>
+
 <script type="text/javascript">
-        /* ---------------------------------------------------------------------- */
-        /*  Google Maps
-        /* ---------------------------------------------------------------------- */
-        
-        // Needed variables
-        var $content            = $("#content");
-        var $map                = $('#map'),
-            $tabContactClass    = ('tab-contact'),
-            $address            = '<?php echo $map->map_full; ?>';
-        
-        $content.bind('easytabs:after', function(evt,tab,panel) {
-            if ( tab.hasClass($tabContactClass) ) {
-                $map.gMap({
-                    address: $address,
-                    zoom: 16,
-                    markers: [
-                        { 'address' : $address }
-                    ]
-                });
+    $(document).on('submit', '#contactform', function(e) {
+        var data = $(this).serialize();
+        $.ajax({
+            url: '<?php echo base_url('vcard/send_message') ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: data
+        })
+        .done(function(out) {
+            if (out.status) {
+                toastr.success(out.msg);
+            } else{
+                toastr.error(out.msg);
             }
         });
+
+        e.preventDefault();
+    });
 </script>

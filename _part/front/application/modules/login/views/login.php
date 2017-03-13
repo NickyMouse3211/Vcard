@@ -1,4 +1,5 @@
 <!-- Profile -->
+
 <div id="profile"> 
  	<!-- About section -->
 	<div class="wrap-form-login" style="width:100%; text-align: center; margin: 50px 0;">
@@ -67,6 +68,25 @@
         var data = $(this).serialize();
         $.ajax({
             url: '<?php echo base_url('login/act_login') ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: data
+        })
+        .done(function(out) {
+            if (out.status) {
+                toastr.success(out.msg);
+            } else{
+                toastr.error(out.msg);
+            }
+        });
+        
+        e.preventDefault();
+    });
+
+    $(document).on('submit', '.form-register', function(e) {
+        var data = $(this).serialize();
+        $.ajax({
+            url: '<?php echo base_url('login/register') ?>',
             type: 'POST',
             dataType: 'json',
             data: data
