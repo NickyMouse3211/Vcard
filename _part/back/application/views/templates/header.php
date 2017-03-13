@@ -48,7 +48,7 @@
 							<?php echo $this->session->userdata('user_data')->vcard_name;?>
 						</span>
 						<!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
-						<img alt="" class="img-circle" src="<?php echo base_url('../public/images/member') . '/'.$this->session->userdata('user_data')->vcard_image;?>"/>
+						<img alt="" class="img-circle" src="<?php echo base_url('../public/images/vcard') . '/'.$this->session->userdata('user_data')->vcard_image;?>"/>
 						</a>
 						<ul class="dropdown-menu dropdown-menu-default">
 							<li>
@@ -95,7 +95,7 @@
 							<div class="portlet light profile-sidebar-portlet">
 								<!-- SIDEBAR USERPIC -->
 								<div class="profile-userpic">
-									<img src="<?php echo base_url('../public/images/member') . '/'. $this->session->userdata('user_data')->vcard_image; ?>" class="img-responsive" alt="">
+									<img src="<?php echo base_url('../public/images/vcard') . '/'. $this->session->userdata('user_data')->vcard_image; ?>" class="img-responsive" alt="">
 								</div>
 								<!-- END SIDEBAR USERPIC -->
 								<!-- SIDEBAR USER TITLE -->
@@ -261,7 +261,7 @@
 																		<div class="col-md-9">
 																			<div class="fileinput fileinput-new" data-provides="fileinput">
 																				<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
-																					<img src="<?php echo base_url('../public/images/member') . '/'. $this->session->userdata('user_data')->vcard_image; ?>" alt="">
+																					<img src="<?php echo base_url('../public/images/vcard') . '/'. $this->session->userdata('user_data')->vcard_image; ?>" alt="">
 																				</div>
 																				<div>
 																					<span class="btn default btn-file">

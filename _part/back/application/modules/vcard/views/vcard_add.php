@@ -58,7 +58,7 @@
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'Link')); ?>" type="text" maxlength="100" class="required form-control" placeholder="Link" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Link')); ?>" type="text" maxlength="100" id="link" class="required form-control link" placeholder="Link" />
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -91,7 +91,7 @@
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'DO Birth')); ?>" maxlength="15" type="text" class="required form-control" placeholder="DO Birth" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'DO Birth')); ?>" maxlength="15" type="text" class="required form-control date-picker" placeholder="DO Birth" />
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -113,7 +113,7 @@
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'Email')) ?>" maxlength="100" type="email" class="required form-control" placeholder="Email" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Email')) ?>" maxlength="100" type="email" class="required form-control email" placeholder="Email" />
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -143,8 +143,11 @@
 						Phone
 						<span class="required" aria-required="true">* </span>
 					</label>
+					<div class="col-md-2">
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'country')); ?>" maxlength="3" type="text" id="code" class="required form-control number" placeholder="Kode" />
+					</div>
 					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'Phone')); ?>" maxlength="15" type="text" class="required form-control" placeholder="Phone" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Phone')); ?>" maxlength="15" type="text" class="required form-control number" placeholder="Phone" />
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -305,7 +308,40 @@
        	        return state.name;
        	    }
        	});
+
+       	$('#code').select2({
+       	    minimumInputLength: 0,
+       	    ajax: {
+       	        url: "<?=base_url('universal/get_phonecode')?>",
+       	        dataType: 'json',
+       	        quietMillis: 250,
+       	        data: function (term, page) {
+       	            return {
+       	                q: term,
+       	            };
+       	        },
+       	        results: function (data, page) {
+       	            return { results: data.item };
+       	        },
+       	        cache: true
+       	    },
+       	    initSelection: function(element, callback) {
+       	        var id = $(element).val();
+       	        if (id !== "") {
+       	            $.ajax("<?=base_url('universal/get_phonecode')?>"+id, {
+       	                dataType: "json"
+       	            }).done(function(data) { callback(data[0]); });
+       	        }
+       	    },
+       	    formatResult: function (state) {
+       	        return state.name;
+       	    },
+       	    formatSelection:  function (state) {
+       	        return state.name;
+       	    }
+       	});
 		
+
 	});
 
 	$('.upload').change(function(){

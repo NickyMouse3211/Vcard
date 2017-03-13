@@ -51,6 +51,35 @@ class Universal extends CI_Controller {
 	        echo json_encode($res);
 	    }
 	}
+
+	public function get_phonecode($id = '')
+	{
+	    if($id == ''){
+
+	        $q = $_GET['q'];
+
+	        $where['phonecode !='] = '';
+	       
+	        $whereE = "(phonecode LIKE '%$q%')";
+	        $result = $this->m_global->get_data_all('country', null, $where, 'phonecode', $whereE, ['phonecode', 'asc'], null , '10','phonecode');
+
+	        foreach ($result as $row){
+	            $res[] = ['id' => $row->phonecode, 'name' => '(+'.$row->phonecode.')'];
+	        }
+
+	        $data = ['item' => $res];
+	        echo json_encode($data);
+	    }else{
+	        $where = [ 'phonecode' => $id, 'phonecode !=' => ''];
+
+	        $result = $this->m_global->get_data_all('country', null, $where, 'phonecode', null, ['phonecode', 'asc'] , null , '10','phonecode');
+	        $res = [];
+	        foreach ($result as $row){
+	            $res[] = ['id' => $row->phonecode, 'name' => '(+'.$row->phonecode.')'];
+	        }
+	        echo json_encode($res);
+	    }
+	}
 	
 }
 
