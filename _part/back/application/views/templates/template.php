@@ -203,28 +203,28 @@ License: You must have a valid license purchased only from themeforest(the above
 	   	    // minViewMode: 2
 	   	});
 
-	   	var regex = new RegExp("^[-_a-zA-Z0-9\b]+$");
+	   	var regexlink = new RegExp("^[-_a-zA-Z0-9\b]+$");
 	   	$('.link').bind("keypress", function (event) {
 	   	    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-	   	    if (!regex.test(key)) {
+	   	    if (!regexlink.test(key)) {
 	   	        event.preventDefault();
 	   	        return false;
 	   	    }
 	   	});
 
-	   	var regex = new RegExp("^[-_a-zA-Z0-9\b@.]+$");
+	   	var regexemail = new RegExp("^[-_a-zA-Z0-9\b@.]+$");
 	   	$('.email').bind("keypress", function (event) {
 	   	    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-	   	    if (!regex.test(key)) {
+	   	    if (!regexemail.test(key)) {
 	   	        event.preventDefault();
 	   	        return false;
 	   	    }
 	   	});
 
-	   	var regex = new RegExp("^[0-9\b]+$");
+	   	var regexnumb = new RegExp("^[0-9\b]+$");
 	   	$('.number').bind("keypress", function (event) {
 	   	    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-	   	    if (!regex.test(key)) {
+	   	    if (!regexnumb.test(key)) {
 	   	        event.preventDefault();
 	   	        return false;
 	   	    }

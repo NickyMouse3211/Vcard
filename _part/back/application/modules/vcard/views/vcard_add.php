@@ -77,10 +77,10 @@
 				<div class="form-group">
 					<label class="col-md-2 control-label">
 						Work
-						<span class="required" aria-required="true">* </span>
+						<span class="required" aria-required="true"> </span>
 					</label>
 					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'Work')); ?>" maxlength="100" type="text" class="required form-control" placeholder="Work" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Work')); ?>" maxlength="100" type="text" class=" form-control" placeholder="Work" />
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -155,10 +155,10 @@
 				<div class="form-group">
 					<label class="col-md-2 control-label">
 						Website
-						<span class="required" aria-required="true">* </span>
+						<span class="required" aria-required="true"> </span>
 					</label>
 					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'Website')); ?>" maxlength="15" type="text" class="required form-control" placeholder="Website" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Website')); ?>" maxlength="15" type="text" class=" form-control" placeholder="Website" />
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -198,7 +198,7 @@
 						  	Select image </span>
 						  	<span class="fileinput-exists">
 						  	Change </span>
-						  	<input type="file" class="upload cropit-image-input" name="pu_foto">
+						  	<input type="file" class="upload cropit-image-input" name="pu_foto" onchange="$('#img-edit').hide();">
 						  	<input type="text" name="filebase64" id='hidden_base64' readonly hidden>
 						  	</span>
 						  	<a href="javascript:;" class="btn blue rotate-cw">
@@ -208,7 +208,7 @@
 
 						  </div>
 						  <div class="cropit-preview">
-						  	<img class="img-edit" src="<?=base_url("../public/images")?>/anonim.png" alt="" style="width: 145px; height: 150px;">
+						  	<img class="img-edit" id='img-edit' src="<?=base_url("../public/images")?>/anonim.png" alt="" style="width: 145px; height: 150px;">
 						  </div>
 						  <div class="image-size-label" >
 						    Resize image
@@ -361,12 +361,12 @@
 	        $(this).val('');
 	        toastr.error('File type does not fit !');
 	    }
-	    if (file > maxsize)
-	    {
-	    	$('.img-edit').attr('src','<?=base_url("../public/images")?>/anonim.png');
-	        $(this).val('');
-	        toastr.error('File size is too large !');
-	    }
+	    // if (file > maxsize)
+	    // {
+	    // 	$('.img-edit').attr('src','<?=base_url("../public/images")?>/anonim.png');
+	    //     $(this).val('');
+	    //     toastr.error('File size is too large !');
+	    // }
 		
 		// img.onload  = function () {
 		// 	width   = $(this)[0].width;

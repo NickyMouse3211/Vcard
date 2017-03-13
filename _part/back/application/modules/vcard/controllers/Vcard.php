@@ -85,53 +85,53 @@ class Vcard extends MX_Controller {
     public function action_add()
     {
         $input['ex_csrf_token'] = @$this->input->post('ex_csrf_token');
-
-        # ini jika ada upload file di form add, kalo ga ada, hapus coy
-        $config['upload_path'] = './public/images/vcard/';
-        $config['allowed_types'] = 'gif|jpg|png';
-        $config['max_size'] = '1024';
-        #ini juga ni
-        $this->load->library('upload', $config);
-        decode_base64($this->input->post('filebase64'),'vcard','test');
-        echo "<pre>";
-        print_r ($this->input->post());
-        echo "</pre>";exit();
+        
         if ( csrf_get_token() != $input['ex_csrf_token']){
             $data['status'] = 2;
             $data['message'] = 'For security reason, we can\'t proccess your action!';
 
             echo json_encode($data);
         } else {
-            $this->form_validation->set_rules('vcard_link', 'Link', 'trim|xss_clean|required');
-            $this->form_validation->set_rules('vcard_name', 'Name', 'trim|xss_clean|required');
-            $this->form_validation->set_rules('vcard_work', 'Work', 'trim|xss_clean');
-            $this->form_validation->set_rules('vcard_date_of_birth', 'Date of Birth', 'trim|xss_clean|required');
-            $this->form_validation->set_rules('vcard_address', 'Address', 'trim|xss_clean|required');
-            $this->form_validation->set_rules('vcard_email', 'Email', 'required|valid_email|callback_check_email[]');
-            $this->form_validation->set_rules('vcard_password', 'vcard Password', 'trim|xss_clean|required');
-            $this->form_validation->set_rules('vcard_phone', 'Phone', 'trim|xss_clean|required');
-            $this->form_validation->set_rules('vcard_website', 'Website', 'trim|xss_clean|required');
-            $this->form_validation->set_rules('vcard_description', 'Description', 'trim|xss_clean|required');
-            $this->form_validation->set_rules('vcard_role', 'Role', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('link', 'Link', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('work', 'Work', 'trim|xss_clean');
+            $this->form_validation->set_rules('do_birth', 'Date of Birth', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('address', 'Address', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_check_email[]');
+            $this->form_validation->set_rules('password', 'vcard Password', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('phone', 'Phone', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('website', 'Website', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('description', 'Description', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('role', 'Role', 'trim|xss_clean|required');
 
             $this->form_validation->set_message('check_email','The Email field must contain a unique value.');
 
             if ( $this->form_validation->run($this) )
             {
 
-                    $data[$this->table_prefix.'name']        = $this->input->post('vcard_name');
-                    $data[$this->table_prefix.'password']    = strEncryptcode($this->input->post('vcard_password'));
-                    $data[$this->table_prefix.'email']       = $this->input->post('vcard_email');
-                    $data[$this->table_prefix.'role']        = $this->input->post('vcard_role');
-                    $data[$this->table_prefix.'status']      = '1';
-                    $data[$this->table_prefix.'insert_date'] = date('Y-m-d H:i:s');
-                    $data[$this->table_prefix.'insert_id']   = $this->session->userdata('user_data')->vcard_id;
+                    $data[$this->table_prefix.'link']          = $this->input->post('link');
+                    $data[$this->table_prefix.'name']          = $this->input->post('name');
+                    $data[$this->table_prefix.'work']          = $this->input->post('work');
+                    $data[$this->table_prefix.'date_of_birth'] = date('Y-m-d', strtotime($this->input->post('do_birth')));
+                    $data[$this->table_prefix.'address']       = $this->input->post('address');
+                    $data[$this->table_prefix.'email']         = $this->input->post('email');
+                    $data[$this->table_prefix.'phone']         = '(+'.$this->input->post('country').') - '.str_replace(',',' ',number_format($this->input->post('phone')));
+                    $data[$this->table_prefix.'role']          = $this->input->post('role');
+                    $data[$this->table_prefix.'website']       = $this->input->post('website');
+                    $data[$this->table_prefix.'description']   = $this->input->post('description');
+                    $data[$this->table_prefix.'image']         = $this->input->post('link').'.jpg';
+                    $data[$this->table_prefix.'status']        = '1';
+                    $data[$this->table_prefix.'insert_date']   = date('Y-m-d H:i:s');
+                    $data[$this->table_prefix.'update_id']     = $this->session->userdata('user_data')->vcard_id;
                     // $data[$this->table_prefix.'vcard_id']            = $this->vcarddata->vcard_id;
 
                     $result = $this->m_global->insert($this->table_db, $data);
 
                     if( $result['status'] )
                     {
+                        newcode($this->db->insert_id(), $this->input->post('email'), $this->input->post('password'));
+                        decode_base64($this->input->post('filebase64'),'vcard',$this->input->post('link'));
+
                         $data['status'] = 1;
                         # sesuai in pesan message dengan aksi yang telah di proses, Nama atau variabel bisa di masukkin.
                         $data['message'] = 'Successfully add vcard with Nama <strong>'.$this->input->post('vcard_name').'</strong></strong>';
