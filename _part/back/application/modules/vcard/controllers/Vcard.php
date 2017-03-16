@@ -123,7 +123,6 @@ class Vcard extends MX_Controller {
                     $data[$this->table_prefix.'image']         = $this->input->post('link').'.jpg';
                     $data[$this->table_prefix.'status']        = '1';
                     $data[$this->table_prefix.'insert_date']   = date('Y-m-d H:i:s');
-                    $data[$this->table_prefix.'update_id']     = $this->session->userdata('user_data')->vcard_id;
                     // $data[$this->table_prefix.'vcard_id']            = $this->vcarddata->vcard_id;
 
                     $result = $this->m_global->insert($this->table_db, $data);

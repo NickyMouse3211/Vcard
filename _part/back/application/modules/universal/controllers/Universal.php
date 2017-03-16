@@ -80,6 +80,35 @@ class Universal extends CI_Controller {
 	        echo json_encode($res);
 	    }
 	}
+
+	public function get_country($id = '')
+	{
+	    if($id == ''){
+
+	        $q = $_GET['q'];
+
+	        $where['iso !='] = '';
+	       
+	        $whereE = "(name LIKE '%$q%')";
+	        $result = $this->m_global->get_data_all('country', null, $where, 'iso,name', $whereE, ['name', 'asc'], null , '10','iso');
+
+	        foreach ($result as $row){
+	            $res[] = ['id' => $row->iso, 'name' => $row->name];
+	        }
+
+	        $data = ['item' => $res];
+	        echo json_encode($data);
+	    }else{
+	        $where = [ 'iso' => $id, 'iso !=' => ''];
+
+	        $result = $this->m_global->get_data_all('country', null, $where, 'iso,name', null, ['name', 'asc'] , null , '10','iso');
+	        $res = [];
+	        foreach ($result as $row){
+	            $res[] = ['id' => $row->iso, 'name' => $row->name];
+	        }
+	        echo json_encode($res);
+	    }
+	}
 	
 }
 
