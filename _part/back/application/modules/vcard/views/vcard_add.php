@@ -141,13 +141,13 @@
 				<div class="form-group">
 					<label class="col-md-2 control-label">
 						Phone
-						<span class="required" aria-required="true">* </span>
+						<span class="required" aria-required="true"> </span>
 					</label>
 					<div class="col-md-2">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'country')); ?>" maxlength="3" type="text" id="code" class="required form-control number" placeholder="Kode" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'country')); ?>" maxlength="3" type="text" id="code" class=" form-control number" placeholder="Kode" />
 					</div>
 					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'Phone')); ?>" maxlength="15" type="text" class="required form-control number" placeholder="Phone" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Phone')); ?>" maxlength="15" type="text" class=" form-control number" placeholder="Phone" />
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -166,10 +166,10 @@
 				<div class="form-group">
 					<label class="col-md-2 control-label">
 						Description
-						<span class="required" aria-required="true">* </span>
+						<span class="required" aria-required="true"> </span>
 					</label>
 					<div class="col-md-4">
-						<textarea name="<?php echo strtolower(str_replace(' ', '_', 'Description')); ?>" class="required form-control" placeholder="Description"></textarea>
+						<textarea name="<?php echo strtolower(str_replace(' ', '_', 'Description')); ?>" class=" form-control" placeholder="Description"></textarea>
 						<span class="help-block"></span>
 					</div>
 				</div>

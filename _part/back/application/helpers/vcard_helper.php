@@ -46,10 +46,13 @@ function strEncrypt($str, $forDB = FALSE){
     return $str;
 }
 
-function strEncryptcode($str, $forDB = FALSE){
+function strEncryptcode($str, $forDB = FALSE, $editID = null){
     $CI =& get_instance();  
     $key    = $CI->config->item('encryption_key');
     $code = $CI->session->userdata('user_code').$CI->session->userdata('user_data')->vcard_id;
+    if ($editID != null) {
+    $code = $CI->session->userdata('user_code').$editID;
+    }
 
     $str    = ($forDB) ? 'md5(concat(\'' . $key . $code . '\',' . $str. '))' : md5($key . $code . $str);   
     return $str;
@@ -347,19 +350,24 @@ function color_inverse($color){
     return '#'.$rgb;
 }
 
-function newcode($id,$email,$password)
+function newcode($id,$email,$password,$action = 'create')
 {
     $CI      = &get_instance();
     $rand    = generateRandomString();
 
     $newkey = chiper($password,'encrypt',$rand);
     $newpass= strEncrypt($password.$rand);
-
-    $data['code_vcard_id'] = $id;
-    $data['code_string'] = $rand;
-    $data['code_email'] = $email;
-    $data['code_key'] = $newkey;
-    $saverand = $CI->m_global->insert('code', $data);
+    $data['code_string']   = $rand;
+    $data['code_email']    = $email;
+    $data['code_key']      = $newkey;
+    
+    $saverand = false;
+    if ($action == 'create') {
+        $data['code_vcard_id'] = $id;
+        $saverand = $CI->m_global->insert('code', $data);
+    }elseif ($action == 'edit') {
+        $saverand = $CI->m_global->update('code', $data, array(strEncryptcode('code_vcard_id', TRUE) => $id));
+    }
     if ($saverand) {
         $savevcard= $CI->m_global->update('vcard', array('vcard_password' => $newpass), array('vcard_email' => $email));
 

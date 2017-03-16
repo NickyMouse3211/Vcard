@@ -96,14 +96,14 @@ License: You must have a valid license purchased only from themeforest(the above
 	 });
     var base_url = "<?=base_url()?>";
 </script>
-<body class="page-md page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo">
+<body id='page-scroll-container' class="page-md page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo">
 <!-- BEGIN HEADER -->
 <?= @$_header; ?>
 <!-- END HEADER -->
 <div class="clearfix">
 </div>
 <!-- BEGIN CONTAINER -->
-<div class="page-container" >
+<div  class="page-container" >
 	<!-- BEGIN SIDEBAR -->
 	<?= @$_menu; ?>
 	<!-- END SIDEBAR -->
@@ -185,49 +185,5 @@ License: You must have a valid license purchased only from themeforest(the above
 <script>
 	jQuery(document).ready(function() {    
 	   	$("#page-scroll-container").niceScroll();
-	   	$('.date-picker-month').datepicker({
-	   	    format: 'mm-yyyy',
-	   	    // startView: 1,
-	   	    // minViewMode: 1
-	   	});
-
-	   	$('.date-picker-year').datepicker({
-	   	    format: 'yyyy',
-	   	    // startView: 2,
-	   	    // minViewMode: 2
-	   	});
-
-	   	$('.date-picker').datepicker({
-	   	    format: 'dd-mm-yyyy',
-	   	    // startView: 2,
-	   	    // minViewMode: 2
-	   	});
-
-	   	var regexlink = new RegExp("^[-_a-zA-Z0-9\b]+$");
-	   	$('.link').bind("keypress", function (event) {
-	   	    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-	   	    if (!regexlink.test(key)) {
-	   	        event.preventDefault();
-	   	        return false;
-	   	    }
-	   	});
-
-	   	var regexemail = new RegExp("^[-_a-zA-Z0-9\b@.]+$");
-	   	$('.email').bind("keypress", function (event) {
-	   	    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-	   	    if (!regexemail.test(key)) {
-	   	        event.preventDefault();
-	   	        return false;
-	   	    }
-	   	});
-
-	   	var regexnumb = new RegExp("^[0-9\b]+$");
-	   	$('.number').bind("keypress", function (event) {
-	   	    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-	   	    if (!regexnumb.test(key)) {
-	   	        event.preventDefault();
-	   	        return false;
-	   	    }
-	   	});
 	});
 </script>

@@ -1,3 +1,38 @@
+<style>
+  .cropit-preview {
+    background-color: #f8f8f8;
+    background-size: cover;
+    border: 5px solid #ccc;
+    border-radius: 3px;
+    margin-top: 7px;
+    width: 153px;
+    height: 186px;
+  }
+
+  .cropit-preview-image-container {
+    cursor: move;
+  }
+
+  .cropit-preview-background {
+    opacity: .2;
+    cursor: auto;
+  }
+
+  .image-size-label {
+    margin-top: 10px;
+  }
+
+  input, .export {
+    /* Use relative position to prevent from being covered by image background */
+    position: relative;
+    z-index: 10;
+    display: block;
+  }
+
+  button {
+    margin-top: 10px;
+  }
+</style>
 <div class="portlet light">
 	<div class="portlet-title">
 		<div class="caption">
@@ -17,67 +52,47 @@
 				<span>Your form validation is successful!</span>
 			</div>
 			<div class="form-body">
+				
+				<div class="form-group">
+					<label class="col-md-2 control-label">
+						Link
+						<span class="required" aria-required="true">* </span>
+					</label>
+					<div class="col-md-4">
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Link')); ?>" value="<?=@$records->vcard_link?>" type="text" maxlength="100" id="link" class="required form-control link" placeholder="Link" />
+						<span class="help-block"></span>
+					</div>
+				</div>
+				
 				<div class="form-group">
 					<label class="col-md-2 control-label">
 						Name
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="member_nama" type="text" value="<?=$records->member_nama?>" maxlength="50" class="required form-control" placeholder="User Name" required/>
-						<span class="help-block"></span>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-md-2 control-label">
-						Email
-						<span class="required" aria-required="true">* </span>
-					</label>
-					<div class="col-md-4">
-						<input name="member_email" maxlength="100" value="<?=$records->member_email?>" type="text" class="required form-control" placeholder="User Email" required/>
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Name')); ?>" value="<?=@$records->vcard_name?>" maxlength="50" type="text" class="required form-control" placeholder="Name" />
 						<span class="help-block"></span>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label class="col-md-2 control-label">
-						Nick Name
-						<span class="required" aria-required="true">* </span>
+						Work
+						<span class="required" aria-required="true"> </span>
 					</label>
 					<div class="col-md-4">
-						<input name="member_nick_name" type="text" value="<?=$records->member_nick_name?>" maxlength="15" class=" form-control" placeholder="Nick Name" required/>
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Work')); ?>" value="<?=@$records->vcard_work?>" maxlength="100" type="text" class=" form-control" placeholder="Work" />
 						<span class="help-block"></span>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label class="col-md-2 control-label">
-						Sign
-					</label>
-					<div class="col-md-4">
-						<textarea name="member_sign" class="form-control" placeholder="Sign"><?=$records->member_sign?></textarea>
-						<span class="help-block"></span>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label class="col-md-2 control-label">
-						Place of Birth
+						DO Birth
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="member_tempat_lahir" type="text" value="<?=$records->member_tempat_lahir?>" maxlength="50" class=" form-control" placeholder="Place of Birth" required/>
-						<span class="help-block"></span>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-md-2 control-label">
-						Date of Birth
-						<span class="required" aria-required="true">* </span>
-					</label>
-					<div class="col-md-4">
-						<input name="member_tanggal_lahir" type="text" value="<?=date('Y-m-d', strtotime(@$records->member_tanggal_lahir));?>" class="form-control datepicker" placeholder="Date of Birth" required/>
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'DO Birth')); ?>" value="<?=date('d-m-Y',strtotime(@$records->vcard_date_of_birth))?>" maxlength="15" type="text" class="required form-control date-picker" placeholder="DO Birth" />
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -85,9 +100,41 @@
 				<div class="form-group">
 					<label class="col-md-2 control-label">
 						Address
+						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<textarea name="member_alamat" class="form-control" placeholder="Address"><?=$records->member_alamat?></textarea>
+						<textarea name="<?php echo strtolower(str_replace(' ', '_', 'Address')); ?>" class="required form-control" placeholder="Address"><?=@$records->vcard_address?></textarea>
+						<span class="help-block"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-2 control-label">
+						Email
+						<span class="required" aria-required="true">* </span>
+					</label>
+					<div class="col-md-4">
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Email')) ?>" value="<?=@$records->vcard_email;?>" maxlength="100" type="email" class="required form-control email" placeholder="Email" />
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">
+						Password
+						<span class="required" aria-required="true"> </span>
+					</label>
+					<div class="col-md-4">
+						<input name="password" id='password' maxlength="255" value="" type="password" class="form-control" placeholder="Password" />
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">
+						Re-Password
+						<span class="required" aria-required="true"> </span>
+					</label>
+					<div class="col-md-4">
+						<input name="re_password" maxlength="255" value="" type="password" class="form-control" placeholder="Password" />
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -95,87 +142,87 @@
 				<div class="form-group">
 					<label class="col-md-2 control-label">
 						Phone
+						<span class="required" aria-required="true"> </span>
 					</label>
+					<?php 
+						$vcard_phone =@explode('-', str_replace('(+','',str_replace(')','',str_replace(' ','',@$records->vcard_phone))));
+					?>
+					<div class="col-md-2">
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'country')); ?>" value="<?=@$vcard_phone[0]?>" maxlength="3" type="text" id="code" class=" form-control number" placeholder="Kode" />
+					</div>
 					<div class="col-md-4">
-						<input name="member_telepon" maxlength="20" type="text" value="<?=$records->member_telepon?>" onkeypress="return isNumber(event)" class="form-control" placeholder="User Phone" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Phone')); ?>" value="<?=@$vcard_phone[1]?>" maxlength="15" type="text" class=" form-control number" placeholder="Phone" />
 						<span class="help-block"></span>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label class="col-md-2 control-label">
-						Guild Name
+						Website
+						<span class="required" aria-required="true"> </span>
 					</label>
 					<div class="col-md-4">
-						<input name="member_guild_name" maxlength="20" type="text" value="<?=$records->member_guild_name?>"  class="form-control" placeholder="Guild Name" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Website')); ?>" value="<?=@$records->vcard_website?>" maxlength="15" type="text" class=" form-control" placeholder="Website" />
 						<span class="help-block"></span>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label class="col-md-2 control-label">
-						Couple Name
+						Description
+						<span class="required" aria-required="true"> </span>
 					</label>
 					<div class="col-md-4">
-						<input name="member_couple" maxlength="20" type="text" value="<?=$records->member_couple?>"  class="form-control" placeholder="Couple Nick Name" />
+						<textarea name="<?php echo strtolower(str_replace(' ', '_', 'Description')); ?>" class=" form-control" placeholder="Description"><?=@$records->vcard_description?></textarea>
 						<span class="help-block"></span>
 					</div>
 				</div>
 
-				<div class="form-group">
-					<label class="col-md-2 control-label">
-						Upload foto
-						<span class="required" aria-required="true">* </span>
-					</label>
-					<div class="col-md-4">
-						<div class="fileinput fileinput-new" data-provides="fileinput">
-							<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
-								<img class="img-edit" src="<?php echo base_url('../public/images/member') . '/'. $records->member_pict; ?>" alt="">
-							</div>
-							<div>
-								<span class="btn default btn-file">
-								<span class="fileinput-new">
-								Select image </span>
-								<span class="fileinput-exists">
-								Change </span>
-								<input type="file" class="upload" name="pu_foto">
-								</span>
-								<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
-								Remove </a>
-							</div>
-						</div>
-						<span class="help-block">File Type: Jpg. Jpeg, Gif, Png. Max Size: 1024 KB</span>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label class="col-md-2 control-label">
-						Password
-						<!-- <span class="required" aria-required="true">* </span> -->
-					</label>
-					<div class="col-md-4">
-						<input name="member_password" id='member_password' maxlength="255" type="password" class="form-control" placeholder="Password User" />
-						<span class="help-block"></span>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-md-2 control-label">
-						Re-Password
-						<!-- <span class="required" aria-required="true">* </span> -->
-					</label>
-					<div class="col-md-4">
-						<input name="re_password" maxlength="255" type="password" class="form-control" placeholder="Password User" />
-						<span class="help-block"></span>
-					</div>
-				</div>
 				<div class="form-group">
 					<label class="col-md-2 control-label">
 						Role
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="member_role" id="ROLE" type="text" value="<?=$records->member_role?>"  class="form-control" placeholder="Role" required/>
+						<input name="<?php echo strtolower('role') ?>" value="<?=@$records->vcard_role?>" type="text" id="ROLE" class="form-control" placeholder="Role" />
 						<span class="help-block"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-2 control-label">
+						Photo
+						<span class="required" aria-required="true">* </span>
+					</label>
+					<div class="col-md-10">
+						<div class="image-editor fileinput fileinput-new" data-provides="fileinput">
+						  <div>
+						  	<span class="btn default btn-file">
+						  	<span class="fileinput-new">
+						  	Select image </span>
+						  	<span class="fileinput-exists">
+						  	Change </span>
+						  	<input type="file" class="upload cropit-image-input" name="pu_foto" onchange="$('#img-edit').hide();$('.resize-img').show();">
+						  	<input type="text" name="filebase64" id='hidden_base64' readonly hidden>
+						  	</span>
+						  	<a href="javascript:;" class="btn blue rotate-cw">
+						  	Rotate counterclockwise </a>
+						  	<a href="javascript:;" class="btn blue rotate-ccw">
+						  	Rotate clockwise </a>
+
+						  </div>
+						  <div class="cropit-preview">
+						  	<img class="img-edit" id='img-edit' src="<?=base_url("../public/images/vcard").'/'.@$records->vcard_image?>" error="<?=base_url("../public/images")?>/anonim.png" alt="" style="width: 145px; height: 150px;">
+						  </div>
+						  <div class="image-size-label resize-img" style="display:none;">
+						    Resize image
+						  </div>
+						  <input type="range" class="cropit-image-zoom-input col-md-2 resize-img" style="display:none;">
+						</div>
+
+						<span class="help-block">
+							File Type: Jpg. Jpeg, Gif, Png. Max Size: 1024 KB 
+						</span>
 					</div>
 				</div>
 			</div>
@@ -195,7 +242,19 @@
 <a href="<?=base_url($url)?>" class="ajaxify reload" style="display: none;"></a>
 <script>
 	jQuery(document).ready(function() {
-		
+		$('.image-editor').cropit({
+		  exportZoom: 1,
+		  imageBackground: true,
+		  imageBackgroundBorderWidth: 20,
+		  
+		});
+
+		$('.rotate-cw').click(function() {
+		  $('.image-editor').cropit('rotateCW');
+		});
+		$('.rotate-ccw').click(function() {
+		  $('.image-editor').cropit('rotateCCW');
+		});
 		// Fungsi Form Validasi
       	var rule = {
       		member_phone: {
@@ -204,17 +263,26 @@
       		member_email: {
       			email : true,
       		},
-      		re_password: {
-			equalTo: "#member_password",
-			}
+   //    		re_password: {
+			// 	equalTo: "#member_password",
+			// }
       	};
        	var message = {};
        	var form = '.form-add';
        	
        	var title = 'Are You Sure want to Confirm Data?';
        	var text = 'Your data will submit?';
-
-       	FormValidation.initDefault(form, rule, message, title, text);
+       	var BANoption = { 
+       						cropit: {
+       							'class'  		: '.image-editor',
+       							'action' 		: 'export',
+       							'type'	 		: 'image/jpeg',
+       							'quality'		: 0.33,
+       							'originalSize' 	: true,
+       							'hiddenForm'	: '#hidden_base64'
+       						}, 
+       					};
+       	FormValidation.initDefault(form, rule, message, title, text, BANoption);
 
        	// Input mask, format nominal
 
@@ -256,26 +324,73 @@
        	        return state.name;
        	    }
        	});
-
+       	$('#code').select2({
+       	    minimumInputLength: 0,
+       	    ajax: {
+       	        url: "<?=base_url('universal/get_phonecode')?>",
+       	        dataType: 'json',
+       	        quietMillis: 250,
+       	        data: function (term, page) {
+       	            return {
+       	                q: term,
+       	            };
+       	        },
+       	        results: function (data, page) {
+       	            return { results: data.item };
+       	        },
+       	        cache: true
+       	    },
+       	    initSelection: function(element, callback) {
+       	        var id = $(element).val();
+       	        if (id !== "") {
+       	            $.ajax("<?=base_url('universal/get_phonecode')?>"+'/'+id, {
+       	                dataType: "json"
+       	            }).done(function(data) { callback(data[0]); });
+       	        }
+       	    },
+       	    formatResult: function (state) {
+       	        return state.name;
+       	    },
+       	    formatSelection:  function (state) {
+       	        return state.name;
+       	    }
+       	});
 		$('.upload').change(function(){
-		    var nil     = $(this).val().split('.');
-		    nil         = nil[nil.length - 1].toLowerCase();
-		    var file    = $(this)[0].files[0].size;
-		    var arr     = ['gif','jpg','png','jpeg'];
-		    var maxsize = 1024000;
-		    if (arr.indexOf(nil) < 0)
-		    {
-		    	$('.img-edit').attr('src','<?=base_url("../public/images")?>/anonim.png');
-		        $(this).val('');
-		        toastr.error('File type does not fit !');
-		    }
-		    if (file > maxsize)
-		    {
-		    	$('.img-edit').attr('src','<?=base_url("../public/images")?>/anonim.png');
-		        $(this).val('');
-		        toastr.error('File size is too large !');
-		    }
-		});
+		var _URL    = window.URL || window.webkitURL;
+		var nil     = $(this).val().split('.');
+		nil         = nil[nil.length - 1].toLowerCase();
+		var file    = $(this)[0].files[0].size;
+		var arr     = ['gif','jpg','png','jpeg'];
+		var width   = null;
+		var height  = null;
+		var maxsize = 1024000;
+		var img     = new Image();
+
+	    if (arr.indexOf(nil) < 0)
+	    {
+	    	$('.img-edit').attr('src','<?=base_url("../public/images")?>/anonim.png');
+	        $(this).val('');
+	        toastr.error('File type does not fit !');
+	    }
+	    // if (file > maxsize)
+	    // {
+	    // 	$('.img-edit').attr('src','<?=base_url("../public/images")?>/anonim.png');
+	    //     $(this).val('');
+	    //     toastr.error('File size is too large !');
+	    // }
+		
+		// img.onload  = function () {
+		// 	width   = $(this)[0].width;
+		// 	height  = $(this)[0].height;
+		// 	if (height < width) {
+		// 		$('.img-edit').attr('src','<?php // echo base_url("../public/images")?>/anonim.png');
+		// 	    $(this).val('');
+		// 	    toastr.error('file instead of portrait !');
+		// 	    $('.file-remove').click();
+		// 	}
+  //       };
+  //       img.src = _URL.createObjectURL($(this)[0].files[0]);	    
+	});
 	});
 
 

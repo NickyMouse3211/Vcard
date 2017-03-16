@@ -29,11 +29,11 @@ class Universal extends CI_Controller {
 	        if ($this->session->userdata('user_data')->vcard_role == '2' ) {
 	        	$where['role_id <>'] = '1';
 	        }elseif ($this->session->userdata('user_data')->vcard_role >= '3' ) {
-	        	$where['role_id >'] = '3';
+	        	$where['role_id >='] = '3';
 	        }
 	        $whereE = "(role_nama LIKE '%$q%')";
 	        $result = $this->m_global->get_data_all('role', null, $where, 'role_id, role_nama', $whereE, ['role_nama', 'asc'], null , '10');
-
+	       
 	        foreach ($result as $row){
 	            $res[] = ['id' => $row->role_id, 'name' => $row->role_nama];
 	        }

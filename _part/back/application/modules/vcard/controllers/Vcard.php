@@ -28,7 +28,9 @@ class Vcard extends MX_Controller {
 
         # kalo js emang ga kepake, hapus ya. folder: \assets\admin\pages\scripts
         $js['custom']       = ['table-ajax','upload'];
-
+        // echo "<pre>";
+        // print_r ($this->session->userdata());
+        // echo "</pre>";
         $this->template->display($this->prefix, $data, $js);
     }
 
@@ -42,7 +44,7 @@ class Vcard extends MX_Controller {
         $data['instance']   = $this->prefix;
         $data['url']        = $this->prefix.'/show_add';
         $data['breadcrumb'] = ['vcard' => $this->prefix, 'Add' => $this->prefix.'/show_add'];
-        $js['custom']       = ['form-validation','cropit'];
+        $js['custom']       = ['form-validation','custom','cropit'];
 
         $this->template->display($this->prefix.'_add', $data, $js);
     }
@@ -55,14 +57,12 @@ class Vcard extends MX_Controller {
         $data['instance']   = $this->prefix;
         $data['url']        = $this->prefix.'/show_edit/'.$id;
         $data['breadcrumb'] = ['vcard' => $this->prefix, 'Edit' => $this->prefix.'/show_edit/'.$id];
-        $js['custom']       = ['form-validation'];
+        $js['custom']       = ['form-validation','custom','cropit'];
 
         $data['id']         = $id;
         # id dalam bentuk encript, lihat di cdn_helper strEncryptcode()
         $data['records']    = $this->m_global->get_data_all($this->table_db, NULL, [strEncryptcode('vcard_id', TRUE) => $id])[0];
-        echo "<pre>";
-        print_r ($this->db->last_query());
-        echo "</pre>";exit();
+        
         $this->template->display($this->prefix.'_edit', $data, $js);
     }
 
@@ -92,19 +92,20 @@ class Vcard extends MX_Controller {
 
             echo json_encode($data);
         } else {
-            $this->form_validation->set_rules('link', 'Link', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('link', 'Link', 'trim|xss_clean|required|callback_check_link[]');
+            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_check_email[]');
             $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
             $this->form_validation->set_rules('work', 'Work', 'trim|xss_clean');
             $this->form_validation->set_rules('do_birth', 'Date of Birth', 'trim|xss_clean|required');
             $this->form_validation->set_rules('address', 'Address', 'trim|xss_clean|required');
-            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_check_email[]');
             $this->form_validation->set_rules('password', 'vcard Password', 'trim|xss_clean|required');
-            $this->form_validation->set_rules('phone', 'Phone', 'trim|xss_clean|required');
-            $this->form_validation->set_rules('website', 'Website', 'trim|xss_clean|required');
-            $this->form_validation->set_rules('description', 'Description', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('phone', 'Phone', 'trim|xss_clean');
+            $this->form_validation->set_rules('website', 'Website', 'trim|xss_clean');
+            $this->form_validation->set_rules('description', 'Description', 'trim|xss_clean');
             $this->form_validation->set_rules('role', 'Role', 'trim|xss_clean|required');
 
             $this->form_validation->set_message('check_email','The Email field must contain a unique value.');
+            $this->form_validation->set_message('check_link','The Link field must contain a unique value.');
 
             if ( $this->form_validation->run($this) )
             {
@@ -130,7 +131,9 @@ class Vcard extends MX_Controller {
                     if( $result['status'] )
                     {
                         newcode($this->db->insert_id(), $this->input->post('email'), $this->input->post('password'));
-                        decode_base64($this->input->post('filebase64'),'vcard',$this->input->post('link'));
+                        if ($this->input->post('filebase64') != null || $this->input->post('filebase64') != '') {
+                            decode_base64($this->input->post('filebase64'),'vcard',$this->input->post('link'));
+                        }
 
                         $data['status'] = 1;
                         # sesuai in pesan message dengan aksi yang telah di proses, Nama atau variabel bisa di masukkin.
@@ -168,68 +171,56 @@ class Vcard extends MX_Controller {
 
             echo json_encode($data);
         } else {
-            $this->form_validation->set_rules('vcard_email'        , 'Email'           , 'trim|xss_clean|required|callback_check_email['.$id.']');
-            $this->form_validation->set_rules('vcard_name'         , 'Name'            , 'trim|xss_clean|required');
-            $this->form_validation->set_rules('vcard_nick_name'    , 'Nick Name'       , 'trim|xss_clean|required');
-            $this->form_validation->set_rules('vcard_tempat_lahir' , 'Place of Birth'  , 'trim|xss_clean|required');
-            $this->form_validation->set_rules('vcard_tanggal_lahir', 'Date of Birth'   , 'trim|xss_clean|required');
-            $this->form_validation->set_rules('vcard_alamat'       , 'Address'         , 'trim|xss_clean');
-            $this->form_validation->set_rules('vcard_sign'         , 'Sign'            , 'trim|xss_clean');
-            $this->form_validation->set_rules('vcard_phone'      , 'Phone'           , 'trim|xss_clean');
-            $this->form_validation->set_rules('vcard_guild_name'   , 'Guild Name'      , 'trim|xss_clean');
-            $this->form_validation->set_rules('vcard_couple'       , 'Couple Nick Name', 'trim|xss_clean');
-            $this->form_validation->set_rules('vcard_password'     , 'vcard Password' , 'trim|xss_clean');
-            $this->form_validation->set_rules('pu_foto'             , 'Picture'         , 'trim|xss_clean');
-            $this->form_validation->set_rules('vcard_role'         , 'Role'            , 'trim|xss_clean|required');
-            $this->form_validation->set_message('check_email'       ,'The Email field must contain a unique value.');
+            $this->form_validation->set_rules('link', 'Link', 'trim|xss_clean|required|callback_check_link['.$id.']');
+            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_check_email['.$id.']');
+            $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('work', 'Work', 'trim|xss_clean');
+            $this->form_validation->set_rules('do_birth', 'Date of Birth', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('address', 'Address', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('re_password', 'vcard re-Password', 'trim|xss_clean');
+            $this->form_validation->set_rules('password', 'vcard Password', 'trim|xss_clean|matches[re_password]');
+            $this->form_validation->set_rules('phone', 'Phone', 'trim|xss_clean');
+            $this->form_validation->set_rules('website', 'Website', 'trim|xss_clean');
+            $this->form_validation->set_rules('description', 'Description', 'trim|xss_clean');
+            $this->form_validation->set_rules('role', 'Role', 'trim|xss_clean|required');
+
+            $this->form_validation->set_message('check_email','The Email field must contain a unique value.');
+            $this->form_validation->set_message('check_link','The Link field must contain a unique value.');
 
             if ($this->form_validation->run($this))
             {
+                $data[$this->table_prefix.'link']          = $this->input->post('link');
+                $data[$this->table_prefix.'name']          = $this->input->post('name');
+                $data[$this->table_prefix.'work']          = $this->input->post('work');
+                $data[$this->table_prefix.'date_of_birth'] = date('Y-m-d', strtotime($this->input->post('do_birth')));
+                $data[$this->table_prefix.'address']       = $this->input->post('address');
+                $data[$this->table_prefix.'email']         = $this->input->post('email');
+                $data[$this->table_prefix.'phone']         = '(+'.$this->input->post('country').') - '.str_replace(',',' ',number_format($this->input->post('phone')));
+                $data[$this->table_prefix.'role']          = $this->input->post('role');
+                $data[$this->table_prefix.'website']       = $this->input->post('website');
+                $data[$this->table_prefix.'description']   = $this->input->post('description');
+                $data[$this->table_prefix.'status']        = '1';
+                $data[$this->table_prefix.'insert_date']   = date('Y-m-d H:i:s');
+                $data[$this->table_prefix.'update_id']     = $this->session->userdata('user_data')->vcard_id;
 
-                // # Jika ada file yang diupload
-                if(!empty($_FILES)){
-                    $config['upload_path']   = '../public/images/vcard/';
-                    $config['allowed_types'] = 'gif|jpg|png|jpeg';
-                    $config['max_size']      = '1024';
-
-                    $this->load->library('upload', $config);
-
-                    if (!$this->upload->do_upload('pu_foto')){
-                        $data['status'] = 0;
-                        $data['message'] = 'File must be Image and max size 1024Kb';
-                        echo json_encode($data);
-                        die();
-                    }else{
-                        $re                               = $this->m_global->get_data_all($this->table_db, NULL, [strEncryptcode($this->table_prefix.'id', TRUE) => $id], $this->table_prefix.'pict')[0];
-                        $upload                           = $this->upload->data();
-                        $data[$this->table_prefix.'pict'] = $upload['file_name'];
-                    }
-                } // end IF !empty($_FILES
-
-                $data[$this->table_prefix.'email']              = $this->input->post('vcard_email');
-                $data[$this->table_prefix.'name']               = $this->input->post('vcard_name');
-                $data[$this->table_prefix.'nick_name']          = $this->input->post('vcard_nick_name');
-                $data[$this->table_prefix.'tempat_lahir']       = $this->input->post('vcard_tempat_lahir');
-                $data[$this->table_prefix.'tanggal_lahir']      = date('Y-m-d', strtotime($this->input->post('vcard_tanggal_lahir')));
-                $data[$this->table_prefix.'alamat']             = $this->input->post('vcard_alamat');
-                $data[$this->table_prefix.'sign']               = $this->input->post('vcard_sign');
-                $data[$this->table_prefix.'phone']     = $this->input->post('vcard_phone');
-                $data[$this->table_prefix.'guild_name']         = $this->input->post('vcard_guild_name');
-                $data[$this->table_prefix.'couple']             = $this->input->post('vcard_couple');
-                $data[$this->table_prefix.'role']               = $this->input->post('vcard_role');
-                $data[$this->table_prefix.'update_date']        = date('Y-m-d H:i:s');
-                $data[$this->table_prefix.'update_id']          = $this->session->userdata('user_data')->vcard_id;
                 # jika kosong tidak dirubah
-                if($this->input->post('vcard_password') != ''){
-                    $data[$this->table_prefix.'password']           = strEncryptcode($this->input->post('vcard_password'));
+                if ($this->input->post('filebase64') != null && $this->input->post('filebase64') != '') {
+                    $data[$this->table_prefix.'image']         = $this->input->post('link').'.jpg';
+                    $cekLink = @$this->m_global->get_data_all($this->table_db,null,[strEncryptcode('vcard_id', TRUE) => $id],'vcard_link')[0]->vcard_link;
+                    if ($cekLink != $this->input->post('link')) {
+                        unlink('../public/images/vcard/'.$cekLink.'.jpg');
+                    }
                 }
 
                 $result = $this->m_global->update($this->table_db, $data, [strEncryptcode('vcard_id', TRUE) => $id]);
 
                 if( $result )
                 {
-                    if(isset($re->vcard_pict)){
-                        unlink('../public/images/vcard/'.$re->vcard_pict);
+                    if($this->input->post('vcard_password') != '' && $this->input->post('vcard_password') != ''){
+                            newcode($id, $this->input->post('email'), $this->input->post('password'), 'edit');
+                    }
+                    if ($this->input->post('filebase64') != null && $this->input->post('filebase64') != '') {
+                        decode_base64($this->input->post('filebase64'),'vcard',$this->input->post('link'));
                     }
                     $data['status'] = 1;
                     $data['message'] = 'Successfully edit vcard with Nama <strong>'.$this->input->post('vcard_name').'</strong></strong>';
@@ -237,10 +228,6 @@ class Vcard extends MX_Controller {
                     echo json_encode($data);
 
                 } else {
-                    if(!empty($_FILES))
-                    {
-                        unlink('../public/images/vcard/'.$re->vcard_foto);
-                    }
 
                     $data['status'] = 0;
                     $data['message'] = 'Failed edit vcard with Nama <strong>'.$this->input->post('vcard_name').'</strong></strong>';
@@ -261,6 +248,15 @@ class Vcard extends MX_Controller {
             $result = $this->m_global->validation($this->table_db, [strEncryptcode($this->table_prefix.'id', TRUE).' <>' => $id, $this->table_prefix.'email' => $str]);
         }else{
             $result = $this->m_global->validation($this->table_db, [$this->table_prefix.'email' => $str]);
+        }
+        
+        return $result;
+    }
+    public function check_link($str, $id){
+        if ($id != '') {
+            $result = $this->m_global->validation($this->table_db, [strEncryptcode($this->table_prefix.'id', TRUE).' <>' => $id, $this->table_prefix.'link' => $str]);
+        }else{
+            $result = $this->m_global->validation($this->table_db, [$this->table_prefix.'link' => $str]);
         }
         
         return $result;
@@ -343,8 +339,14 @@ class Vcard extends MX_Controller {
                 $action =   $changeStatus.$editData.$detailData.$deleteData;
                             
             }elseif ($this->session->userdata('user_data')->vcard_role != '1') {
-                if ($rows->vcard_role > $this->session->userdata('user_data')->vcard_role || $this->session->userdata('user_data')->vcard_id == $rows->vcard_id) {
-                    $action =   $changeStatus.$editData.$detailData.$deleteData;
+                
+                if ($rows->vcard_role > $this->session->userdata('user_data')->vcard_role || $this->session->userdata('user_data')->vcard_id == strEncryptcode($rows->vcard_id,false,$rows->vcard_id)) {
+                    if ($this->session->userdata('user_data')->vcard_id == strEncryptcode($rows->vcard_id,false,$rows->vcard_id)) 
+                    {
+                        $action =   $changeStatus.$editData.$detailData;
+                    }else{
+                        $action =   $changeStatus.$editData.$detailData.$deleteData;
+                    }
                 }else{
                     $action =   $detailData;
                 }
