@@ -189,6 +189,7 @@ class Vcard extends MX_Controller {
 
             if ($this->form_validation->run($this))
             {
+                $TID = TID($this->session->userdata('user_data')->vcard_id);
                 $data[$this->table_prefix.'link']          = $this->input->post('link');
                 $data[$this->table_prefix.'name']          = $this->input->post('name');
                 $data[$this->table_prefix.'work']          = $this->input->post('work');
@@ -201,7 +202,7 @@ class Vcard extends MX_Controller {
                 $data[$this->table_prefix.'description']   = $this->input->post('description');
                 $data[$this->table_prefix.'status']        = '1';
                 $data[$this->table_prefix.'insert_date']   = date('Y-m-d H:i:s');
-                $data[$this->table_prefix.'update_id']     = $this->session->userdata('user_data')->vcard_id;
+                $data[$this->table_prefix.'update_id']     = $TID->vcard_id;
 
                 # jika kosong tidak dirubah
                 if ($this->input->post('filebase64') != null && $this->input->post('filebase64') != '') {

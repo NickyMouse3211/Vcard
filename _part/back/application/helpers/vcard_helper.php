@@ -54,7 +54,11 @@ function strEncryptcode($str, $forDB = FALSE, $editID = null){
     $code = $CI->session->userdata('user_code').$editID;
     }
 
-    $str    = ($forDB) ? 'md5(concat(\'' . $key . $code . '\',' . $str. '))' : md5($key . $code . $str);   
+    if (is_string($editID)) {
+        $str    = ($forDB) ? 'md5(concat(\'' . $key . $CI->session->userdata('user_code') . '\','.$editID.',' . $str. '))' : md5($key . $code . $str);  
+    }else{
+        $str    = ($forDB) ? 'md5(concat(\'' . $key . $code . '\',' . $str. '))' : md5($key . $code . $str);  
+    }
     return $str;
 }
 
@@ -207,15 +211,6 @@ function sub_menu( $value, $url, $segment ){
         echo '</ul>';
     }
 }
-
-function generateSalt($param, $param1, $param2){
-    $a     = md5($param, '3ustasCartainkid');
-    $b     = md5($param1, $a);
-    $c     = md5($param2, $b);
-    $hasil = md5(md5($a.$b.$c, 'IrfanIsmaSomantri'));
-    return $hasil;
-}
-
 function generatePass($param, $param1){
     $hasil = md5(md5($param, $param1));
     return $hasil;
@@ -387,4 +382,16 @@ function decode_base64 ($code, $folder ,$username) {
     $code = base64_decode($code);
 
     file_put_contents('../public/images/'.$folder.'/'.$username.'.jpg', $code);
+}
+
+function TID($id){
+    $CI      = &get_instance();
+    $cekcode = @$CI->m_global->get_data_all('vcard', NULL, [strEncryptcode('vcard_id', TRUE,'vcard_id') => $id])[0];
+    // echo "<pre>";
+    // print_r ($CI->db->last_query());
+    // echo "</pre>";exit();
+    if (!$cekcode) {
+        $cekcode = null;
+    }
+    return $cekcode;
 }
