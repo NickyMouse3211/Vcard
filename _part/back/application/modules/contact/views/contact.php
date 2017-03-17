@@ -37,14 +37,11 @@
 				<th>
 					 Name
 				</th>
-				<th width="15%">
-					 Email
+				<th>
+					 Type
 				</th>
 				<th>
-					 Phone
-				</th>
-				<th width="15%">
-					 Role
+					 Value
 				</th>
 				<th>
 					 Status
@@ -63,13 +60,10 @@
 					<input type="text" class="form-control form-filter input-sm" placeholder="name" name="name">
 				</td>
 				<td>
-					<input type="text" class="form-control form-filter input-sm" placeholder="email" name="email">
+					<input type="text" class="form-control form-filter input-sm" placeholder="type" name="type">
 				</td>
 				<td>
-					<input type="text" class="form-control form-filter input-sm" placeholder="phone" name="phone">
-				</td>
-				<td>
-					<input type="text" class="form-control form-filter select-filter input-sm" id="ROLE" placeholder="Role" name="role">
+					<input type="text" class="form-control form-filter input-sm" placeholder="value" name="value">
 				</td>
 				<td>
 					<select name="status" class="select2 form-control form-filter select-filter input-sm">
@@ -98,11 +92,10 @@
 <script type="text/javascript">
 
 	jQuery(document).ready(function() {
-		var url = base_url+"vcard/select";
+		var url = base_url+"contact/select";
 		var header = [
 			{ "sClass": "text-center" },
 			{ "sClass": "text-center" },
-			null,
 			null,
 			null,
 			null,

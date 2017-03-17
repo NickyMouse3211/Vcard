@@ -200,7 +200,7 @@ class Vcard extends MX_Controller {
                 $data[$this->table_prefix.'website']       = $this->input->post('website');
                 $data[$this->table_prefix.'description']   = $this->input->post('description');
                 $data[$this->table_prefix.'status']        = '1';
-                $data[$this->table_prefix.'insert_date']   = date('Y-m-d H:i:s');
+                // $data[$this->table_prefix.'insert_date']   = date('Y-m-d H:i:s');
                 $data[$this->table_prefix.'update_id']     = $TID->vcard_id;
 
                 # jika kosong tidak dirubah
@@ -216,6 +216,10 @@ class Vcard extends MX_Controller {
 
                 if( $result )
                 {
+                    $email = $TID->vcard_email;
+                    if ($email != $this->input->post('email')) {
+                        $change = $this->m_global->update('code',array('code_email' => $this->input->post('email')), array('code_email' => $email));
+                    }
                     if($this->input->post('vcard_password') != '' && $this->input->post('vcard_password') != ''){
                             newcode($id, $this->input->post('email'), $this->input->post('password'), 'edit');
                     }

@@ -109,6 +109,38 @@ class Universal extends CI_Controller {
 	        echo json_encode($res);
 	    }
 	}
+
+	public function get_contact_type($id = '')
+	{
+	    if($id == ''){
+
+	        $q = $_GET['q'];
+
+	        $where[] = '';
+	        
+	        $whereE = "(contact_type LIKE '%$q%')";
+	        $result = $this->m_global->get_data_all('contact', null, $where, 'contact_type', $whereE, ['contact_type', 'asc'], null , '10','contact_type');
+	       
+	        foreach ($result as $row){
+	            $res[] = ['id' => $row->contact_type, 'name' => $row->contact_type];
+	        }
+	        if ($q != '' || $q != null) {
+	        	$res[] = ['id' => $q, 'name' => $q];
+	        }
+	        
+	        $data = ['item' => $res];
+	        echo json_encode($data);
+	    }else{
+	        $where = [ 'contact_type' => $id];
+
+	        $result = $this->m_global->get_data_all('contact', null, $where, 'contact_type', null, ['contact_type', 'asc'] , null , '10','contact_type');
+	        $res = [];
+	        foreach ($result as $row){
+	            $res[] = ['id' => $row->contact_type, 'name' => $row->contact_type];
+	        }
+	        echo json_encode($res);
+	    }
+	}
 	
 }
 

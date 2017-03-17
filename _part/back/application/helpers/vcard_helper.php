@@ -55,7 +55,7 @@ function strEncryptcode($str, $forDB = FALSE, $editID = null){
     }
 
     if (is_string($editID)) {
-        $str    = ($forDB) ? 'md5(concat(\'' . $key . $CI->session->userdata('user_code') . '\','.$editID.',' . $str. '))' : md5($key . $code . $str);  
+        $str    = 'md5(concat(\'' . $key . $CI->session->userdata('user_code') . '\','.$editID.',' . $str. '))';  
     }else{
         $str    = ($forDB) ? 'md5(concat(\'' . $key . $code . '\',' . $str. '))' : md5($key . $code . $str);  
     }
