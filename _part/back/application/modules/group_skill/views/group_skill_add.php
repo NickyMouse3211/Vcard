@@ -20,22 +20,11 @@
 				
 				<div class="form-group">
 					<label class="col-md-2 control-label">
-						Type
+						Name
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'Type')); ?>" maxlength="100" type="text" id="contact_type" class="required form-control" placeholder="Type" />
-						<span class="help-block"></span>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label class="col-md-2 control-label">
-						Value
-						<span class="required" aria-required="true">* </span>
-					</label>
-					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'Value')); ?>" maxlength="100" type="text" class="required form-control" placeholder="Value" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Name')); ?>" maxlength="100" type="text" class="required form-control" placeholder="Name" />
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -70,38 +59,6 @@
        					};
        	FormValidation.initDefault(form, rule, message, null, null, BANoption);
        	// FormValidation.init(form, rule, message);
-       	$('#contact_type').select2({
-       	    minimumInputLength: 0,
-       	    ajax: {
-       	        url: "<?=base_url('universal/get_contact_type')?>",
-       	        dataType: 'json',
-       	        quietMillis: 250,
-       	        data: function (term, page) {
-       	            return {
-       	                q: term,
-       	            };
-       	        },
-       	        results: function (data, page) {
-       	            return { results: data.item };
-       	        },
-       	        cache: true
-       	    },
-       	    initSelection: function(element, callback) {
-       	        var id = $(element).val();
-       	        if (id !== "") {
-       	            $.ajax("<?=base_url('universal/get_contact_type')?>"+id, {
-       	                dataType: "json"
-       	            }).done(function(data) { callback(data[0]); });
-       	        }
-       	    },
-       	    formatResult: function (state) {
-       	        return state.name;
-       	    },
-       	    formatSelection:  function (state) {
-       	        return state.name;
-       	    }
-       	});
-
 
 	});
 

@@ -1,11 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Contact extends MX_Controller {
+class Group_skill extends MX_Controller {
 
-    private $prefix            = 'contact';
-    private $table_db          = 'contact';
-    private $table_prefix      = 'contact_';
-    private $pagetitle         = 'Contact';
+    private $prefix            = 'group_skill';
+    private $table_db          = 'group_skill';
+    private $table_prefix      = 'group_skill_';
+    private $pagetitle         = 'Group_skill';
     
     private $table_db_role     = 'role';
     private $table_prefix_role = 'role_';
@@ -16,7 +16,7 @@ class Contact extends MX_Controller {
 
     }
 
-    /* START contact Core Controller */
+    /* START group_skill Core Controller */
 
     public function index()
     {   
@@ -24,7 +24,7 @@ class Contact extends MX_Controller {
         $data['instance']   = $this->prefix;
 
         # link breadcrumb bisa kosong, jika kosong cuman tampil text 
-        $data['breadcrumb'] = ['contact' => $this->prefix];
+        $data['breadcrumb'] = [str_replace('_', ' ','group_skill') => $this->prefix];
 
         # kalo js emang ga kepake, hapus ya. folder: \assets\admin\pages\scripts
         $js['custom']       = ['table-ajax','upload'];
@@ -43,7 +43,7 @@ class Contact extends MX_Controller {
         $data['pagetitle']  = $this->pagetitle;
         $data['instance']   = $this->prefix;
         $data['url']        = $this->prefix.'/show_add';
-        $data['breadcrumb'] = ['contact' => $this->prefix, 'Add' => $this->prefix.'/show_add'];
+        $data['breadcrumb'] = [str_replace('_', ' ','group_skill') => $this->prefix, 'Add' => $this->prefix.'/show_add'];
         $js['custom']       = ['form-validation','custom','cropit'];
 
         $this->template->display($this->prefix.'_add', $data, $js);
@@ -56,12 +56,12 @@ class Contact extends MX_Controller {
         $data['pagetitle']  = $this->pagetitle;
         $data['instance']   = $this->prefix;
         $data['url']        = $this->prefix.'/show_edit/'.$id;
-        $data['breadcrumb'] = ['contact' => $this->prefix, 'Edit' => $this->prefix.'/show_edit/'.$id];
+        $data['breadcrumb'] = [str_replace('_', ' ','group_skill') => $this->prefix, 'Edit' => $this->prefix.'/show_edit/'.$id];
         $js['custom']       = ['form-validation','custom','cropit'];
 
         $data['id']         = $id;
         # id dalam bentuk encript, lihat di cdn_helper strEncryptcode()
-        $data['records']    = $this->m_global->get_data_all($this->table_db, NULL, [strEncryptcode('contact_id', TRUE) => $id])[0];
+        $data['records']    = $this->m_global->get_data_all($this->table_db, NULL, [strEncryptcode('group_skill_id', TRUE) => $id])[0];
         
         $this->template->display($this->prefix.'_edit', $data, $js);
     }
@@ -73,12 +73,12 @@ class Contact extends MX_Controller {
         $data['pagetitle']  = $this->pagetitle;
         $data['instance']   = $this->prefix;
         $data['url']        = $this->prefix.'/show_edit/'.$id;
-        $data['breadcrumb'] = ['contact' => $this->prefix, 'Detail' => $this->prefix.'/show_detail/'.$id];
+        $data['breadcrumb'] = ['group_skill' => $this->prefix, 'Detail' => $this->prefix.'/show_detail/'.$id];
         $js['custom']       = ['form-validation'];
 
         $data['id']         = $id;
         # id dalam bentuk encript, lihat di cdn_helper strEncryptcode()
-        $data['records']    = @$this->m_global->get_data_all($this->table_db, NULL, [strEncryptcode('contact_id', TRUE) => $id])[0];
+        $data['records']    = @$this->m_global->get_data_all($this->table_db, NULL, [strEncryptcode('group_skill_id', TRUE) => $id])[0];
         $this->template->display($this->prefix.'_detail', $data, $js);
     }
 
@@ -92,19 +92,16 @@ class Contact extends MX_Controller {
 
             echo json_encode($data);
         } else {
-            $this->form_validation->set_rules('type', 'Type', 'trim|xss_clean|required');
-            $this->form_validation->set_rules('value', 'Value', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
             
             if ( $this->form_validation->run($this) )
             {
                     $TID = TID($this->session->userdata('user_data')->vcard_id);
-                    $data[$this->table_prefix.'type']          = $this->input->post('type');
-                    $data[$this->table_prefix.'value']         = $this->input->post('value');
-                    $data[$this->table_prefix.'vcard_id']      = $TID->vcard_id;
+                    $data[$this->table_prefix.'name']          = $this->input->post('name');
                     $data[$this->table_prefix.'insert_date']   = date('Y-m-d H:i:s');
                     $data[$this->table_prefix.'insert_id']     = $TID->vcard_id;
                     $data[$this->table_prefix.'status']        = '1';
-                    // $data[$this->table_prefix.'contact_id']            = $this->contactdata->contact_id;
+                    // $data[$this->table_prefix.'group_skill_id']            = $this->group_skilldata->group_skill_id;
 
                     $result = $this->m_global->insert($this->table_db, $data);
 
@@ -113,7 +110,7 @@ class Contact extends MX_Controller {
 
                         $data['status'] = 1;
                         # sesuai in pesan message dengan aksi yang telah di proses, Nama atau variabel bisa di masukkin.
-                        $data['message'] = 'Successfully add contact with Nama <strong>'.$this->input->post('contact_name').'</strong></strong>';
+                        $data['message'] = 'Successfully add '.str_replace('_',' ','group_skill').' with Nama <strong>'.$this->input->post('group_skill_name').'</strong></strong>';
                         echo json_encode($data);
                     } else {
                         # menghapus gambar yg udah di upload jika sql gagal,
@@ -121,7 +118,7 @@ class Contact extends MX_Controller {
 
                         $data['status'] = 0;
                         #ini sesuaiin juga
-                        $data['message'] = 'Failed add contact with Nama <strong>'.$this->input->post('contact_name').'</strong></strong>';
+                        $data['message'] = 'Failed add '.str_replace('_',' ','group_skill').' with Nama <strong>'.$this->input->post('group_skill_name').'</strong></strong>';
 
                         echo json_encode($data);
                     }
@@ -147,32 +144,30 @@ class Contact extends MX_Controller {
 
             echo json_encode($data);
         } else {
-            $this->form_validation->set_rules('type', 'Type', 'trim|xss_clean|required');
-            $this->form_validation->set_rules('value', 'Value', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
 
             if ($this->form_validation->run($this))
             {
                 $TID = TID($this->session->userdata('user_data')->vcard_id);
-                $data[$this->table_prefix.'type']          = $this->input->post('type');
-                $data[$this->table_prefix.'value']         = $this->input->post('value');
+                $data[$this->table_prefix.'name']          = $this->input->post('name');
                 $data[$this->table_prefix.'status']        = '1';
 
                 # jika kosong tidak dirubah
-
-                $result = $this->m_global->update($this->table_db, $data, [strEncryptcode('contact_id', TRUE) => $id]);
+                
+                $result = $this->m_global->update($this->table_db, $data, [strEncryptcode('group_skill_id', TRUE) => $id]);
 
                 if( $result )
                 {
                     
                     $data['status'] = 1;
-                    $data['message'] = 'Successfully edit contact with Nama <strong>'.$this->input->post('contact_name').'</strong></strong>';
+                    $data['message'] = 'Successfully edit '.str_replace('_',' ','group_skill').' with Nama <strong>'.$this->input->post('group_skill_name').'</strong></strong>';
 
                     echo json_encode($data);
 
                 } else {
 
                     $data['status'] = 0;
-                    $data['message'] = 'Failed edit contact with Nama <strong>'.$this->input->post('contact_name').'</strong></strong>';
+                    $data['message'] = 'Failed edit '.str_replace('_',' ','group_skill').' with Nama <strong>'.$this->input->post('group_skill_name').'</strong></strong>';
                     echo json_encode($data);
                 }
             } else {
@@ -185,38 +180,18 @@ class Contact extends MX_Controller {
         }
     }
     // validasi
-    public function check_email($str, $id){
-        if ($id != '') {
-            $result = $this->m_global->validation($this->table_db, [strEncryptcode($this->table_prefix.'id', TRUE).' <>' => $id, $this->table_prefix.'email' => $str]);
-        }else{
-            $result = $this->m_global->validation($this->table_db, [$this->table_prefix.'email' => $str]);
-        }
-        
-        return $result;
-    }
-    public function check_link($str, $id){
-        if ($id != '') {
-            $result = $this->m_global->validation($this->table_db, [strEncryptcode($this->table_prefix.'id', TRUE).' <>' => $id, $this->table_prefix.'link' => $str]);
-        }else{
-            $result = $this->m_global->validation($this->table_db, [$this->table_prefix.'link' => $str]);
-        }
-        
-        return $result;
-    }
     // end validasi
     public function select()
     {   
         if(@$_REQUEST['customActionType'] == 'group_action'){
             $aChk = [0, 1, 99];
-            if(in_array(@$_REQUEST['customActionName'], $aChk)){
-                $this->change_status($_REQUEST['customActionName'], [strEncryptcode($this->table_prefix.'id', true).' IN ' => "('".implode("','", $_REQUEST['id'] )."')"]);
+            if(in_array(@$_REQUEST['customActionType'], $aChk)){
+                $this->change_status($_REQUEST['customActionType'], [strEncryptcode($this->table_prefix.'id', true).' IN ' => "('".implode("','", $_REQUEST['id'] )."')"]);
             }
         }
 
         $aCari = [
-            'name'        => 'vcard_name',
-            'type'        => $this->table_prefix.'type',
-            'value'       => $this->table_prefix.'value',
+            'name'        => $this->table_prefix.'name',
             'status'      => $this->table_prefix.'status',
             'update_date' => $this->table_prefix.'update_date'
         ];
@@ -227,9 +202,7 @@ class Contact extends MX_Controller {
         # bisa di bedain dengan where bentuk array, kalo ini text asli langsung masuk ke sql
         $where_e    = NULL;
         $where[$this->table_prefix.'status !='] = '99';
-        if ($this->session->userdata('user_data')->vcard_role != 1) {
-            $where[strEncryptcode('contact_vcard_id', TRUE,'contact_vcard_id')] = $this->session->userdata('user_data')->vcard_id;
-        }
+        
         if(@$_REQUEST['action'] == 'filter')
         {
             $where = [];
@@ -238,7 +211,7 @@ class Contact extends MX_Controller {
                 {
                     if($key == 'update_date'){
                         $tmp = explode(' - ', $_REQUEST[$key]);
-                        $where_e = "DATE(contact_update_date) BETWEEN '".$this->db->escape_str($tmp[0])."' AND '".$this->db->escape_str($tmp[1])."'";
+                        $where_e = "DATE(group_skill_update_date) BETWEEN '".$this->db->escape_str($tmp[0])."' AND '".$this->db->escape_str($tmp[1])."'";
                     } else {
                         $where[$value.' LIKE '] = '%'.$_REQUEST[$key].'%';
                     }
@@ -246,10 +219,7 @@ class Contact extends MX_Controller {
             }
         }
         $join = array(
-                    array(
-                            'table' => 'vcard',
-                            'on'    => 'contact_vcard_id = vcard_id'
-                        ),
+                    
                 );
         $keys = array_keys($aCari);
         @$order = [$aCari[$keys[($_REQUEST['order'][0]['column']-2)]], $_REQUEST['order'][0]['dir']];
@@ -266,30 +236,28 @@ class Contact extends MX_Controller {
         $end = $iDisplayStart + $iDisplayLength;
         $end = $end > $iTotalRecords ? $iTotalRecords : $end;
 
-        $select = 'contact_id, contact_status,'.implode(',' , $aCari);
+        $select = 'group_skill_id, group_skill_status,'.implode(',' , $aCari);
         $result = $this->m_global->get_data_all($this->table_db, $join, $where, $select, $where_e, $order, $iDisplayStart, $iDisplayLength);
         
         //echo $this->db->last_query();
         $i = 1 + $iDisplayStart;
 
         foreach ($result as $rows) {
-            $changeStatus = '<a data-original-title="Change Status contact" href="'.base_url( $this->prefix.'/change_status_by/'.strEncryptcode($rows->contact_id).'/'.($rows->contact_status == 1 ? '0' : '1' ) ).'" class="tooltips btn-icon-only btn btn-sm '.($rows->contact_status == 0 ? 'grey-cascade' : ($rows->contact_status == 99 ? 'red-sunglo' : 'green-meadow')). '" onClick="return f_status(1, this, event)"><i title="'.($rows->contact_status == 0 ? 'InActive' : ($rows->contact_status == 99 ? 'Deleted' : 'Active') ).'" class="fa fa'.($rows->contact_status == 0 ? '-eye-slash' : ($rows->contact_status == 99 ? '-trash-o' : '-eye') ).'"></i></a> ';
-            $editData = '<a data-original-title="Edit contact Data" href="'.base_url( $this->prefix.'/show_edit/'.strEncryptcode($rows->contact_id) ).'" class="btn btn-icon-only btn-sm blue-madison ajaxify tooltips"><i class="fa fa-edit"></i></a> ';
-            $detailData = '<a data-original-title="Detail contact Data" href="'.base_url( $this->prefix.'/show_detail/'.strEncryptcode($rows->contact_id) ).'" class="btn btn-icon-only btn-sm yellow ajaxify tooltips"><i class="fa fa-search"></i></a> ';
-            $deleteData = '<a data-original-title="Delete contact Data" href="'.base_url( $this->prefix.'/change_status_by/'.strEncryptcode($rows->contact_id).'/99/'.($rows->contact_status == 99 ? '/true' : '' )).'" class="btn btn-icon-only btn-sm red-sunglo tooltips" onClick="return f_status(2, this, event)"><i class="fa fa-times"></i></a>';
+            $changeStatus = '<a data-original-title="Change Status group_skill" href="'.base_url( $this->prefix.'/change_status_by/'.strEncryptcode($rows->group_skill_id).'/'.($rows->group_skill_status == 1 ? '0' : '1' ) ).'" class="tooltips btn-icon-only btn btn-sm '.($rows->group_skill_status == 0 ? 'grey-cascade' : ($rows->group_skill_status == 99 ? 'red-sunglo' : 'green-meadow')). '" onClick="return f_status(1, this, event)"><i title="'.($rows->group_skill_status == 0 ? 'InActive' : ($rows->group_skill_status == 99 ? 'Deleted' : 'Active') ).'" class="fa fa'.($rows->group_skill_status == 0 ? '-eye-slash' : ($rows->group_skill_status == 99 ? '-trash-o' : '-eye') ).'"></i></a> ';
+            $editData = '<a data-original-title="Edit group_skill Data" href="'.base_url( $this->prefix.'/show_edit/'.strEncryptcode($rows->group_skill_id) ).'" class="btn btn-icon-only btn-sm blue-madison ajaxify tooltips"><i class="fa fa-edit"></i></a> ';
+            $detailData = '<a data-original-title="Detail group_skill Data" href="'.base_url( $this->prefix.'/show_detail/'.strEncryptcode($rows->group_skill_id) ).'" class="btn btn-icon-only btn-sm yellow ajaxify tooltips"><i class="fa fa-search"></i></a> ';
+            $deleteData = '<a data-original-title="Delete group_skill Data" href="'.base_url( $this->prefix.'/change_status_by/'.strEncryptcode($rows->group_skill_id).'/99/'.($rows->group_skill_status == 99 ? '/true' : '' )).'" class="btn btn-icon-only btn-sm red-sunglo tooltips" onClick="return f_status(2, this, event)"><i class="fa fa-times"></i></a>';
 
             $action =   $changeStatus.$editData.$deleteData;
                             
             
             $records["data"][] = [
-                '<input type="checkbox" name="id[]" value="'.strEncryptcode($rows->contact_id).'">',
+                '<input type="checkbox" name="id[]" value="'.strEncryptcode($rows->group_skill_id).'">',
                 $i,
 
-                $rows->vcard_name,
-                $rows->contact_type,
-                $rows->contact_value,
-                $rows->contact_status == 1 ? 'Active' :  ($rows->contact_status == 99 ? 'Deleted' : 'InActive'),
-                $rows->contact_update_date == '' ? 'has not been updated' : tgl_format($rows->contact_update_date),
+                $rows->group_skill_name,
+                $rows->group_skill_status == 1 ? 'Active' :  ($rows->group_skill_status == 99 ? 'Deleted' : 'InActive'),
+                $rows->group_skill_update_date == '' ? 'has not been updated' : tgl_format($rows->group_skill_update_date),
                 $action,
             ];
             $i++;

@@ -24,18 +24,54 @@
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'Type')); ?>" maxlength="100" type="text" id="contact_type" class="required form-control" placeholder="Type" />
+						<select name="<?php echo strtolower(str_replace(' ', '_', 'Type')); ?>"  class="required form-control" placeholder="Type">
+							<option value="employment">Employment</option>
+							<option value="education">Education</option>
+						</select>
 						<span class="help-block"></span>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label class="col-md-2 control-label">
-						Value
+						Position
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'Value')); ?>" maxlength="100" type="text" class="required form-control" placeholder="Value" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Position')); ?>" maxlength="50" type="text" class="required form-control" placeholder="Position" />
+						<span class="help-block"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-md-2 control-label">
+						Sub Position
+						<span class="required" aria-required="true"> </span>
+					</label>
+					<div class="col-md-4">
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Sub')); ?>" maxlength="50" type="text" class=" form-control" placeholder="Sub Position" />
+						<span class="help-block"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-2 control-label">
+						Period
+						<span class="required" aria-required="true">* </span>
+					</label>
+					<div class="col-md-4">
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Period')); ?>"  type="text" class="required form-control" placeholder="Period" />
+						<span class="help-block"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-2 control-label">
+						Description
+						<span class="required" aria-required="true"> </span>
+					</label>
+					<div class="col-md-4">
+						<textarea name="<?php echo strtolower(str_replace(' ', '_', 'Description')); ?>" class=" form-control" placeholder="Description"></textarea>
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -70,38 +106,6 @@
        					};
        	FormValidation.initDefault(form, rule, message, null, null, BANoption);
        	// FormValidation.init(form, rule, message);
-       	$('#contact_type').select2({
-       	    minimumInputLength: 0,
-       	    ajax: {
-       	        url: "<?=base_url('universal/get_contact_type')?>",
-       	        dataType: 'json',
-       	        quietMillis: 250,
-       	        data: function (term, page) {
-       	            return {
-       	                q: term,
-       	            };
-       	        },
-       	        results: function (data, page) {
-       	            return { results: data.item };
-       	        },
-       	        cache: true
-       	    },
-       	    initSelection: function(element, callback) {
-       	        var id = $(element).val();
-       	        if (id !== "") {
-       	            $.ajax("<?=base_url('universal/get_contact_type')?>"+id, {
-       	                dataType: "json"
-       	            }).done(function(data) { callback(data[0]); });
-       	        }
-       	    },
-       	    formatResult: function (state) {
-       	        return state.name;
-       	    },
-       	    formatSelection:  function (state) {
-       	        return state.name;
-       	    }
-       	});
-
 
 	});
 

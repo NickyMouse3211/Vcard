@@ -180,7 +180,7 @@
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="<?php echo strtolower('role') ?>" type="text" id="ROLE" class="form-control" placeholder="Role" />
+						<input name="<?php echo strtolower('role') ?>" type="text" id="ROLE" class="required form-control" placeholder="Role" />
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -188,7 +188,7 @@
 				<div class="form-group">
 					<label class="col-md-2 control-label">
 						Photo
-						<span class="required" aria-required="true">* </span>
+						<span class="required" aria-required="true"> </span>
 					</label>
 					<div class="col-md-10">
 						<div class="image-editor fileinput fileinput-new" data-provides="fileinput">

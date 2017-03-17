@@ -59,7 +59,7 @@
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="<?php echo strtolower('negara_id') ?>" value="<?=@$records->map_negara_id?>" type="text" id="country" class="form-control" placeholder="Role" />
+						<input name="<?php echo strtolower('negara_id') ?>" value="<?=@$records->map_negara_id?>" type="text" id="country" class="required form-control" placeholder="Country" />
 						<span class="help-block"></span>
 					</div>
 				</div>
