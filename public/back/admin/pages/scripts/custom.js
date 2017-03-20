@@ -5,11 +5,11 @@ jQuery(document).ready(function() {
    	    // minViewMode: 1
    	});
 
-   	$('.date-picker-year').datepicker({
-   	    format: 'yyyy',
-   	    // startView: 2,
-   	    // minViewMode: 2
-   	});
+   	$(".year-picker").datepicker( {
+          format: "yyyy",
+          viewMode: "years", 
+          minViewMode: "years"
+      });
 
    	$('.date-picker').datepicker({
    	    format: 'dd-mm-yyyy',

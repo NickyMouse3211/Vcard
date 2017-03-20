@@ -92,7 +92,9 @@ class Group_skill extends MX_Controller {
 
             echo json_encode($data);
         } else {
-            $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required|callback_check_name[]');
+            
+            $this->form_validation->set_message('check_name','The Group Name field must contain a unique value.');
             
             if ( $this->form_validation->run($this) )
             {
@@ -144,8 +146,9 @@ class Group_skill extends MX_Controller {
 
             echo json_encode($data);
         } else {
-            $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required|callback_check_name['.$id.']');
 
+            $this->form_validation->set_message('check_name','The Group Name field must contain a unique value.');
             if ($this->form_validation->run($this))
             {
                 $TID = TID($this->session->userdata('user_data')->vcard_id);
@@ -180,6 +183,15 @@ class Group_skill extends MX_Controller {
         }
     }
     // validasi
+    public function check_name($str, $id){
+        if ($id != '') {
+            $result = $this->m_global->validation($this->table_db, [strEncryptcode($this->table_prefix.'id', TRUE).' <>' => $id, $this->table_prefix.'name' => $str]);
+        }else{
+            $result = $this->m_global->validation($this->table_db, [$this->table_prefix.'name' => $str]);
+        }
+        
+        return $result;
+    }
     // end validasi
     public function select()
     {   

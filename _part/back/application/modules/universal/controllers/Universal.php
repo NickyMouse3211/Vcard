@@ -141,6 +141,38 @@ class Universal extends CI_Controller {
 	        echo json_encode($res);
 	    }
 	}
+
+	public function get_group_skill($id = '')
+	{
+	    if($id == ''){
+
+	        $q = $_GET['q'];
+
+	        $where[] = '';
+	        
+	        $whereE = "(group_skill_name LIKE '%$q%')";
+	        $result = $this->m_global->get_data_all('group_skill', null, $where, 'group_skill_name, group_skill_id', $whereE, ['group_skill_name', 'asc'], null , '10','group_skill_name');
+	       
+	        foreach ($result as $row){
+	            $res[] = ['id' => (int)$row->group_skill_id, 'name' => $row->group_skill_name];
+	        }
+	        if ($q != '' || $q != null) {
+	        	$res[] = ['id' => $q, 'name' => $q];
+	        }
+	        
+	        $data = ['item' => $res];
+	        echo json_encode($data);
+	    }else{
+	        $where = [ 'group_skill_id' => $id];
+
+	        $result = $this->m_global->get_data_all('group_skill', null, $where, 'group_skill_name, group_skill_id', null, ['group_skill_name', 'asc'] , null , '10','group_skill_name');
+	        $res = [];
+	        foreach ($result as $row){
+	            $res[] = ['id' => (int)$row->group_skill_id, 'name' => $row->group_skill_name];
+	        }
+	        echo json_encode($res);
+	    }
+	}
 	
 }
 

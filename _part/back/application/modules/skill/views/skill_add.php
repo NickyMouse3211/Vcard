@@ -20,62 +20,41 @@
 				
 				<div class="form-group">
 					<label class="col-md-2 control-label">
-						Type
+						Group
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<select name="<?php echo strtolower(str_replace(' ', '_', 'Type')); ?>"  class="required form-control" placeholder="Type">
-							<option value="employment">Employment</option>
-							<option value="education">Education</option>
-						</select>
-						<span class="help-block"></span>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label class="col-md-2 control-label">
-						Position
-						<span class="required" aria-required="true">* </span>
-					</label>
-					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'Position')); ?>" maxlength="50" type="text" class="required form-control" placeholder="Position" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Group')); ?>" maxlength="100" id="group" type="text" class="required form-control" placeholder="Group" />
 						<span class="help-block"></span>
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-md-2 control-label">
-						Sub Position
-						<span class="required" aria-required="true"> </span>
-					</label>
-					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'Sub')); ?>" maxlength="50" type="text" class=" form-control" placeholder="Sub Position" />
-						<span class="help-block"></span>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label class="col-md-2 control-label">
-						Period
+						Name
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'From')); ?>"  type="text" class="required form-control year-picker" placeholder="From" />
-						<span class="help-block"></span>
-					</div>
-					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'To')); ?>"  type="text" class="required form-control year-picker" placeholder="To" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Name')); ?>" maxlength="50" type="text" class="required form-control" placeholder="Name" />
 						<span class="help-block"></span>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label class="col-md-2 control-label">
-						Description
-						<span class="required" aria-required="true"> </span>
+						Range
+						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<textarea name="<?php echo strtolower(str_replace(' ', '_', 'Description')); ?>" class=" form-control" placeholder="Description"></textarea>
+						<select name="<?php echo strtolower(str_replace(' ', '_', 'Range')); ?>" maxlength="50" class="required form-control" placeholder="Range">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+						</select>
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -110,7 +89,37 @@
        					};
        	FormValidation.initDefault(form, rule, message, null, null, BANoption);
        	// FormValidation.init(form, rule, message);
-
+       	$('#group').select2({
+       	    minimumInputLength: 0,
+       	    ajax: {
+       	        url: "<?=base_url('universal/get_group_skill')?>",
+       	        dataType: 'json',
+       	        quietMillis: 250,
+       	        data: function (term, page) {
+       	            return {
+       	                q: term,
+       	            };
+       	        },
+       	        results: function (data, page) {
+       	            return { results: data.item };
+       	        },
+       	        cache: true
+       	    },
+       	    initSelection: function(element, callback) {
+       	        var id = $(element).val();
+       	        if (id !== "") {
+       	            $.ajax("<?=base_url('universal/get_group_skill')?>"+id, {
+       	                dataType: "json"
+       	            }).done(function(data) { callback(data[0]); });
+       	        }
+       	    },
+       	    formatResult: function (state) {
+       	        return state.name;
+       	    },
+       	    formatSelection:  function (state) {
+       	        return state.name;
+       	    }
+       	});
 	});
 
 	function isNumber(evt) {

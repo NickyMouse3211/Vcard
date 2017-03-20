@@ -20,62 +20,41 @@
 
 				<div class="form-group">
 					<label class="col-md-2 control-label">
-						Type
+						Group
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<select name="<?php echo strtolower(str_replace(' ', '_', 'Type')); ?>" class="required form-control" placeholder="Type">
-							<option value="employment" <?=@$records->resume_type == 'employment' ? 'selected' : ''?>>Employment</option>
-							<option value="education" <?=@$records->resume_type == 'education' ? 'selected' : ''?>>Education</option>
-						</select>
-						<span class="help-block"></span>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label class="col-md-2 control-label">
-						Position
-						<span class="required" aria-required="true">* </span>
-					</label>
-					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'Position')); ?>" value="<?=@$records->resume_position?>" maxlength="50" type="text" class="required form-control" placeholder="Position" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Group')); ?>" value="<?=@$records->skill_group_skill_id?>" maxlength="100" id="group" type="text" class="required form-control" placeholder="Group" />
 						<span class="help-block"></span>
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-md-2 control-label">
-						Sub Position
-						<span class="required" aria-required="true"> </span>
-					</label>
-					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'Sub')); ?>" value="<?=@$records->resume_sub?>" maxlength="50" type="text" class=" form-control" placeholder="Sub Position" />
-						<span class="help-block"></span>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label class="col-md-2 control-label">
-						Period
+						Name
 						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'From')); ?>" value="<?=explode(' - ',@$records->resume_period)[0]?>"  type="text" class="required form-control year-picker" placeholder="From" />
-						<span class="help-block"></span>
-					</div>
-					<div class="col-md-4">
-						<input name="<?php echo strtolower(str_replace(' ', '_', 'To')); ?>" value="<?=explode(' - ',@$records->resume_period)[1]?>"  type="text" class="required form-control year-picker" placeholder="To" />
+						<input name="<?php echo strtolower(str_replace(' ', '_', 'Name')); ?>" value="<?=@$records->skill_name?>" maxlength="50" type="text" class="required form-control" placeholder="Name" />
 						<span class="help-block"></span>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label class="col-md-2 control-label">
-						Description
-						<span class="required" aria-required="true"> </span>
+						Range
+						<span class="required" aria-required="true">* </span>
 					</label>
 					<div class="col-md-4">
-						<textarea name="<?php echo strtolower(str_replace(' ', '_', 'Description')); ?>" class=" form-control" placeholder="Description"><?=@$records->resume_description?></textarea>
+						<select name="<?php echo strtolower(str_replace(' ', '_', 'Range')); ?>" maxlength="50" class="required form-control" placeholder="Range">
+							<option value="1" <?=$records->skill_range == '1' ? 'selected' : ''?>>1</option>
+							<option value="2" <?=$records->skill_range == '2' ? 'selected' : ''?>>2</option>
+							<option value="3" <?=$records->skill_range == '3' ? 'selected' : ''?>>3</option>
+							<option value="4" <?=$records->skill_range == '4' ? 'selected' : ''?>>4</option>
+							<option value="5" <?=$records->skill_range == '5' ? 'selected' : ''?>>5</option>
+							<option value="6" <?=$records->skill_range == '6' ? 'selected' : ''?>>6</option>
+							<option value="7" <?=$records->skill_range == '7' ? 'selected' : ''?>>7</option>
+						</select>
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -110,7 +89,37 @@
        	FormValidation.initDefault(form, rule, message, title, text, BANoption);
 
        	// Input mask, format nominal
-
+       	$('#group').select2({
+       	    minimumInputLength: 0,
+       	    ajax: {
+       	        url: "<?=base_url('universal/get_group_skill')?>",
+       	        dataType: 'json',
+       	        quietMillis: 250,
+       	        data: function (term, page) {
+       	            return {
+       	                q: term,
+       	            };
+       	        },
+       	        results: function (data, page) {
+       	            return { results: data.item };
+       	        },
+       	        cache: true
+       	    },
+       	    initSelection: function(element, callback) {
+       	        var id = $(element).val();
+       	        if (id !== "") {
+       	            $.ajax("<?=base_url('universal/get_group_skill')?>/"+id, {
+       	                dataType: "json"
+       	            }).done(function(data) { callback(data[0]); });
+       	        }
+       	    },
+       	    formatResult: function (state) {
+       	        return state.name;
+       	    },
+       	    formatSelection:  function (state) {
+       	        return state.name;
+       	    }
+       	});
 	});
 
 
