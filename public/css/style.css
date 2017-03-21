@@ -196,12 +196,21 @@
 	/* Personal info */
 	.personal-info {
 		float:left;
-		margin-top:30px;
+		position: relative;
+		margin-top:0px;
 		width:310px;
 		min-height:230px;
 		margin-left:10px;
+		padding:23px 12px 0 18px;
+		background-color: rgba(231,171,37,0.5);
+	}
+	.personal-info::before {
+	   content: " ";
+	   position: absolute;
+	   width:310px;
+	   min-height:250px;
+	   margin-left:-28px;
 		background:url(../images/personal-info-sep.png) no-repeat left top;
-		padding:20px 0 0 20px;
 	}
 	.personal-info li {
 		font-size:14px;
@@ -595,13 +604,31 @@
 		/* Footer */
 	/*-------------------------------------------------------*/
 	div.footer {
-		margin-top:20px;
-		height:20px;
+		background-color: #fdd22e;
+	    border-radius: 0 0 18px 18px;
+	    display: inline-block;
+	    height: 20px;
+	    margin-top: 0;
+	    padding: 14px 15px 15px 0;
 	}
 	div.footer .copyright {
 		float:left;
 		color:#333;
 		padding-left:6px;
+	}
+	div.footer .copyright::after {
+		content: ' ';
+		width: 31px;
+		position: absolute;
+		height: 29px;
+		border-radius: 5px 1px 50px;
+		border: 15px solid #fdd22e;
+		transform: rotate(191deg);
+		border-top: none;
+		border-bottom: none;
+		border-left: none;
+		margin-top: -17px;
+		margin-left: 3px;
 	}
 	/*-------------------------------------------------------*/
 		/* Isotope filtering */
@@ -655,10 +682,24 @@
 		line-height:14px;
 	}
 	/* Personal info */
+	
 	.personal-info {
 		width:280px;
-		margin-right:10px;
+		margin-right:0px;
+		float:left;
+		margin-top:0px;
+		min-height:230px;
+		/*margin-left:10px;*/
+		padding: 25px 13px 0 17px;
 	}
+	.personal-info::before {
+	   
+	   margin-left:-26px;
+	}
+	/*.personal-info {
+		width:280px;
+		margin-right:10px;
+	}*/
 	/*-------------------------------------------------------*/
 		/* Resume */
 	/*-------------------------------------------------------*/
@@ -709,6 +750,9 @@
 		color:#666;
 		line-height:15px;
 	}
+	.personal-info::before {
+	   display: none;
+	}
 	/* Social icons */
 	.socialicons {
 		margin-top:9px;
@@ -734,11 +778,19 @@
 	}
 	/* Personal info */
 	.personal-info {
-		margin-top:0;
-		display:block;
-		width:420px;
-		background:none;
-		border-top:1px solid #fdc62a;
+		display: block;
+		width: 420px;
+		background: none;
+		border-top: 1px solid #fdc62a;
+		background-color: rgba(231,171,37,0.5);
+		margin: 0 10px;
+		padding: 15px;
+		border-radius: .6em;
+	}
+	.personal-info li span {
+	    float: right;
+	    width: 252px;
+	    color: #a87f09;
 	}
 	/*-------------------------------------------------------*/
 		/* Menu */
@@ -793,7 +845,7 @@
 	/*-------------------------------------------------------*/
 	/* Logo */
 	#logo h2 {
-		font-size:25px;
+		font-size:21px;
 		font-weight:900;
 		color: #444;
 		line-height:30px;
@@ -845,9 +897,24 @@
 		width:280px;
 		background:none;
 		border-top:1px solid #fdc62a;
-		margin-left:10px;
+		/*margin-left:10px;*/
 		min-height:220px;
-		padding-left:0;
+		background-color: rgba(231,171,37,0.5);
+		margin: 0 5px;
+		padding: 4px;
+		border-radius: .6em;
+	}
+
+	.personal-info::before {
+	   content: " ";
+	   position: absolute;
+	   width:310px;
+	   min-height:250px;
+	   margin-left:-15px;
+		background:url(../images/personal-info-sep.png) no-repeat left top;
+	}
+	.personal-info::before {
+	   display: none;
 	}
 	.personal-info li {
 		font-size:13px;

@@ -11,7 +11,7 @@
     $description = @$profile->vcard_description != '' || @$profile->vcard_description != null ? @$profile->vcard_description : ' -';
     $img         = @$profile->vcard_image != '' || @$profile->vcard_image != null ? '/vcard/'.@$profile->vcard_image : 'vcard/no-vcard.jpg';
 
-    $resume      = count($resume_employment) > 0 ? '' : 'display:none';
+    $resume      = (count($resume_employment) > 0 || count($resume_education) > 0 || count($skill) > 0)? '' : 'display:none';
     $portfolio   = count($portfolio) > 0 ? '' : 'display:none';
     $map         = count($contact) > 0 ? '' : 'display:none';
 
@@ -55,7 +55,8 @@
 <!-- Resume -->
 <div id="resume">
 	<div class="timeline-section">
-        <!-- Timeline for Employment  -->   
+        <!-- Timeline for Employment  -->
+        <?php if (count($resume_employment) > 0): ?>   
         <h3 class="main-heading"><span>Employment</span></h3>   
         <ul class="timeline">
             <?php
@@ -74,9 +75,11 @@
             ?>
             <div class="clear"></div>
         </ul> 
+        <?php endif ?>
         <!-- /Timeline for Employment  -->
 
         <!-- Timeline for Education  -->   
+        <?php if (count($resume_education) > 0): ?>
         <h3 class="main-heading"><span>Education</span></h3>   
          <ul class="timeline">
             <?php
@@ -95,8 +98,10 @@
             ?>
             <div class="clear"></div>
         </ul> 
+        <?php endif ?>
         <!-- /Timeline for Education  -->              
     </div>
+    <?php if (count($resume_education) > 0): ?>
     <div class="skills-section">
         <!-- Skills -->
         <?php 
@@ -120,6 +125,7 @@
         ?>
      <!-- /Skills -->
     </div>
+    <?php endif ?>
 </div>
 <!-- /Resume --> 
                         
