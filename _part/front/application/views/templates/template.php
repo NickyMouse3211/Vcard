@@ -54,13 +54,7 @@
                 <!-- /Logo -->
                 
                 <!-- Social Icons -->
-                <ul class="socialicons" style="<?php echo $menustyle; ?>">
-                	<li><a href="#" class="social-text">SOCIAL PROFILES</a></li>
-                	<li><a href="#" class="social-facebook"></a></li>
-                    <li><a href="#" class="social-twitter"></a></li>
-                    <li><a href="#" class="social-in"></a></li>
-                    <li><a href="#" class="social-googleplus"></a></li>
-                </ul>
+                
                 <!-- /Social Icons -->
             </div>
             <!-- /Top -->
@@ -75,6 +69,12 @@
 			<div class="footer">
             	<div class="copyright">Copyright © 2017 Bayu Ady Nugraha</div>
             </div>
+            <ul class="socialicons" style="<?php echo $menustyle; ?>">
+            	<li><a href="#" class="social-facebook"></a></li>
+                <li><a href="#" class="social-twitter"></a></li>
+                <li><a href="#" class="social-in"></a></li>
+                <li><a href="#" class="social-googleplus"></a></li>
+            </ul>
             <!-- /Footer --> 
             
         </div>
