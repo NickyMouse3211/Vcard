@@ -344,13 +344,17 @@ class Vcard extends MX_Controller {
                             
             }elseif ($this->session->userdata('user_data')->vcard_role != '1') {
                 
-                if ($rows->vcard_role > $this->session->userdata('user_data')->vcard_role || $this->session->userdata('user_data')->vcard_id == strEncryptcode($rows->vcard_id,false,$rows->vcard_id)) {
-                    if ($this->session->userdata('user_data')->vcard_id == strEncryptcode($rows->vcard_id,false,$rows->vcard_id)) 
-                    {
-                        $action =   $changeStatus.$editData.$detailData;
-                    }else{
-                        $action =   $changeStatus.$editData.$detailData.$deleteData;
-                    }
+                if (
+                        $rows->vcard_role > $this->session->userdata('user_data')->vcard_role || 
+                        $this->session->userdata('user_data')->vcard_id == strEncryptcode($rows->vcard_id,false,$rows->vcard_id)
+                    ) {
+
+                        if ($this->session->userdata('user_data')->vcard_id == strEncryptcode($rows->vcard_id,false,$rows->vcard_id)) 
+                        {
+                            $action =   $changeStatus.$editData.$detailData;
+                        }else{
+                         $action =   $changeStatus.$editData.$detailData.$deleteData;
+                        }
                 }else{
                     $action =   $detailData;
                 }

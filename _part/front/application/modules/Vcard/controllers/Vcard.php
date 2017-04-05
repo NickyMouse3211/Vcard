@@ -39,6 +39,7 @@ class Vcard extends CI_Controller {
 
 	public function index($param='')
 	{
+        // echo 'asdasd';exit();
         $data = null;
         $where_vcard['vcard_link'] = $param;
 
@@ -85,10 +86,10 @@ class Vcard extends CI_Controller {
                                 ),
                             );
         $vcard_portfolio = $this->m_global->get_data_all($this->table_db_portfolio, $join_portfolio, $where_portfolio);
-        $data['portfolio']      = array();
+        $data['portfolioData']      = array();
         $data['portfolio_list'] = array();
         foreach ($vcard_portfolio as $key => $value) {
-            $data['portfolio'][] = array(
+            $data['portfolioData'][] = array(
                                             'class'      => 'portfolio-'.$value->group_portfolio_id,
                                             'href'       => 'portfolio/'.$value->portfolio_link,
                                             'href_title' => $value->portfolio_link_title,

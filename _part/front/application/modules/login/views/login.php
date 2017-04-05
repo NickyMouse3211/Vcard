@@ -1,6 +1,14 @@
+<?php 
+    $login = false;
+    if (@$this->session->userdata('user_data')->vcard_id != null || @$this->session->userdata('user_data')->vcard_id != '' || 
+        !empty(@$this->session->userdata('user_data')->vcard_id)) {
+        $login = true;
+    }
+?>
+
 <!-- Profile -->
 
-<div id="profile"> 
+<div id="profile" <?php echo $login == true ? 'hidden' : ''; ?>> 
  	<!-- About section -->
 	<div class="wrap-form-login" style="width:100%; text-align: center; margin: 50px 0;">
         <h3 class="main-heading"><span>Login User</span></h3>
@@ -23,14 +31,33 @@
 <!-- Menu -->
 <div class="menu">
 	<ul class="tabs">
-    	<li><a href="#profile" class="tab-profile">Login</a></li>
-    	<li><a href="#contact" class="tab-profile">Register</a></li>
+        <?php
+            if ($login == false) {
+                ?>
+                        <li><a href="#profile" class="tab-login">Login</a></li>
+                        <li><a href="#contact" class="tab-profile">Register</a></li>
+                <?php
+            }else{
+                ?>
+                    <?php $dashboard = base_url('admin/dashboard'); ?>
+                    <li><a href="#dashboard" class="tab-dashboard" onclick="redirect('<?php echo $dashboard; ?>')">Dashboard</a></li>
+                    <?php $out = base_url('login/out'); ?>
+                    <li><a href="#out" class="tab-out" onclick="redirect('<?php echo $out; ?>')">Log Out</a></li>
+                <?php
+            }
+        ?>
+        
     </ul>
 </div>
 <!-- /Menu -->
-
+<div id="dashboard" <?php echo $login == false ? 'hidden' : ''; ?>>
+    
+</div>
+<div id="out" <?php echo $login == false ? 'hidden' : ''; ?>>
+    
+</div>
 <!-- Contact -->
-<div id="contact">
+<div id="contact" <?php echo $login == true ? 'hidden' : ''; ?>>
     <!-- Contact Form -->
     <div class="contact-form">
         <h3 class="main-heading"><span>Register User</span></h3>
@@ -38,7 +65,7 @@
         <form method="post" class="form-register" id="contactform">
             <p>
                 <label for="link">Your Link For Vcard</label>
-                <input type="text" class="input" value="http://Vcard.com/" style="width: 110px;display: inline-block;" disabled>
+                <input type="text" class="input" value="<?php echo base_url(); ?>" style="width: 125px;display: inline-block;" disabled>
                 <input type="text" name="link" class="input" style="width: 45%;display: inline-block;">
             </p>
             <p>
@@ -75,6 +102,7 @@
         .done(function(out) {
             if (out.status) {
                 toastr.success(out.msg);
+                redirect('<?php echo base_url("admin/dashboard"); ?>');
             } else{
                 toastr.error(out.msg);
             }
@@ -101,4 +129,8 @@
         
         e.preventDefault();
     });
+
+    function redirect($link){
+        window.location.replace($link);
+    }
 </script>

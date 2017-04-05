@@ -27,7 +27,7 @@
 		<script type="text/javascript" src="<?=base_url('public/js/jquery.adipoli.min.js');?>"></script>
 	    <script type="text/javascript" src="<?=base_url('public/js/jquery.fancybox.js');?>"></script>
 	    <script type="text/javascript" src="<?=base_url('public/js/isotope.pkgd.js');?>"></script>
-	    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key= AIzaSyCXDOit_6HsPABYugH5LD93G-uTHqVF1U8&callback=initMap"></script>
 	    <script type="text/javascript" src="<?=base_url('public/js/jquery.gmap.min.js');?>"></script>
 	    <script type="text/javascript" src="<?=base_url('public/back/global/plugins/bootstrap-toastr/toastr.min.js');?>"></script>
 	    <script type="text/javascript" src="<?=base_url('public/js/custom.js');?>"></script>

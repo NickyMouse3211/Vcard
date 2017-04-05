@@ -1,3 +1,4 @@
+
 <?php 
     $menustyle   = @$profile->vcard_name != '' || @$profile->vcard_name != null ? '' : 'display:none';
 
@@ -12,8 +13,8 @@
     $img         = @$profile->vcard_image != '' || @$profile->vcard_image != null ? '/vcard/'.@$profile->vcard_image : 'vcard/no-vcard.jpg';
 
     $resume      = (count($resume_employment) > 0 || count($resume_education) > 0 || count($skill) > 0)? '' : 'display:none';
-    $portfolio   = count($portfolio) > 0 ? '' : 'display:none';
-    $map         = count($contact) > 0 ? '' : 'display:none';
+    $portfolio   = count($portfolioData) > 0 ? '' : 'display:none';
+    $maps         = count($contact) > 0 ? '' : 'display:none';
 
     $form_contact   = count($this->session->userdata('user_data')) > 0 ? 'display:none' : '';
 ?>
@@ -128,7 +129,7 @@
     <?php endif ?>
 </div>
 <!-- /Resume --> 
-                        
+           
 <!-- Portfolio -->
 <div id="portfolio">
 
@@ -145,7 +146,7 @@
     <div class="extra-text">Some of the projects i'm proud with</div>
     <ul id="portfolio-list">
         <?php 
-            foreach ($portfolio as $key => $value) {
+            foreach ($portfolioData as $key => $value) {
                 ?>
                         <li class="<?php echo $value['class'];?>">
                             <a href="<?php echo $value['href'];?>" title="<?php echo $value['href_title'];?>" rel="portfolio" class="<?php echo $value['href_class'];?>">
@@ -163,7 +164,7 @@
 
 <!-- Contact -->
 <div id="contact">
-	<div id="map" style="<?php echo $map ?>"></div>
+	<div id="map" style="<?php echo $maps ?>"></div>
 	<!-- Contact Info -->
     <div class="contact-info">
     <h3 class="main-heading"><span>Contact info</span></h3>

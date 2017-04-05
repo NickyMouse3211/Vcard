@@ -70,7 +70,7 @@
 		overflow:hidden;
 	}
 	/* Logo */
-		#logo {
+	#logo {
 		float:left;
 		overflow:hidden;
 		margin-left:10px;
@@ -289,8 +289,20 @@
 		background-image:url(../images/contact-icon.png);
 		background-position:center 65px;
 	}
+	.tabs li .tab-login {
+		background-image:url(../images/login-icon.png);
+		background-position:center 56px;
+	}
+	.tabs li .tab-dashboard {
+		background-image:url(../images/dashboard-icon.png);
+		background-position:center 56px;
+	}
+	.tabs li .tab-out {
+		background-image:url(../images/out-icon.png);
+		background-position:center 56px;
+	}
 	/* Active icons */
-		.tabs .active .tab-profile {
+	.tabs .active .tab-profile {
 		background-image:url(../images/profile-icon-active.png);
 	}
 	.tabs .active .tab-resume {
@@ -301,6 +313,15 @@
 	}
 	.tabs .active .tab-contact {
 		background-image:url(../images/contact-icon-active.png);
+	}
+	.tabs .active .tab-login {
+		background-image:url(../images/login-icon-active.png);
+	}
+	.tabs .active .tab-dashboard {
+		background-image:url(../images/dashboard-icon-active.png);
+	}
+	.tabs .active .tab-out {
+		background-image:url(../images/out-icon-active.png);
 	}
 	/*-------------------------------------------------------*/
 		/* Resume Section */
@@ -380,11 +401,30 @@
 		margin-top:25px;
 		overflow:hidden;
 		height:100%;
+		background-color: rgba(248,248,248,1);
+		border-radius: 10px;
+		padding-top: 15px;
 	}
 	.skills li {
 		margin-bottom:15px;
 		float:left;
 		padding-left:30px;
+		
+	}
+	.skills li:hover {
+		background-color: rgba(253,203,44,0.1);
+		padding: 5px;
+		color: #FDCB2C !important;
+		-o-transition:.5s;
+		  -ms-transition:.5s;
+		  -moz-transition:.5s;
+		  -webkit-transition:.5s;
+		  /* ...and now for the proper property */
+		  transition:.5s;
+		/*border-bottom-right-radius: 10px;
+		border-top-right-radius: 10px;*/
+		padding-right: 30px;
+		
 	}
 	.skills li h4 {
 		width:140px;
@@ -759,6 +799,10 @@
 
 	.tabs li > a {
 		width:187px;
+	}
+
+	.timeline li .timelineUnit::before {
+		width:367px;
 	}
 }
 

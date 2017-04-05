@@ -10,6 +10,10 @@ class Login extends CI_Controller {
     private $pref                         = 'vcard_';
 
 	public function index($param='') {
+        if (@$this->session->userdata('user_data')->vcard_id != null || @$this->session->userdata('user_data')->vcard_id != '' || 
+        !empty(@$this->session->userdata('user_data')->vcard_id)) {
+            redirect(base_url($this->session->userdata('user_data')->vcard_link), 'refresh');
+        }
 		$this->template->display(strtolower(__CLASS__));
 	}
 
@@ -119,5 +123,16 @@ class Login extends CI_Controller {
             echo json_encode($data);
         }
 	}
+
+    function out(){
+        $this->session->sess_destroy();
+
+        if (isset($_COOKIE['user_logged'])) {
+            setcookie('user_logged[user]', '', time() - 3600, '/');
+            setcookie('user_logged[pass]', '', time() - 3600, '/');
+        }
+
+        redirect('login', 'refresh');
+    }
 
 }

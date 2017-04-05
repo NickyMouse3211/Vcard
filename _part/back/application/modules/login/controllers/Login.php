@@ -95,6 +95,6 @@ class Login extends MX_Controller {
             setcookie('user_logged[pass]', '', time() - 3600, '/');
         }
 
-        redirect('login', 'refresh');
+        redirect('../login', 'refresh');
     }
 }
