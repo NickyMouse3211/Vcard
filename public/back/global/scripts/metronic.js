@@ -706,11 +706,11 @@ var Metronic = function() {
             if (options.animate) {
                 html = '<div class="loading-message ' + (options.boxed ? 'loading-message-boxed' : '') + '">' + '<div class="block-spinner-bar"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>' + '</div>';
             } else if (options.iconOnly) {
-                html = '<div class="loading-message ' + (options.boxed ? 'loading-message-boxed' : '') + '"><img clss="img-responsive" height="100" src="' + this.getGlobalImgPath() + 'cool-loading-animated-gif-8.gif" align=""></div>';
+                html = '<div class="loading-message ' + (options.boxed ? 'loading-message-boxed' : '') + '"><img clss="img-responsive" height="50" src="' + this.getGlobalImgPath() + 'loadings2.gif" align=""></div>';
             } else if (options.textOnly) {
                 html = '<div class="loading-message ' + (options.boxed ? 'loading-message-boxed' : '') + '"><span>&nbsp;&nbsp;' + (options.message ? options.message : 'LOADING...') + '</span></div>';
             } else {
-                html = '<div class="loading-message ' + (options.boxed ? 'loading-message-boxed' : '') + '" style="background-color:transparent;" ><img height="100" style="background-color:transparent;" clss="img-responsive" src="' + this.getGlobalImgPath() + 'cool-loading-animated-gif-8.gif" align=""><br/><span>' + (options.message ? options.message : 'PLease Wait...') + '</span></div></div>';
+                html = '<div class="loading-message ' + (options.boxed ? 'loading-message-boxed' : '') + '" style="background-color:transparent;" ><img height="50" style="background-color:transparent;" clss="img-responsive" src="' + this.getGlobalImgPath() + 'loadings2.gif" align=""><br/><span>' + (options.message ? options.message : 'PLease Wait...') + '</span></div></div>';
             }
 
             if (options.target) { // element blocking
@@ -772,7 +772,7 @@ var Metronic = function() {
                 $('body').append('<div class="page-spinner-bar"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>');
             } else {
                 $('.page-loading').remove();
-                $('body').append('<div class="page-loading"><img height="200" clss="img-responsive" src="' + this.getGlobalImgPath() + 'loadings.gif"/>&nbsp;&nbsp;<span>' + (options && options.message ? options.message : '') + '</span></div>');
+                $('body').append('<div class="page-loading"><img height="10" clss="img-responsive" src="' + this.getGlobalImgPath() + 'loadings.gif"/>&nbsp;&nbsp;<span>' + (options && options.message ? options.message : '') + '</span></div>');
             }
         },
 

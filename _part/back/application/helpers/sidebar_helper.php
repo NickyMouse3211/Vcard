@@ -2,31 +2,27 @@
 	function sidebar(){
 		$CI =& get_instance();
 
-		$dashboard = ['name' => 'Dashboar', 'link' => 'dashboard', 'icon' => 'home', 'controller' => 'dashboard'];
+		$dashboard 		= ['name' => 'Dashboar', 'link' => 'dashboard', 'icon' => 'home', 'controller' => 'dashboard'];
+		$master_card 	= ['name' => 'Master Card'	, 'link' => 'vcard'	, 'icon' => 'credit-card'		, 'controller' => 'vcard'];
 
-			$user = ['name' => 'User Vcard'	, 'link' => 'vcard'	, 'icon' => 'user'		, 'controller' => 'vcard'];
-			$map  = ['name' => 'User MAP'	, 'link' => 'map'	, 'icon' => 'location-pin'		, 'controller' => 'map'];
-			$contact  = ['name' => 'User Contact'	, 'link' => 'contact'	, 'icon' => 'call-end'		, 'controller' => 'contact'];
+			$map  		= ['name' => 'My MAP'	, 'link' => 'map'	, 'icon' => 'location-pin'		, 'controller' => 'map'];
+			$contact  	= ['name' => 'My Contact'	, 'link' => 'contact'	, 'icon' => 'call-end'		, 'controller' => 'contact'];
 
-		$master    = ['name' => 'Master User'	, 'link' => [$user,$map,$contact]	, 'icon' => 'settings'	, 'controller' => 'master'];
+		$myContact    	= ['name' => 'Master Contact'	, 'link' => [$map,$contact]	, 'icon' => 'book-open'	, 'controller' => 'master'];
 
-			$touchtouch  	= ['name' => 'Touch'		, 'link' => 'touch'			, 'icon' => 'book-open'	, 'controller' => 'touch'];
-			$touchartikel  	= ['name' => 'Article'		, 'link' => 'touch/article'	, 'icon' => 'book-open'	, 'controller' => 'touch_artikel'];
-			$touchgallery  	= ['name' => 'Gallery'		, 'link' => 'touch/gallery'	, 'icon' => 'picture'	, 'controller' => 'touch_gallery'];
-		$touch     			= ['name' => 'Touch Data'	, 'link' => [$touchtouch,$touchartikel,$touchgallery], 'icon' => 'arrow-right', 'controller' => 'touch'];
+			$resume  	= ['name' => 'My Resume'	, 'link' => 'resume'	, 'icon' => 'notebook'		, 'controller' => 'resume'];
+			$groupSkill	= ['name' => 'Group Skill'	, 'link' => 'group_skill'	, 'icon' => 'star'		, 'controller' => 'group_skill'];
+			$skill		= ['name' => 'Skill'	, 'link' => 'skill'	, 'icon' => 'target'		, 'controller' => 'skill'];
 
-			$vcardvcard  	= ['name' => 'vcard'		, 'link' => 'vcard'			, 'icon' => 'book-open'	, 'controller' => 'vcard'];
-			$vcardartikel  = ['name' => 'Article'		, 'link' => 'vcard/article'	, 'icon' => 'book-open'	, 'controller' => 'vcard_artikel'];
-			$vcardgallery  = ['name' => 'Gallery'		, 'link' => 'vcard/gallery'	, 'icon' => 'picture'	, 'controller' => 'vcard_gallery'];
-		$vcard     		= ['name' => 'vcard Data'	, 'link' => [$vcardvcard,$vcardartikel,$vcardgallery], 'icon' => 'social-facebook', 'controller' => 'vcard'];
+		$myResume    = ['name' => 'Master Resume'	, 'link' => [$resume,$skill]	, 'icon' => 'graduation'	, 'controller' => 'master_resume'];
 
-		$developer     		= ['name' => 'Developer'	, 'link' => 'developer'	, 'icon' => 'ghost'		, 'controller' => 'developer'];
-		$report     		= ['name' => 'Report'		, 'link' => 'report'	, 'icon' => 'notebook'	, 'controller' => 'report'];
 
 		
 		$menu = [ 
 			// $dashboard, 
-			$master,
+			$master_card,
+			$myResume,
+			$myContact,
 			// $vcard
 		];
 		

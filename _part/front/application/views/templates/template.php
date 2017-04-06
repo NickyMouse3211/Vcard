@@ -11,14 +11,14 @@
 	    <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/fancybox.css');?>"/>
 	    <link rel="stylesheet" type="text/css" href="<?=base_url('public/back/global/plugins/bootstrap-toastr/toastr.min.css');?>"/>
 		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,300,800,700,400italic|PT+Serif:400,400italic"/>
-		<meta name="description" content="Vcard Bayu Ady Nugraha Berisi Biodata dari Bayu Ady nugraha">
+		<meta name="description" content="Virtual Card , Online Name Card , You cant setting your own Name Card here , make yourself online">
 		<meta name="keywords" content="Vcard,Bayu Ady Nugraha,Berisi,Biodata,dari Bayu Ady nugraha">
 			<meta content="Bayu Ady Nugraha" name="author"/>
 		<!-- Meta Tags Created With: STW Meta Tag Builder http://www.scrubtheweb.com/ -->
 		<!-- Facebook -->
 		<meta property="og:type"               	content="article" />
 		<meta property="og:title"              	content="Vcard" />
-		<meta property="og:description"        	content="Vcard,Bayu Ady Nugraha,Berisi,Biodata,dari Bayu Ady nugraha" />
+		<meta property="og:description"        	content="Virtual Card , Online Name Card , You cant setting your own Name Card here , make yourself online" />
 	    
 	    <script type="text/javascript" src="<?=base_url('public/js/jquery.js');?>"></script>
 	    <script type="text/javascript" src="<?=base_url('public/js/jquery.easytabs.min.js');?>"></script>

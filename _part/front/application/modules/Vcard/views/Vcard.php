@@ -22,7 +22,7 @@
 <div id="profile"> 
  	<!-- About section -->
 	<div class="about">
-    	<div class="photo-inner"><img src="<?php echo base_url('public/images/').$img; ?>" height="186" width="153" /></div>
+    	<div class="photo-inner fliponclick"><img src="<?php echo base_url('public/images/').$img; ?>" height="186" width="153" id='photoimg' /></div>
         <h1><?php echo $name;?></h1>
         <h3><?php echo $work;?></h3>
         <p><?php echo $description;?></p>
@@ -249,4 +249,7 @@
 
         e.preventDefault();
     });
+    $(document).on('click', '.fliponclick', function(e){
+        document.querySelector("#photoimg").classList.toggle("flip");
+    })
 </script>
