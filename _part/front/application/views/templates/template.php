@@ -21,6 +21,7 @@
 		<meta property="og:description"        	content="Virtual Card , Online Name Card , You cant setting your own Name Card here , make yourself online" />
 	    
 	    <script type="text/javascript" src="<?=base_url('public/js/jquery.js');?>"></script>
+	    <script type="text/javascript" src="<?=base_url('public/js/flip.js');?>"></script>
 	    <script type="text/javascript" src="<?=base_url('public/js/jquery.easytabs.min.js');?>"></script>
 	    <script type="text/javascript" src="<?=base_url('public/js/respond.min.js');?>"></script>
 	    <script type="text/javascript" src="<?=base_url('public/js/jquery.easytabs.min.js');?>"></script>   

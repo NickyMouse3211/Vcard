@@ -395,3 +395,28 @@ function TID($id){
     }
     return $cekcode;
 }
+
+function generateQRCode($text='')
+{
+    $CI      = &get_instance();
+    $CI->load->library('ciqrcode');
+    
+    if ($text == '') {
+        $text = base_url();
+    }
+
+    $config['cacheable']    = false; //boolean, the default is true
+    $config['cachedir']     = base_url('public/cache'); //string, the default is application/cache/
+    $config['errorlog']     = base_url('public/logs'); //string, the default is application/logs/
+    $config['quality']      = true; //boolean, the default is true
+    $config['size']         = ''; //interger, the default is 1024
+    $config['black']        = array(224,255,255); // array, default is array(255,255,255)
+    $config['white']        = array(70,130,180); // array, default is array(0,0,0)
+    $CI->ciqrcode->initialize($config);
+
+    $params['data'] = $text;
+    $params['level'] = 'H';
+    $params['size'] = 10;
+    $params['savename'] = FCPATH.'public/images/barcode/'.str_replace(' ','_',$text).'.png';
+    $CI->ciqrcode->generate($params);
+}

@@ -1,5 +1,6 @@
 
 <?php 
+    generateQRCode(base_url());
     $menustyle   = @$profile->vcard_name != '' || @$profile->vcard_name != null ? '' : 'display:none';
 
     $name        = @$profile->vcard_name != '' || @$profile->vcard_name != null ? @$profile->vcard_name : 'Vcard Not Found.';
@@ -11,6 +12,7 @@
     $website     = @$profile->vcard_website != '' || @$profile->vcard_website != null ? @$profile->vcard_website : ' -';
     $description = @$profile->vcard_description != '' || @$profile->vcard_description != null ? @$profile->vcard_description : ' -';
     $img         = @$profile->vcard_image != '' || @$profile->vcard_image != null ? '/vcard/'.@$profile->vcard_image : 'vcard/no-vcard.jpg';
+    $barimg         = @$profile->vcard_image != '' || @$profile->vcard_image != null ? '/vcard/'.@$profile->vcard_image : 'vcard/no-vcard.jpg';
 
     $resume      = (count($resume_employment) > 0 || count($resume_education) > 0 || count($skill) > 0)? '' : 'display:none';
     $portfolio   = count($portfolioData) > 0 ? '' : 'display:none';
@@ -22,7 +24,18 @@
 <div id="profile"> 
  	<!-- About section -->
 	<div class="about">
-    	<div class="photo-inner fliponclick"><img src="<?php echo base_url('public/images/').$img; ?>" height="186" width="153" id='photoimg' /></div>
+        <div class="photo-inner">
+            <div id='photocard'>
+        	   <div class="front">
+                    <img src="<?php echo base_url('public/images/').$img; ?>" height="186" width="153" id='photoimg' />
+                </div>
+                <div class="back">
+                    <div height='186' width='153'>
+                        <img src="<?php echo base_url('public/images/').$img; ?>" height="auto" width="153" id='barcodeimg' />
+                    </div>
+                </div>
+            </div>
+        </div>
         <h1><?php echo $name;?></h1>
         <h3><?php echo $work;?></h3>
         <p><?php echo $description;?></p>
@@ -249,7 +262,7 @@
 
         e.preventDefault();
     });
-    $(document).on('click', '.fliponclick', function(e){
-        document.querySelector("#photoimg").classList.toggle("flip");
+    $(document).ready(function(){
+        $("#photocard").flip();
     })
 </script>
